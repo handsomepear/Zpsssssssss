@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "给你橘子吃",
+    "usingComponents": {
+      "auth-button": "/components/AuthButton/AuthButton"
+    }
+  }
+  

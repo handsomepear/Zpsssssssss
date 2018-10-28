@@ -1,0 +1,21 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/result/result",
+        "pages/videoPage/videoPage",
+        "pages/mine/mine",
+        "pages/recharge/recharge",
+        "pages/withdraw/withdraw"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "橘子",
+        "navigationBarTextStyle": "black",
+        "onReachBottomDistance": 500,
+        "backgroundColor": "#f6f6f6"
+    },
+    "networkTimeout": {
+        "request": 10000
+    }
+}

@@ -1,0 +1,207 @@
+.remain {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 182rpx;
+    padding: 42rpx 30rpx 22rpx;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+}
+.remain-title {
+    font-size: 26rpx;
+    line-height: 1;
+}
+
+.remain-num {
+    display: flex;
+    align-items: flex-end;
+    font-size: 35rpx;
+    font-weight: bold;
+}
+.remain-num text {
+    letter-spacing: 10rpx;
+    line-height: 1;
+    font-size: 60rpx;
+    margin-right: 15rpx;
+}
+.remain-num .juzi-img {
+    margin-left: 10rpx;
+}
+
+.container {
+    width: 100%;
+    padding: 0 30rpx;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.title {
+    height: 89rpx;
+    line-height: 89rpx;
+    border-bottom: 1rpx solid #e3e3e3;
+}
+
+.withdraw-type {
+    display: flex;
+    height: 118rpx;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1rpx solid #e3e3e3;
+    font-size: 30rpx;
+}
+
+.withdraw-type .item {
+    display: flex;
+    align-items: center;
+}
+.withdraw-radio {
+    margin-right: 10rpx;
+}
+
+.remain-desc {
+    line-height: 1;
+    font-size: 24rpx;
+    color: #999;
+    margin-top: 30rpx;
+}
+
+.withdraw-btn {
+    width: 100%;
+    height: 90rpx;
+    line-height: 90rpx;
+    background-color: #ff6c00;
+    color: #fff;
+    font-size: 36rpx;
+    text-align: center;
+    margin-top: 60rpx;
+    border-radius: 10rpx;
+}
+
+.address-entry {
+    float: right;
+    margin-top: 30rpx;
+}
+
+.remain-input {
+    display: flex;
+    align-items: center;
+    font-size: 32rpx;
+    margin-top: 30rpx;
+}
+
+.remain-input input {
+    width: 136rpx;
+    border-bottom: 1rpx solid #ccc;
+    text-align: center;
+    color: #ff6c00;
+    font-size: 40rpx;
+    font-weight: bold;
+    height: 70rpx;
+    line-height: 70rpx;
+}
+
+.address-info {
+    margin-top: 100rpx;
+}
+
+.addr-item {
+    /* height: 100rpx; */
+    padding: 30rpx 0;
+    font-size: 30rpx;
+    border-bottom: 1rpx solid #ccc;
+}
+.addr-item text {
+    color: #adadad;
+}
+
+/* 添加地址模态框 */
+.addr-edit-modal {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.addr-edit-panel {
+    position: relative;
+    width: 652rpx;
+    max-height: 836rpx;
+    background-color: #fff;
+    margin-top: 180rpx;
+    border-radius: 10rpx;
+    padding: 50rpx;
+    box-sizing: border-box;
+}
+.addr-edit-panel .close-btn {
+    position: absolute;
+    top: 0;
+    right: 10rpx;
+    font-size: 60rpx;
+    line-height:1; 
+    color: #ccc;
+    transform: rotate(45deg)
+}
+
+.addr-edit-title {
+    display: flex;    
+    justify-content: center;
+    font-size: 34rpx;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 40rpx;
+}
+.flex {
+    display: flex;
+}
+.addr-edit-panel .item {
+    margin-top: 45rpx;
+}
+.addr-edit-panel .item .head{
+    font-size: 26rpx;
+    color: #999;
+}
+.addr-edit-panel .item .phone {
+    margin-left: 50rpx;
+}
+.addr-edit-panel input ,.addr-edit-panel .region{
+    height: 64rpx;
+    line-height: 64rpx; 
+    font-size: 30rpx; 
+    border-bottom: 3rpx  solid #ff6c00;
+}
+.addr-edit-panel .region text {
+    margin-right: 30rpx;
+}
+.addr-options {
+    display: flex;
+    justify-content: center;
+    margin-top: 60rpx;
+}
+.addr-options .btn {
+    width: 404rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 32rpx;
+    background-color: #ff6c00;
+    border-radius: 8rpx;
+}
+.addr-options .btn.disabled {
+    background-color: #999;
+}
+.confirm-radio {
+    display: flex;    
+    align-items:center; 
+    margin-top: 30rpx;
+}
+.confirm-radio text {
+    color: #999;
+}

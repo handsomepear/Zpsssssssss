@@ -1,0 +1,29 @@
+<view class="recharge-page">
+    <view class="remain">
+        <view class="remain-title">橘子余额</view>
+        <view class="remain-num">
+            <text>13</text>
+            个
+            <image class="juzi-img" src="/static/imgs/juzi.png" />
+        </view>
+        <button open-type="contact" plain="{{true}}" class="contact-btn">联系客服</button>
+    </view>
+    <view class="class-list">
+        <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
+            <view class="item {{index == remainTypeIndex ? 'active' : ''}}" data-index="{{index}}" bind:tap="chooseRemainType">
+                <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
+                    <view class="triangle">
+                        <view class="white-check"></view>
+                    </view>
+                </view>
+                <image class="juzi-img" src="/static/imgs/juzi.png" />
+                <view class="num">{{item.amonut}}个</view>
+                <view class="money">
+                    <text>{{item.price}}</text>
+                    元
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="remain-btn">充值</view>
+</view>

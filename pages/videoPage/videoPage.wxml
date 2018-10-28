@@ -1,0 +1,33 @@
+<view class="video-page">
+    <video class="video" id="video" controls="{{false}}" src="{{videoUrl}}" binderror="">
+        <!-- video 下面不能使用自定义组件 -->
+        <button wx:if="{{isShowPlayBtn}}" open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetuserinfo">
+            <cover-image  class="play-btn" src="/static/imgs/play-btn.png"></cover-image>
+        </button>
+    </video>
+    <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
+        <cover-view class="tips">
+            <cover-image class="bg" src="/static/imgs/shipinye_tishikuang.png"></cover-image>
+            <cover-view class="tips-text">
+                <cover-view>获得 1 个</cover-view>
+                <cover-image class="juzi-img" src="/static/imgs/juzi.png"></cover-image>
+                <cover-view class="">，可以提现哟~</cover-view>
+            </cover-view>
+        </cover-view>
+        <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
+            <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="" bind:tap="navigateTo" />
+        </auth-button>
+        <!-- <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bind:tap="navigateTo" /> -->
+        <button open-type="share" plain="{{true}}" class="share-btn">
+            <image src="/static/imgs/shipinye_fahaoyouan.png" class="share" />
+        </button>
+        <block wx:if="{{isSelf}}">
+            <button open-type="share" plain="{{true}}" class="share-btn">
+                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
+            </button>
+        </block>
+        <block wx:if="{{!isSelf}}">
+            <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" data-page="/pages/index/index" bind:tap="navigateTo" />
+        </block>
+    </view>
+</view>

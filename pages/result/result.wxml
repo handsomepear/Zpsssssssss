@@ -1,0 +1,35 @@
+<view class="result">
+    <view class="result-card">
+        <view class="user-about">
+            <view class="avatar"></view>
+            <view class="username">周星星的橘子</view>
+            <view class="quantity">
+                <text style="font-size: 60rpx;line-height:1">13</text>
+                个
+                <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
+            </view>
+        </view>
+        <view class="card-info">
+            <scroll-view class="result-list" scroll-y="{{true}}">
+                <view class="get-state">橘子已领完</view>
+                <view class="result-item">
+                    <view class="item-avatar"></view>
+                    <view class="item-info">
+                        <view class="item-username">两米小厨</view>
+                        <view class="item-quantity">领了 1 个橘子，并叫了 周星星 一声baba</view>
+                    </view>
+                </view>
+            </scroll-view>
+            <view class="card-btns">
+                <view class="btn">
+                    <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize">
+                        <image src="/static/imgs/history.png" mode="widthFix" />
+                    </auth-button>
+                </view>
+                <view class="btn" data-page="/pages/index/index" bind:tap="navigateTo">
+                    <image src="/static/imgs/send-lg.png" mode="widthFix" />
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

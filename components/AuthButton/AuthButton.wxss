@@ -1,0 +1,10 @@
+.c-button {
+  width: 100rpx;
+  height: 100rpx;
+  padding: 0;
+  margin: 0;
+  line-height: auto;
+  border-radius: 50%;
+  border-color: #fff;
+  background-color: #fff;
+}

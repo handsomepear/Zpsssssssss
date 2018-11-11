@@ -1,0 +1,19 @@
+function countDifference(n1, n2) {
+    console.log(n1, n2)
+    return n1 - n2
+}
+
+// 处理手机号码显示
+function hideTelNumber(telNumber) {
+    telNumber = '' + telNumber
+    var reg = getRegExp('^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$')
+    if (reg.test(telNumber)) {
+      return telNumber.substring(0, 3) + '****' + telNumber.substring(7)
+    }
+    return telNumber
+  }
+
+module.exports = {
+    countDifference: countDifference,
+    hideTelNumber: hideTelNumber
+}

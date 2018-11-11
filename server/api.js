@@ -4,11 +4,8 @@ let getServerUrl = request.getServerUrl.bind(request)
 module.exports = {
     // 获取配置
     getConfig() {
-        console.log(request.clientEnv.openId);
         return fetch({
-            url: getServerUrl('/getConfig'),
-            data: { openId: request.clientEnv.openId },
-            method: 'GET'
+            url: getServerUrl('/getConfig')
         })
     },
     // 用户注册
@@ -16,7 +13,6 @@ module.exports = {
         return fetch({
             url: getServerUrl('/user/register'),
             data: {
-                openid: request.clientEnv.openId,
                 nickName,
                 avatar,
                 channel,
@@ -27,40 +23,68 @@ module.exports = {
     // 获取用户信息（游戏相关）
     getUserInfo() {
         return fetch({
-            url: getServerUrl('/user/getUserInfo'),
+            url: getServerUrl('/user/getUserInfo')
         })
     },
-    getWaterBills() {
+
+    // 更新用户地址
+    updateUserAddr(addr) {
+        return fetch({
+            url: getServerUrl('/user/updateUserAddr'),
+            data: { addr }
+        })
+    },
+
+    // 获取用户消费记录
+    getWaterBills({ type, page, size = 10 }) {
         return fetch({
             url: getServerUrl('/user/getWaterBills'),
             data: {
-                openId: request.clientEnv.openId,
-                nickName,
-                avatar,
-                channel,
-                gender
+                type,
+                page,
+                size
             }
+        })
+    },
+    // 获取当前用户所有发橘子记录
+    getMyRounds() {
+        return fetch({
+            url: getServerUrl('/game/getMyRounds')
         })
     },
     // 发橘子
     startRound(amount) {
         return fetch({
             url: getServerUrl('/game/startRound'),
-            data: { amount }
+            data: { amount, slogen: '爸爸给你买了橘子' }
         })
     },
     // 领取橘子
     pullFromRound(rid) {
         return fetch({
-            url: getServerUrl('/game/pullFromRound'),
+            url: getServerUrl('/partake/pullFromRound'),
             data: { rid } // 某一局的id
         })
     },
     // 获取某一局游戏点信息
-    getRound() {
+    getRound(rid) {
         return fetch({
-            url: getServerUrl('/game/getRound'),
+            url: getServerUrl('/game/getRoundById'),
             data: { rid }
+        })
+    },
+    // 充值
+    rechargeOrange({ amount, priceId, detail }) {
+        return fetch({
+            url: getServerUrl('/money/pay'),
+            data: { amount, detail, priceId }
+        })
+    },
+    // 提现
+    withdraw({ withdrawNum, addr, tel, consignee }) {
+        return fetch({
+            url: getServerUrl('/money/withDraw'),
+            data: { orange_number: withdrawNum, addr, tel, consignee }
         })
     }
 }

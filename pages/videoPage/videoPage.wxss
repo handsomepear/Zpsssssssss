@@ -17,8 +17,22 @@ page {
     height: 1076rpx;
     overflow: auto;
 }
+.video .name-con {
+    position: absolute;
+    width: auto;
+    padding: 20rpx 30rpx;
+    opacity: 0;
+    /* background-color: rgba(0,0,0,.8); */
+    border-radius: 10rpx;
+    transition: all 1s;
+}
 
-.video .auth-btn-init{
+.name-con cover-view {
+    font-size: 44rpx;
+    color: #4a412f;
+}
+
+.video .auth-btn-init {
     position: absolute;
     width: 144rpx;
     height: 144rpx;
@@ -72,4 +86,58 @@ page {
 .options image {
     width: 210rpx;
     height: 72rpx;
+}
+
+.share-modal-wrap {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.share-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 90%;
+    height: 300rpx;
+    padding: 30rpx;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+}
+.share-modal .share-title {
+    text-align: center;
+    font-size: 32rpx;
+    line-height: 66rpx;
+}
+.share-modal .share-modal-img {
+    width: 90%;
+    height: 300rpx;
+}
+
+.share-modal .close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30rpx;
+    height: 30rpx;
+    padding: 20rpx;
+}
+
+.share-modal .share-btn {
+    width: 60%;
+    background-color: #ff6c00;
+    color: #fff;
 }

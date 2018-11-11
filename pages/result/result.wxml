@@ -1,24 +1,39 @@
 <view class="result">
     <view class="result-card">
         <view class="user-about">
-            <view class="avatar"></view>
-            <view class="username">周星星的橘子</view>
+            <view class="avatar">
+                <image src="{{avatar}}" />
+            </view>
+            <view class="username">{{nickName}}</view>
             <view class="quantity">
-                <text style="font-size: 60rpx;line-height:1">13</text>
+                <text >{{currentGameOrange}}</text>
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
             </view>
         </view>
         <view class="card-info">
             <scroll-view class="result-list" scroll-y="{{true}}">
-                <view class="get-state">橘子已领完</view>
-                <view class="result-item">
-                    <view class="item-avatar"></view>
-                    <view class="item-info">
-                        <view class="item-username">两米小厨</view>
-                        <view class="item-quantity">领了 1 个橘子，并叫了 周星星 一声baba</view>
-                    </view>
-                </view>
+                <block wx:if="{{getList.length > 0}}">
+                    <!-- <view class="get-state">橘子已领完</view> -->
+                    <block wx:for="{{getList}}" wx:key="{{index}}">
+                        <view class="result-item">
+                            <view class="item-avatar">
+                                <image src="{{item.avatarUrl}}" />
+                            </view>
+                            <view class="item-info">
+                                <view class="item-username-time">
+                                    <view class="item-username">{{item.nickName}}</view>
+                                    <view class="item-time">{{item.time}}</view>
+                                </view>
+                                <view class="item-quantity" wx:if="{{isSelf}}">领了 1 个橘子，并叫了您一声baba</view>
+                                <view class="item-quantity" wx:else>领了 1 个橘子，并叫了{{nickName}}一声baba</view>
+                            </view>
+                        </view>
+                    </block>
+                </block>
+                <block wx:else>
+                    <view class="empty">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
+                </block>
             </scroll-view>
             <view class="card-btns">
                 <view class="btn">
@@ -26,9 +41,15 @@
                         <image src="/static/imgs/history.png" mode="widthFix" />
                     </auth-button>
                 </view>
-                <view class="btn" data-page="/pages/index/index" bind:tap="navigateTo">
-                    <image src="/static/imgs/send-lg.png" mode="widthFix" />
-                </view>
+                <form report-submit="{{true}}" bindsubmit="saveFormId">
+                    <button wx:if="{{hasOrange}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
+                        <image src="/static/imgs/send-lg.png" mode="widthFix" />
+                    </button>
+                     <button wx:else form-type="submit" open-type="share" class="btn" plain="{{true}}" >
+                        <image src="/static/imgs/share-orange.png" mode="widthFix" />
+                    </button>
+                    
+                </form>
             </view>
         </view>
     </view>

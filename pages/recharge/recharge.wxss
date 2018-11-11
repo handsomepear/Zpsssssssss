@@ -62,7 +62,7 @@ button.contact-btn {
     border-radius: 10rpx;
     overflow: hidden;
 }
-.item.active {
+.active .item{
     border: 3rpx solid #ff6c00;
 }
 
@@ -110,15 +110,17 @@ button.contact-btn {
     font-size: 30rpx;
 }
 
-
+.remain-con {
+    margin-top: 170rpx;
+    padding: 0 30rpx;
+}
 .remain-btn {
-    width: 690rpx;
     height: 90rpx;
     line-height: 90rpx;
-    margin: 170rpx auto auto;
     background-color: #1aad19;
     color: #fff;
     font-size: 34rpx;
     text-align: center;
     border-radius: 8rpx;
+    
 }

@@ -1,8 +1,9 @@
+<wxs src="../../utils/tools.wxs" module="TOOLS"></wxs>
 <view class="withdraw-page">
     <view class="remain">
         <view class="remain-title">橘子余额</view>
         <view class="remain-num">
-            <text>13</text>
+            <text>{{orangeTotal}}</text>
             个
             <image class="juzi-img" src="/static/imgs/juzi.png" />
         </view>
@@ -13,27 +14,39 @@
             <view class="withdraw-type">
                 <label for="">
                     <view class="item">
-                        <radio value="0" color="#ff6c00" checked="{{true}}"  class="withdraw-radio"></radio>
-                        <text>60个（约10斤）包邮</text>
+                        <radio value="0" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 0}}" disabled="{{orangeTotal < orangeMin}}" class="withdraw-radio"></radio>
+                        <text>{{orangeMin}}个包邮</text>
                     </view>
                 </label>
                 <label for="">
                     <view class="item">
-                        <radio value="1" color="#ff6c00"  class="withdraw-radio"></radio>
+                        <radio value="1" color="#ff6c00" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
                         <text>自付邮费</text>
                     </view>
                 </label>
             </view>
         </radio-group>
-        <!-- <view class="remain-desc">现有13个，需要再购买47个，约12.5元</view> -->
-        <view class="remain-input" wx:if="{{isSelf}}">
+        <view class="remain-desc" wx:if="{{withdrawType == 0 && orangeTotal < orangeMin}}">
+            现有{{orangeTotal}}个，需要再购买{{TOOLS.countDifference(orangeMin, orangeTotal)}}个
+        </view>
+        <view class="remain-input" wx:if="{{withdrawType == 1 || orangeTotal >= orangeMin}}">
             <text>提现橘子</text>
             <input type="number" value="{{withdrawNum}}" wx:if="{{!isShowAddrPanel}}" bindblur="setWithdrawNum" />
             <text>个</text>
-            <text class="postage">（邮费10元）</text>
+            <text class="postage" wx:if="{{withdrawType == 0}}"></text>
+            <text class="postage" wx:else>（邮费{{postage}}元）</text>
         </view>
-        <view class="withdraw-btn" bindtap="widthDraw">购买，包邮提现</view>
-        <view class="address-entry" bindtap="openAddressPanel">收货地址 ></view>
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+            <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
+                <view class="withdraw-btn">提现</view>
+            </button>
+        </form>
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+            <button form-type="submit" class="address-entry" plain="{{true}}" bindtap="openAddressPanel">
+               收货地址 >
+            </button>
+        </form>
+        
         <view class="address-info" wx:if="{{addrInfo}}">
             <view class="addr-item addr-name">
                 <text>收货人：</text>
@@ -41,17 +54,17 @@
             </view>
             <view class="addr-item addr-phone">
                 <text>电话号码：</text>
-                {{addrInfo.telNumber}}
+                {{TOOLS.hideTelNumber(addrInfo.telNumber)}}
             </view>
             <view class="addr-item addr-name">
                 <text>详细地址：</text>
-                {{addrInfo.region[0]}}{{addrInfo.region[1]}}{{addrInfo.region[2]}}{{addrInfo.detailInfo}}
+                {{region[0]}}{{region[1]}}{{region[2]}}{{addrInfo.detailInfo}}
             </view>
         </view>
     </view>
     <!-- 收货地址面板 -->
     <view class="addr-edit-modal" wx:if="{{isShowAddrPanel}}" bindtap="closeAddressPanel">
-        <form bindsubmit="setAddress">
+        <form report-submit="{{true}}" bindsubmit="setAddress">
             <view class="addr-edit-panel" catchtap="stopPropagation">
                 <view class="close-btn" bindtap="closeAddressPanel">+</view>
                 <view wx:if="{{hasAddrInfo}}" class="addr-edit-title">是否使用该收货地址</view>
@@ -63,17 +76,17 @@
                     </view>
                     <view class="phone">
                         <view class="head">联系电话</view>
-                        <input type="number" name="telNumber" value="{{addrInfo.telNumber}}" />
+                        <input type="number" name="telNumber" value="{{TOOLS.hideTelNumber(addrInfo.telNumber)}}" />
                     </view>
                 </view>
                 <view class="item">
                     <view class="head">收货地址</view>
-                    <picker mode="region" name="region" bindchange="bindRegionChange" value="{{addrInfo.region}}">
+                    <picker mode="region" name="region" bindchange="bindRegionChange" value="{{region}}">
                         <view class="picker">
                             <view class="region">
-                                <text>{{addrInfo.region[0]}}</text>
-                                <text>{{addrInfo.region[1]}}</text>
-                                <text>{{addrInfo.region[2]}}</text>
+                                <text>{{region[0]}}</text>
+                                <text>{{region[1]}}</text>
+                                <text>{{region[2]}}</text>
                             </view>
                         </view>
                     </picker>

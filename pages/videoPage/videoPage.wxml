@@ -1,33 +1,54 @@
 <view class="video-page">
-    <video class="video" id="video" controls="{{false}}" src="{{videoUrl}}" binderror="">
+    <video class="video" id="video" poster="/static/imgs/poster.jpg" controls="{{false}}" src="{{videoUrl}}" binderror="" bindtimeupdate="addNickName" bindended="pullFromRound">
+        <!-- <cover-image src="/static/imgs/poster 2.jpg">/</cover-image> -->
+        <cover-view class="name-con" style="left: {{fatherName.left}}rpx; top: {{fatherName.top}}rpx;opacity: {{isShowFaterName ? 1 : 0}}">
+            <cover-view>Zps</cover-view>
+        </cover-view>
+        <cover-view class="name-con" style="left: {{sonName.left}}rpx; top: {{sonName.top}}rpx; opacity: {{isShowSonName ? 1 : 0}}">
+            <cover-view>陆陆陆柒丶</cover-view>
+        </cover-view>
         <!-- video 下面不能使用自定义组件 -->
         <button wx:if="{{isShowPlayBtn}}" open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetuserinfo">
-            <cover-image  class="play-btn" src="/static/imgs/play-btn.png"></cover-image>
+            <cover-image class="play-btn" src="/static/imgs/play-btn.png"></cover-image>
         </button>
+        <cover-view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
+            <cover-view class="share-modal" catchtap="stopPropagation">
+                <cover-view class="close-btn" bindtap="closeShareModal">
+                    <cover-image src="/static/imgs/close.png"></cover-image>
+                </cover-view>
+                <cover-view class="share-title">生成成功</cover-view>
+                <!-- <cover-image src="/static/imgs/shareModal.jpg" class="share-modal-img"></cover-image> -->
+                <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
+                    <cover-view class="auth-fill">发橘子</cover-view>
+                </button>
+            </cover-view>
+        </cover-view>
     </video>
     <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
-        <cover-view class="tips">
+        <cover-view class="tips" wx:if="{{isShowPullResult}}">
             <cover-image class="bg" src="/static/imgs/shipinye_tishikuang.png"></cover-image>
             <cover-view class="tips-text">
                 <cover-view>获得 1 个</cover-view>
                 <cover-image class="juzi-img" src="/static/imgs/juzi.png"></cover-image>
-                <cover-view class="">，可以提现哟~</cover-view>
+                <cover-view>，可以提现哟~</cover-view>
             </cover-view>
         </cover-view>
         <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
-            <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="" bind:tap="navigateTo" />
+            <!-- 历史记录 -->
+            <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="" bindtap="navigateTo" />
         </auth-button>
-        <!-- <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bind:tap="navigateTo" /> -->
-        <button open-type="share" plain="{{true}}" class="share-btn">
-            <image src="/static/imgs/shipinye_fahaoyouan.png" class="share" />
-        </button>
-        <block wx:if="{{isSelf}}">
-            <button open-type="share" plain="{{true}}" class="share-btn">
-                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
+        <!-- <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bindtap="navigateTo" /> -->
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+            <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
+                <!-- 发好友 -->
+                <image src="/static/imgs/share-green.png" class="share" />
             </button>
-        </block>
-        <block wx:if="{{!isSelf}}">
-            <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" data-page="/pages/index/index" bind:tap="navigateTo" />
-        </block>
+        </form>
+        <!-- 发橘子 -->
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+            <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrange">
+                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send"  />
+            </button>
+        </form>
     </view>
 </view>

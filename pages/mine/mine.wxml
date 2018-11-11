@@ -1,7 +1,11 @@
 <view class="mine-page">
     <view class="tab-title">
-        <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" data-current="0" bind:tap="chooseTab">收入</view>
-        <view class="tab-item {{currentTab == 1 ? 'active' : ''}}" data-current="1" bind:tap="chooseTab">支出</view>
+        <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" data-current="0" bindtap="chooseTab">
+            收入
+        </view>
+        <view class="tab-item {{currentTab == 1 ? 'active' : ''}}" data-current="1" bindtap="chooseTab">
+            支出
+        </view>
     </view>
     <swiper class="mine-swiper" current="{{currentTab}}" duration="500" style="height: {{winHeight}}px" bind:change="swiperChange">
         <!-- 收入 -->
@@ -12,38 +16,31 @@
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" />
             </view>
-            <scroll-view scroll-y="true" class="mine-scroll">
-                <view class="item">
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
+            <block wx:if="{{incomeList.length > 0}}">
+                <scroll-view scroll-y="true" class="mine-scroll">
+                    <block wx:for="{{incomeList}}" wx:key="{{index}}">
+                        <view class="item">
+                            <view class="item-wrap">
+                                <view class="top">叫了 两米小厨</view>
+                                <view class="bottom">
+                                    <text class="desc">一声baba，获得 1 个橘子</text>
+                                    <text class="time">{{item.time}}</text>
+                                </view>
+                            </view>
                         </view>
+                    </block>
+                </scroll-view>
+            </block>
+            <block wx:else>
+                <view class="empty">您还没有领到橘子，快去给好友发橘子吧～</view>
+            </block>
+            <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo" >
+                <button form-type="submit" plain="{{true}}">
+                    <view class="send-btn" >
+                        发橘子
                     </view>
-                </view>
-                <view class="item">
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-            </scroll-view>
-            <view class="send">
-                <view class="send-btn" data-page="/pages/index/index" bind:tap="navigateTo">发橘子</view>
-            </view>
+                </button>
+            </form>
         </swiper-item>
         <!-- 支出 -->
         <swiper-item>
@@ -53,119 +50,34 @@
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" />
             </view>
-            <scroll-view scroll-y="true" class="mine-scroll">
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
+            <block wx:if="{{expenseList.length > 0}}">
+                <scroll-view scroll-y="true" class="mine-scroll">
+                    <block wx:for="{{expenseList}}" wx:key="{{index}}">
+                        <view class="item">
+                            <view class="avatar">
+                                <!-- <image src="" /> -->
+                            </view>
+                            <view class="item-wrap">
+                                <view class="top">两米小厨</view>
+                                <view class="bottom">
+                                    <text class="desc">领了一个橘子，并叫了你一声baba</text>
+                                    <text class="time">{{item.time}}</text>
+                                </view>
+                            </view>
                         </view>
+                    </block>
+                </scroll-view>
+            </block>
+            <block wx:else>
+                <view class="empty">您还没有发过橘子，快去给好友发橘子吧～</view>
+            </block>
+            <form class="send" report-submit="{{true}}" bindsubmit="saveFormId"  data-page="/pages/index/index" bindtap="navigateTo">
+                <button form-type="submit" plain="{{true}}">
+                    <view class="send-btn" >
+                        发橘子
                     </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="avatar">
-                        <!-- <image src="" /> -->
-                    </view>
-                    <view class="item-wrap">
-                        <view class="top">叫了 两米小厨</view>
-                        <view class="bottom">
-                            <text class="desc">一声baba，获得 1 个橘子</text>
-                            <text class="time">刚刚</text>
-                        </view>
-                    </view>
-                </view>
-            </scroll-view>
-            <view class="send">
-                <view class="send-btn" data-page="/pages/index/index" bind:tap="navigateTo">发橘子</view>
-            </view>
+                </button>
+            </form>
         </swiper-item>
     </swiper>
 </view>

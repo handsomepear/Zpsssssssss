@@ -1,4 +1,4 @@
-let host = 'https://orange.dimoge.win/wx_api'
+let host = 'https://orange.geinigejuzichi.top/wx_api'
 
 let request = {
     host: host,
@@ -19,12 +19,11 @@ let request = {
                     data: { openid: openId, ...params.data },
                     dataType: 'json',
                     success(res) {
-                        // FIXME: 接口通的话 需要做下面的判断
                         if (res.data.result == 0) {
                             resolve(res.data)
                         } else {
-                            wx.showToastWithoutIcon(res.msg)
-                            reject()
+                            // wx.showToastWithoutIcon(res.data.msg)
+                            reject(res.data)
                         }
                     },
                     fail(err) {
@@ -50,8 +49,8 @@ let request = {
                                 if (res.data.result == 0) {
                                     resolve(res.data)
                                 } else {
-                                    wx.showToastWithoutIcon(res.data.msg)
-                                    reject()
+                                    // wx.showToastWithoutIcon(res.data.msg)
+                                    reject(res.data)
                                 }
                             },
                             fail(err) {
@@ -62,7 +61,8 @@ let request = {
                     })
                 })
                 .catch(err => {
-                    wx.showToastWithoutIcon('获取openId失败')
+                    console.log(err);
+                    // wx.showToastWithoutIcon('获取openId失败')
                 })
         }
     },
@@ -83,6 +83,7 @@ let request = {
                             if (res.data.result == 0) {
                                 resolve(res.data.data.openid)
                             } else {
+                                console.log(res);
                                 reject(res)
                             }
                         },

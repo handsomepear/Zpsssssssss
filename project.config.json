@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -36,13 +36,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 2,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "领取结果",
 					"pathName": "pages/result/result",
-					"query": ""
+					"query": "gameId=15&shareOpenId=213131"
 				},
 				{
 					"id": -1,
@@ -54,7 +54,7 @@
 					"id": 2,
 					"name": "视频",
 					"pathName": "pages/videoPage/videoPage",
-					"query": ""
+					"query": "gameId=15&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBSE    "
 				},
 				{
 					"id": -1,
@@ -65,7 +65,8 @@
 				{
 					"id": -1,
 					"name": "提现橘子",
-					"pathName": "pages/withdraw/withdraw"
+					"pathName": "pages/withdraw/withdraw",
+					"query": ""
 				}
 			]
 		}

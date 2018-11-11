@@ -10,6 +10,7 @@ Component({
     methods: {
         // 授权回调
         handleGetuserinfo(e) {
+            console.log(app.globalData.isAuthorized);
             if (!app.globalData.isAuthorized) {
                 let userInfo = e.detail.userInfo
                 if (userInfo) {

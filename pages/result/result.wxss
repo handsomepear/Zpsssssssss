@@ -29,9 +29,13 @@ page {
     width: 126rpx;
     height: 126rpx;
     border-radius: 50%;
-    background-color: red;
     top: 0;
     transform: translateY(-50%);
+    overflow: hidden;
+}
+.avatar image {
+    width: 100%;
+    height: 100%;
 }
 .user-name {
     font-size: 24rpx;
@@ -40,7 +44,13 @@ page {
 .quantity {
     /* display: flex;
     align-items: flex-end; */
-    margin-top: 34rpx;
+    margin-top: 14rpx;
+}
+
+.quantity text {
+    font-size: 90rpx;
+    font-weight: bold;
+    line-height: 1;
 }
 
 .card-info {
@@ -65,20 +75,36 @@ page {
     align-items: center;
     width: 100%;
     padding: 25rpx;
+    padding-right: 0;
     border-bottom: 1rpx solid #e5e5e5;
+    box-sizing: border-box;
 }
 
 .item-avatar {
     width: 74rpx;
     height: 74rpx;
     border-radius: 50%;
-    background-color: red;
     margin-right: 30rpx;
+    overflow: hidden;
+}
+.item-avatar image {
+    width: 100%;
+    height: 100%;
 }
 .item-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.item-username-time {
+    display: flex;
+    justify-content: space-between;
+}
+.item-time {
+    font-size: 28rpx;
+    color: #d9d9d9;
 }
 .item-quantity {
     font-size: 27rpx;
@@ -96,4 +122,10 @@ page {
 .card-btns .btn image {
     width: 320rpx;
     height: 84rpx;
+}
+.empty {
+    font-size: 33rpx;
+    color: #ccc;
+    text-align: center;
+    margin-top: 100rpx;
 }

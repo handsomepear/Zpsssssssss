@@ -15,8 +15,6 @@ App({
     },
     onLaunch() {
         this.checkAuth()
-        this.getConfig()
-        this.getGameUserInfo()
     },
     checkAuth() {
         let userInfo = wx.getStorageSync('userInfo')
@@ -32,41 +30,11 @@ App({
                 .getOpenId()
                 .then(openId => {
                     that.globalData.openId = openId
-                    console.log(openId);
+                    console.log(openId)
                 })
                 .catch(err => {
                     wx.showToastWithoutIcon(err.msg)
                 })
         }
-    },
-    getConfig() {
-        let that = this
-        fetch({
-            url: getServerUrl('/getConfig'),
-            method: 'POST'
-        })
-            .then(res => {
-                that.globalData.openId = request.clientEnv.openId
-                that.globalData.postage = res.data.postage
-                that.globalData.orangeMin = res.data.orange_min
-                that.globalData.videoUrl = res.data.video_url
-                that.globalData.priceList = res.data.price_list
-            })
-            .catch(err => {
-                // resolve 中代码出错也会进catch语句
-                if (err.msg) {
-                    wx.showToastWithoutIcon(err.msg)
-                } else {
-                    console.log(err)
-                }
-            })
-    },
-    getGameUserInfo() {
-        let that = this
-         fetch({
-            url: getServerUrl('/user/getUserInfo'),
-        }).then(res => {
-            that.globalData.gameUserInfo.orange = res.data.orange
-        })
-    },
+    }
 })

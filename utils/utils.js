@@ -1,8 +1,12 @@
 // 不带icon的Toast
-wx.showToastWithoutIcon = function(title) {
+wx.showToastWithoutIcon = function(title,  duration = 1500) {
     wx.showToast({
         title: title,
-        icon: 'none'
+        icon: 'none',
+        duration,
+        success(){
+
+        }
     })
 }
 

@@ -1,13 +1,13 @@
 const app = getApp()
-const {updateUserAddr, withdraw} = require('../../server/api')
-const {saveFormId} = require('../../server/common')
+const { updateUserAddr, withdraw } = require('../../server/api')
+const { saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
     openAddressPanel() {
-        this.setData({isShowAddrPanel: true})
+        this.setData({ isShowAddrPanel: true })
     },
     closeAddressPanel() {
-        this.setData({isShowAddrPanel: false})
+        this.setData({ isShowAddrPanel: false })
     },
     bindRegionChange(e) {
         var that = this
@@ -17,10 +17,9 @@ let eventFunctions = {
         })
     },
     setWithdrawNum(e) {
-        this.setData({withdrawNum: e.detail.value})
+        this.setData({ withdrawNum: e.detail.value })
     },
-    stopPropagation() {
-    },
+    stopPropagation() {},
     // 橘子提现
     // TODO: 检测提现类型 和 提现个数
     withdraw() {
@@ -32,48 +31,53 @@ let eventFunctions = {
         if (data.withdrawNum == null) {
             return wx.showToastWithoutIcon('请填写提现橘子个数')
         }
-        if (data.withdrawNum > this.data.orangeTotal) {
-            return wx.showToastWithoutIcon('您没有这么多橘子')
-        }
-        if (this.data.orangeTotal < this.data.orangeMin) {
-            return wx.showToastWithoutIcon('橘子余额不足，请充值或者领取好友橘子')
-        }
+        // if (data.withdrawNum > this.data.orangeTotal) {
+        //     return wx.showToastWithoutIcon('您没有这么多橘子')
+        // }
+        // if (this.data.orangeTotal < this.data.orangeMin) {
+        //     return wx.showToastWithoutIcon('橘子余额不足，请充值或者领取好友橘子')
+        // }
         // 检测是否有地址
         if (!this.data.addrInfo) {
             // 如果没有地址 直接使用微信地址
             return this.getWxAddress()
         }
+        this.setData({ isShowWithdrawModal: true })
 
-        if (this.data.withdrawType == 0) {
-            // 提现
-            withdraw({
-                withdrawNum: data.withdrawNum,
-                addr: data.addrInfo.detailInfo,
-                tel: data.addrInfo.telNumber,
-                consignee: data.addrInfo.userName
-            }).then(res => {
-                wx.showToastWithoutIcon('提现成功')
-            }).catch(err => {
-                wx.showToastWithoutIcon('提现失败')
-            })
-        } else if (this.data.withdrawType == 1) {
-            // 自费邮费提现
-            // 自付邮费的 需要 判断提现橘子 是否超过橘子总额
-            withdraw({
-                withdrawNum: data.withdrawNum,
-                addr: data.addrInfo.detailInfo,
-                tel: data.addrInfo.telNumber,
-                consignee: data.addrInfo.userName
-            }).then(res => {
-                wx.showToastWithoutIcon('提现成功')
-            }).catch(err => {
-                wx.showToastWithoutIcon('提现失败')
-            })
-        }
+        // if (this.data.withdrawType == 0) {
+        //     // 提现
+        //     withdraw({
+        //         withdrawNum: data.withdrawNum,
+        //         addr: data.addrInfo.detailInfo,
+        //         tel: data.addrInfo.telNumber,
+        //         consignee: data.addrInfo.userName
+        //     })
+        //         .then(res => {
+        //             wx.showToastWithoutIcon('提现成功')
+        //         })
+        //         .catch(err => {
+        //             wx.showToastWithoutIcon('提现失败')
+        //         })
+        // } else if (this.data.withdrawType == 1) {
+        //     // 自费邮费提现
+        //     // 自付邮费的 需要 判断提现橘子 是否超过橘子总额
+        //     withdraw({
+        //         withdrawNum: data.withdrawNum,
+        //         addr: data.addrInfo.detailInfo,
+        //         tel: data.addrInfo.telNumber,
+        //         consignee: data.addrInfo.userName
+        //     })
+        //         .then(res => {
+        //             wx.showToastWithoutIcon('提现成功')
+        //         })
+        //         .catch(err => {
+        //             wx.showToastWithoutIcon('提现失败')
+        //         })
+        // }
         // 最后才提现
     },
     toggleConfirmAddress() {
-        this.setData({isConfirmAddress: !this.data.isConfirmAddress})
+        this.setData({ isConfirmAddress: !this.data.isConfirmAddress })
     },
     setAddress(e) {
         this.saveFormId(e)
@@ -102,7 +106,7 @@ let eventFunctions = {
             updateUserAddr(
                 `${addrInfo.userName} ${addrInfo.telNumber} ${addrInfo.region[0]} ${addrInfo.region[1]} ${
                     addrInfo.region[2]
-                    } ${addrInfo.detailInfo}`
+                } ${addrInfo.detailInfo}`
             ).then(res => {
                 that.setData({
                     addrInfo: {
@@ -121,7 +125,11 @@ let eventFunctions = {
     },
     // 改变提现类型
     chooseWithDrawType(e) {
-        this.setData({withdrawType: e.detail.value})
+        this.setData({ withdrawType: e.detail.value })
+    },
+    // 隐藏提现类型弹窗
+    closeWithdrawModal() {
+        this.setData({ isShowWithdrawModal: false })
     }
 }
 
@@ -141,7 +149,7 @@ let lifeCycleFunctions = {
         })
     },
     onShow() {
-        this.setData({orangeTotal: app.globalData.gameUserInfo.orangeTotal})
+        this.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
         // 如果橘子总数小于提现个数 直接默认自费包邮
         // if (this.data.orangeTotal < app.globalData.orangeMin) {
         //     this.setData({ withdrawType: '1' })
@@ -152,14 +160,12 @@ let lifeCycleFunctions = {
         //     })
         // }
     },
-    onHide() {
-    }
+    onHide() {}
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
-    onShareAppMessage() {
-    },
+    onShareAppMessage() {},
     handleAuthorize() {
         this.setData({
             isAuth: true
@@ -181,7 +187,7 @@ let wxRelevantFunctions = {
                 })
             },
             fail() {
-                that.setData({isShowAddrPanel: true})
+                that.setData({ isShowAddrPanel: true })
             }
         })
     }
@@ -203,11 +209,11 @@ Page({
         hasAddrInfo: false,
         isConfirmAddress: false,
         addrInfo: null,
-        region: []
+        region: [],
+        isShowWithdrawModal: false
     },
     updateUserAddr(addr) {
-        updateUserAddr(addr).then(res => {
-        })
+        updateUserAddr(addr).then(res => {})
     },
     saveFormId
 })

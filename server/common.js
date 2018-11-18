@@ -46,6 +46,7 @@ module.exports = {
     },
     // 保存formid
     saveFormId(e) {
+        console.log(e.detail.formId)
         if (e.detail.formId && e.detail.formId != 'the formId is a mock one') {
         saveFormId(e.detail.formId)
             .then(() => {

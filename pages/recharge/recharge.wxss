@@ -111,9 +111,13 @@ button.contact-btn {
     font-size: 30rpx;
 }
 
-.remain-con {
-    margin-top: 170rpx;
-    padding: 0 30rpx;
+button.remain-con {
+    position: fixed;
+    width: 100%;
+    bottom: 0rpx;
+    left: 0;
+    padding: 20rpx 30rpx 30rpx;
+    background-color: #fff;
 }
 .remain-btn {
     height: 90rpx;

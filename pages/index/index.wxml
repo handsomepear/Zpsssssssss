@@ -6,8 +6,7 @@
     <view class="index-mid">
         <view class="remain">
             橘子余额：
-            <!-- <text class="remain-quantity">{{orangeTotal}}</text> -->
-            <text class="remain-quantity">13</text>
+            <text class="remain-quantity">{{orangeTotal}}</text>
             个
             <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
         </view>
@@ -36,11 +35,12 @@
             <text>橘子个数</text>
             <view class="quantity">
                 <view class="input-con">
-                    <view class="number" wx:if="{{!isShowNumInput}}" style="color : {{sendOrangeNum != null && sendOrangeNum != 0 ? '#000' : '#aaa'}}" bindtap="showNumInput">
+                    <!-- <view class="number" wx:if="{{!isShowNumInput}}" style="color : {{sendOrangeNum != null && sendOrangeNum != 0 ? '#000' : '#aaa'}}" bindtap="showNumInput">
                         {{ sendOrangeNum == null || sendOrangeNum == 0 ? '填写个数': sendOrangeNum}}
-                    </view>
-                    <block wx:if="{{isShowNumInput}}">
-                        <input type="number" focus="{{true}}" class="number" value="{{sendOrangeNum}}" cursor="{{120}}" placeholder="填写个数" placeholder-style="color: #aaa;font-size: 28rpx;" bindinput="getSendOrangeNum" bindblur="hideNumInput" />
+                    </view> -->
+                    <!-- wx:if="{{isShowNumInput}}" -->
+                    <block>
+                        <input type="number" class="number" value="{{sendOrangeNum}}" cursor="{{120}}" placeholder="填写个数" placeholder-style="color: #aaa;font-size: 28rpx;" bindinput="getSendOrangeNum" bindblur="hideNumInput" />
                     </block>
                 </view>
                 <text>个</text>

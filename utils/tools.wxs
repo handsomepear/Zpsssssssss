@@ -13,7 +13,13 @@ function hideTelNumber(telNumber) {
     return telNumber
   }
 
+// 将分转换成元
+function priceFilter(price) {
+    return price / 100
+}
+
 module.exports = {
     countDifference: countDifference,
-    hideTelNumber: hideTelNumber
+    hideTelNumber: hideTelNumber,
+    priceFilter:priceFilter
 }

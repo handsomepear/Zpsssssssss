@@ -1,5 +1,5 @@
 const app = getApp()
-const { navigateTo } = require('../../utils/utils.js')
+const { navigateTo , randomShareImg} = require('../../utils/utils.js')
 const { getRound } = require('../../server/api')
 const { saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
@@ -24,18 +24,19 @@ let lifeCycleFunctions = {
         } else {
             this.setData({ isSelf: true })
         }
-        // 如果橘子没有被领完
-        if (this.data.isSelf && opts.result == 1) {
-            this.setData({ hasOrange: false })
-        }
+        // // 如果橘子没有被领完
+        // if (this.data.isSelf && opts.result == 1) {
+        //     this.setData({ hasOrange: false })
+        // }
         // 获取某局游戏记录
         getRound(gameId).then(res => {
-            console.log(res)
             that.setData({
                 getList: res.data.getList,
                 avatar: res.data.owner_avatar,
                 nickName: res.data.owner_name,
-                currentGameOrange: res.data.orange_total
+                currentGameOrange: res.data.orange_total,
+                gameId: gameId,
+                gameState: res.data.state
             })
         })
     },
@@ -48,10 +49,12 @@ let lifeCycleFunctions = {
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
     onShareAppMessage(e) {
+        const that = this
         if(e.from == 'button') {
             return {
                 title: '发橘子',
-                imageUrl: '/static/imgs/307509232997331295.jpg'
+                imageUrl: randomShareImg(app.globalData.shareImgList),
+                path: '/pages/videoPage/videoPage?gameId=' + that.gameId + '&shareOpenId=' + app.globalData.openId
             }
         }
     },
@@ -74,7 +77,9 @@ Page({
         nickName: '',
         currentGameOrange: '',
         isSelf: false,
-        hasOrange: true // 是否已被领取完
+        hasOrange: true, // 是否已被领取完
+        gameId: null,
+        gameState: 3, // 3 表示已被领完或者超时 0 表示可分享
     },
     saveFormId
 })

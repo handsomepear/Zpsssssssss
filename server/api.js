@@ -5,7 +5,8 @@ module.exports = {
     // 获取配置
     getConfig() {
         return fetch({
-            url: getServerUrl('/getConfig')
+            url: getServerUrl('/getConfig'),
+            data: { version: '1.0.0' }
         })
     },
     // 用户注册
@@ -35,15 +36,18 @@ module.exports = {
         })
     },
 
-    // 获取用户消费记录
-    getWaterBills({ type, page, size = 10 }) {
+    // 获取用户收入记录
+    getIncome({ page, size = 10 }) {
         return fetch({
-            url: getServerUrl('/user/getWaterBills'),
-            data: {
-                type,
-                page,
-                size
-            }
+            url: getServerUrl('/record/getIncome'),
+            data: { page, size }
+        })
+    },
+    // 获取用户支出记录
+    getOutcome({ page, size = 10 }) {
+        return fetch({
+            url: getServerUrl('/record/getOutcome'),
+            data: { page, size }
         })
     },
     // 获取当前用户所有发橘子记录
@@ -85,6 +89,13 @@ module.exports = {
         return fetch({
             url: getServerUrl('/money/withDraw'),
             data: { orange_number: withdrawNum, addr, tel, consignee }
+        })
+    },
+    // 上传formid
+    saveFormId(formId) {
+        return fetch({
+            url: getServerUrl('/user/getFormId'),
+            data: { formid: formId }
         })
     }
 }

@@ -54,7 +54,7 @@
 					"id": 2,
 					"name": "视频",
 					"pathName": "pages/videoPage/videoPage",
-					"query": "gameId=15&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBSE    "
+					"query": "gameId=15&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&shareUsername=dangerous"
 				},
 				{
 					"id": -1,

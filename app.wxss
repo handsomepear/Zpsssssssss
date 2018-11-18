@@ -6,7 +6,7 @@ page {
 .juzi-img {
     width: 50rpx;
     height: 54rpx;
-    vertical-align: text-bottom;
+    vertical-align: bottom;
 }
 
 button {

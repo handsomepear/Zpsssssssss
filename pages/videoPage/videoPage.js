@@ -1,5 +1,5 @@
 const app = getApp()
-const { navigateTo } = require('../../utils/utils')
+const { navigateTo, randomShareImg } = require('../../utils/utils')
 const { pullFromRound, register } = require('../../server/api')
 const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
 // 事件函数
@@ -10,17 +10,23 @@ let eventFunctions = {
         let that = this
         pullFromRound(this.data.gameId)
             .then(res => {
+                that.setData({ isShowPullResult: true })
                 var timer = setTimeout(() => {
-                    that.setData({ isShowPullResult: true })
+                    that.setData({ isShowPullResult: false })
                 }, 2000)
                 that.setData({ timer })
             })
             .catch(err => {
                 wx.navigateTo({
-                    url: '/pages/result/result?gameId=' + that.data.gameId + '&openId=' + app.globalData.openId + '&shareOpenId=' + that.data.shareOpenId 
+                    url:
+                        '/pages/result/result?gameId=' +
+                        that.data.gameId +
+                        '&openId=' +
+                        app.globalData.openId +
+                        '&shareOpenId=' +
+                        that.data.shareOpenId
                 })
             })
-        
     },
     sendOrange() {
         this.setData({ isShowPullResult: false })
@@ -36,120 +42,126 @@ let eventFunctions = {
     },
     // 视频中根据人物位置添加对应的用户昵称
     addNickName(e) {
-        let currentTime = Math.round(e.detail.currentTime)
-        let d = this.data
-        console.log(currentTime)
-        switch (currentTime) {
-            case 0:
-                d.sonName = {
-                    left: 220,
-                    top: 150
-                }
-                d.isShowFaterName = false
-                d.isShowSonName = true
-                break
-            case 1:
-                d.fatherName = {
-                    left: 400,
-                    top: 100
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = false
-                break
-            case 2 || 3:
-                d.fatherName = {
-                    left: 300,
-                    top: 200
-                }
-                d.sonName = {
-                    left: 0,
-                    top: 40
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = true
-                break
-            case 4 || 5 || 6 || 7 || 8 || 9 || 10:
-                d.fatherName = {
-                    left: 400,
-                    top: 50
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = false
-                break
-            case 11 || 12 || 13:
-                d.sonName = {
-                    left: 400,
-                    top: 0
-                }
-                d.isShowFaterName = false
-                d.isShowSonName = true
-                break
-            case 14 || 15 || 16 || 17 || 18 || 19 || 20:
-                d.sonName = {
-                    left: 200,
-                    top: 0
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = false
-                break
+        
+        if (!this.data.isSelf) {
+            let currentTime = Math.round(e.detail.currentTime)
+            let d = this.data
+            console.log(currentTime)
+            switch (currentTime) {
+                case 0 || 1 || 2 || 3:
+                    d.isShowFaterName = false
+                    d.isShowSonName = false
+                    break
+                case 4 || 5:
+                    d.fatherName = {
+                        left: 400,
+                        top: 50
+                    }
+                    d.isShowFaterName = true
+                    d.isShowSonName = false
+                    break
+                case 6 || 7 || 8:
+                    d.fatherName = {
+                        left: 260,
+                        top: 250
+                    }
+                    break
+                case 9 || 10:
+                    d.fatherName = {
+                        left: 260,
+                        top: 150
+                    }
+                    break
+                case 11 || 12:
+                    d.sonName = {
+                        left: 400,
+                        top: 0
+                    }
+                    d.isShowFaterName = false
+                    d.isShowSonName = true
+                    break
+                case 13 || 14 || 15 || 16 || 17 || 18 || 19 || 20:
+                    d.isShowSonName = false
+                    break
 
-            case 21 || 22:
-                d.fatherName = {
-                    left: 100,
-                    top: 200
-                }
-                d.sonName = {
-                    left: 300,
-                    top: 200
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = true
-                break
-            case 23 || 24:
-                d.fatherName = {
-                    left: 50,
-                    top: 100
-                }
-                d.sonName = {
-                    left: 450,
-                    top: 0
-                }
-                d.isShowFaterName = true
-                d.isShowSonName = true
-                break
-            case 25 || 26:
-                d.sonName = {
-                    left: 450,
-                    top: 0
-                }
-                d.isShowFaterName = false
-                d.isShowSonName = true
-                break
-            default:
-                break
+                case 21 || 22:
+                    d.fatherName = {
+                        left: 110,
+                        top: 240
+                    }
+                    d.sonName = {
+                        left: 370,
+                        top: 200
+                    }
+                    d.isShowFaterName = true
+                    d.isShowSonName = true
+                    break
+                case 23:
+                    d.fatherName = {
+                        left: 80,
+                        top: 100
+                    }
+                    d.sonName = {
+                        left: 430,
+                        top: 0
+                    }
+                    d.isShowFaterName = true
+                    d.isShowSonName = true
+                    break
+                case 24 || 25 || 26:
+                    d.sonName = {
+                        left: 430,
+                        top: 0
+                    }
+                    d.isShowFaterName = false
+                    d.isShowSonName = true
+                    break
+                default:
+                    break
+            }
+            this.setData(d)
         }
-        this.setData(d)
     }
 }
 
 // 生命周期函数（属性值只能为function）
 let lifeCycleFunctions = {
     onLoad(opts) {
+        const that = this
         if (opts.from == 'index') {
+            var userInfo = wx.getStorageSync('userInfo') // 分享者的用户信息
             this.setData({
-                isShowShareModal: true
+                isShowShareModal: true,
+                shareOpenId: app.globalData.openId,
+                shareUsername: userInfo.nickName,
+                isShowFaterName: false,
+                isShowSonName: false
             })
         } else {
+            var userInfo = wx.getStorageSync('userInfo') // 被分享者用户信息
+            var openId = wx.getStorageSync('openId')
             this.setData({
-                // FIXME: 测试完分享面板之后 改成 false
-                isShowShareModal: false
+                isShowShareModal: false,
+                shareOpenId: opts.shareOpenId,
+                shareUsername: opts.shareUsername,
+                father: opts.shareUsername
             })
+            if (openId && openId == this.data.shareOpenId) {
+                this.setData({ isSelf: true })
+            }
+            if (userInfo) {
+                this.setData({ son: userInfo.nickName })
+            }
         }
-        this.setData({
-            shareOpenId: opts.shareOpenId
-        })
         getConfigHandle(() => {
-            this.setData({
+            var openId = wx.getStorageSync('openId')
+            if (openId == this.shareOpenId) {
+                // 表示是自己
+                that.setData({
+                    isSelf: true
+                })
+            }
+            that.setData({
                 videoContext: wx.createVideoContext('video'),
                 videoUrl: app.globalData.videoUrl,
                 gameId: opts.gameId
@@ -160,25 +172,35 @@ let lifeCycleFunctions = {
     onHide() {
         this.data.videoContext.pause()
         // 显示播放按钮 去除分享框
-        this.setData({ isShowPlayBtn: true, isShowShareModal: false })
+        this.setData({ isShowPlayBtn: true, isShowShareModal: false, isShowFaterName: false, isShowSonName: false })
     }
 }
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
     onShareAppMessage(obj) {
+        let userInfo = wx.getStorageSync('userInfo')
         let that = this
         let path = '/pages/videoPage/videoPage'
         if (obj.from == 'button') {
-            path = '/pages/videoPage/videoPage?shareOpenId=' + app.globalData.openId + '&gameId=' + that.data.gameId
+            path =
+                '/pages/videoPage/videoPage?shareOpenId=' +
+                this.data.shareOpenId +
+                '&gameId=' +
+                that.data.gameId +
+                '&shareUsername=' +
+                this.data.shareUsername
         }
+        console.log(path)
         return {
             title: '领橘子了～',
+            imageUrl: randomShareImg(app.globalData.shareImgList),
             path: path
         }
     },
     // 授权之后触发
     handleAuthorize(e) {
-        this.setData({ isAuth: true })
+        const userInfo = wx.getStorageSync('userInfo')
+        this.setData({ son: userInfo.nickName })
         wx.navigateTo({ url: e.detail })
     },
     // 播放按钮授权
@@ -189,6 +211,7 @@ let wxRelevantFunctions = {
             if (userInfo) {
                 wx.setStorageSync('userInfo', userInfo)
                 app.globalData.isAuthorized = true
+                that.setData({ son: userInfo.nickName })
                 register({
                     nickName: userInfo.nickName,
                     avatar: userInfo.avatarUrl,
@@ -213,8 +236,10 @@ Page({
         isShowPlayBtn: true,
         videoUrl: '',
         videoContext: null,
-        isSelf: true,
+        isSelf: false,
         gameId: null,
+        father: '',
+        son: '',
         isShowFaterName: false,
         isShowSonName: false,
         fatherName: {
@@ -227,7 +252,9 @@ Page({
         },
         isShowPullResult: false, // 领取橘子成功之后通知
         isShowShareModal: false,
-        timer: null
+        timer: null,
+        shareOpenId: '', // 分享链接的参数
+        shareUsername: ''
     },
     playVideo() {
         this.setData({ isShowPlayBtn: false })

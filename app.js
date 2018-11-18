@@ -1,5 +1,5 @@
 const utils = require('/utils/utils.js')
-const { request } = require('/utils/request.js')
+const {request} = require('/utils/request.js')
 let fetch = request.fetch.bind(request)
 let getServerUrl = request.getServerUrl.bind(request)
 App({
@@ -11,7 +11,8 @@ App({
         orangeMin: '', // 最少提现橘子数量
         postage: '', // 邮费
         priceList: [], // 提现个数选择
-        gameUserInfo: {}
+        gameUserInfo: {},
+        shareImgList: [] // 分享图列表
     },
     onLaunch() {
         this.checkAuth()

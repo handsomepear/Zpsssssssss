@@ -32,7 +32,12 @@
                     </block>
                 </block>
                 <block wx:else>
-                    <view class="empty">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
+                    <block wx:if="{{gameState == 3}}">
+                        <view class="empty">您分享的橘子长时间无人领取，已返回到您账户～</view>
+                    </block>
+                    <block wx:else>
+                        <view class="empty">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
+                    </block>
                 </block>
             </scroll-view>
             <view class="card-btns">
@@ -42,7 +47,7 @@
                     </auth-button>
                 </view>
                 <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button wx:if="{{hasOrange}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
+                    <button wx:if="{{gameState == 3}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
                         <image src="/static/imgs/send-lg.png" mode="widthFix" />
                     </button>
                      <button wx:else form-type="submit" open-type="share" class="btn" plain="{{true}}" >

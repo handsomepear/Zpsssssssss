@@ -16,6 +16,12 @@ function navigateTo(e) {
     })
 }
 
+// 随机出分享图
+function randomShareImg(shareImgList) {
+    return shareImgList[Math.floor(Math.random() * shareImgList.length)]
+}
+
 module.exports = {
-    navigateTo
+    navigateTo,
+    randomShareImg
 }

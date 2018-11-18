@@ -1,17 +1,24 @@
 const app = getApp()
 const { navigateTo } = require('../../utils/utils.js')
-const { getWaterBills } = require('../../server/api')
+const { getIncome, getOutcome } = require('../../server/api')
 
 const { saveFormId } = require('../../server/common')
 
 // 事件函数
 let eventFunctions = {
     chooseTab(e) {
-        let currentTab = e.currentTarget.dataset.current
+        const currentTab = e.currentTarget.dataset.current
         this.setData({ currentTab })
     },
     swiperChange(e) {
+        const data = this.data
         this.setData({ currentTab: e.detail.current })
+        if(data.currentTab == 0 && data.incomeList.length == 0) {
+            this.getIncomeList()
+        }
+        if(data.currentTab == 1 && data.outcomeList.length == 0) {
+            this.getOutcomeList()
+        }
     },
     navigateTo: navigateTo
 }
@@ -22,16 +29,24 @@ let lifeCycleFunctions = {
         this.getSystemHeight()
     },
     onShow() {
-        let that = this
-        let getIncomeList = getWaterBills({ type: 5, page: this.data.page, size: this.data.size })
-        let getExpenseList = getWaterBills({ type: 2, page: this.data.page, size: this.data.size })
-        // 获取收入支出列表
-        Promise.all([getIncomeList, getExpenseList]).then(res => {
-            that.setData({
-                incomeList: res[0].data,
-                expenseList: res[1].data
-            })
+        this.setData({
+            currentTab: 0,
+            incomePage: 0,
+            outcomePage: 0
         })
+        this.getIncomeList()
+        // let getIncomeList = getIncome({ page: this.data.page, size: this.data.size })
+        // let getOutComeList = getOutcome({ page: this.data.page, size: this.data.size })
+        // // 获取收入支出列表
+        // Promise.all([getIncomeList, getOutComeList]).then(res => {
+        //     console.log(res)
+        //     that.setData({
+        //         incomeTotal: res[0].data.total,
+        //         incomeList: res[0].data.getList,
+        //         outcomeTotal: res[1].data.total,
+        //         outcomeList: res[1].data.getList
+        //     })
+        // })
     },
     onHide() {}
 }
@@ -44,7 +59,13 @@ let wxRelevantFunctions = {
             isAuth: true
         })
     },
-    
+    onReachBottom(){
+        if(this.data.currentTab == 0) {
+            this.getIncomeList()
+        }else if(this.data.currentTab == 1) {
+            this.getOutcomeList()
+        }
+    }
 }
 
 Page({
@@ -54,14 +75,17 @@ Page({
     data: {
         currentTab: 0,
         winHeight: 0,
-        page: 0,
+        incomePage: 0,
+        outcomePage: 0,
         size: 10,
         incomeList: [], // 收入列表
-        expenseList: [] // 支出列表
+        outcomeList: [], // 支出列表
+        incomeTotal: 0,
+        outcomeTotal: 0
     },
     // 计算设备高度
     getSystemHeight() {
-        let that = this
+        const that = this
         wx.getSystemInfo({
             success: function(res) {
                 var clientHeight = res.windowHeight
@@ -72,9 +96,45 @@ Page({
             }
         })
     },
-    // 获取用户支出/消费列表
-    getWaterBills(type) {
-        return
+    getIncomeList() {
+        const that = this
+        const data = that.data
+        getIncome({ page: data.incomePage, size: data.size }).then(res => {
+            data.incomeTotal = res.data.total
+            if (data.incomePage == 0) {
+                data.incomeList = res.data.getList
+            } else {
+                data.incomeList = data.incomeList.concat(res.data.getList)
+            }
+            if (!res.data.getList || res.data.getList.length == 0) {
+                data.incomePage = --data.incomePage
+            } else {
+                data.incomePage = ++data.incomePage
+            }
+            that.setData(data)
+        }).catch(err => {
+            wx.showToastWithoutIcon(err)
+        })
+    },
+    getOutcomeList() {
+        const that = this
+        const data = that.data
+        getOutcome({ page: data.outcomePage, size: data.size }).then(res => {
+            data.outcomeTotal = res.data.total
+            if (data.outcomePage == 0) {
+                data.outcomeList = res.data.getList
+            } else {
+                data.outcomeList = data.outcomeList.concat(res.data.getList)
+            }
+            if (!res.data.getList || res.data.getList.length == 0) {
+                data.outcomePage = --data.outcomePage
+            } else {
+                data.outcomePage = ++data.outcomePage
+            }
+            that.setData(data)
+        }).catch(err => {
+            wx.showToastWithoutIcon(err)
+        })
     },
     saveFormId
 })

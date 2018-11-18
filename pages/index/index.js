@@ -1,7 +1,7 @@
 const app = getApp()
-const { navigateTo } = require('../../utils/utils.js')
-const { startRound, getMyRounds } = require('../../server/api')
-const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
+const {navigateTo, randomShareImg} = require('../../utils/utils.js')
+const {startRound, getMyRounds} = require('../../server/api')
+const {getConfigHandle, getGameUserInfo, saveFormId} = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
     navigateTo: navigateTo,
@@ -12,12 +12,13 @@ let eventFunctions = {
         })
     },
     showNumInput() {
-        this.setData({ isShowNumInput: true })
+        this.setData({isShowNumInput: true})
     },
     hideNumInput(e) {
-        this.setData({ isShowNumInput: false })
+        this.setData({isShowNumInput: false})
     },
-    stopPropagation() {},
+    stopPropagation() {
+    },
 
     toVideoPage() {
         wx.navigateTo({
@@ -29,7 +30,13 @@ let eventFunctions = {
         let dataset = e.currentTarget.dataset
         wx.navigateTo({
             // result 0表示已领完，1表示未领完
-            url: '/pages/result/result?gameId=' + dataset.gameId + '&openId=' + app.globalData.openId + '&result=' + (dataset.total == dataset.received ? '0' : '1')
+            url:
+                '/pages/result/result?gameId=' +
+                dataset.gameId +
+                '&openId=' +
+                app.globalData.openId +
+                '&result=' +
+                (dataset.total == dataset.received ? '0' : '1')
         })
     },
     // 发橘子
@@ -61,40 +68,30 @@ let lifeCycleFunctions = {
     },
     onShow() {
         let that = this
-        this.setData({ isAuthorized: app.globalData.isAuthorized })
+        this.setData({isAuthorized: app.globalData.isAuthorized})
         this.getMyRounds()
         getGameUserInfo(() => {
-            that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
+            that.setData({orangeTotal: app.globalData.gameUserInfo.orangeTotal})
         })
     },
-    onHide() {}
+    onHide() {
+    }
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
     onShareAppMessage(e) {
-        let that = this
-        let shareObj = {}
-        if (e.from == 'button') {
-            shareObj = {
-                title: '您发了' + that.data.sendOrangeNum + '个橘子',
-                imgUrl: '',
-                path: '/pages/videoPage/videoPage?gameId=' + that.data.gameId
-            }
-        } else {
-            shareObj = {
-                title: '叫爸爸',
-                imgUrl: '',
-                path: '/pages/index/index'
-            }
+        return {
+            title: '给你一个橘子吃',
+            imageUrl: randomShareImg(app.globalData.shareImgList),
+            path: '/pages/index/index'
         }
-        return shareObj
     },
     // 授权之后触发
     handleAuthorize(e) {
-        this.setData({ isAuthorized: true })
+        this.setData({isAuthorized: true})
         if (e.detail) {
-            wx.navigateTo({ url: e.detail })
+            wx.navigateTo({url: e.detail})
         }
     },
     saveFormId
@@ -118,8 +115,8 @@ Page({
     getMyRounds() {
         let that = this
         getMyRounds().then(res => {
-            if (that.data.roundList.length == 0) {
-                that.setData({ roundList: res.data })
+            if (that.data.roundList.length === 0) {
+                that.setData({roundList: res.data})
             }
         })
     }

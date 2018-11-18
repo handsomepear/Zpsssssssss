@@ -1,25 +1,38 @@
 <view class="video-page">
-    <video class="video" id="video" poster="/static/imgs/poster.jpg" controls="{{false}}" src="{{videoUrl}}" binderror="" bindtimeupdate="addNickName" bindended="pullFromRound">
-        <!-- <cover-image src="/static/imgs/poster 2.jpg">/</cover-image> -->
-        <cover-view class="name-con" style="left: {{fatherName.left}}rpx; top: {{fatherName.top}}rpx;opacity: {{isShowFaterName ? 1 : 0}}">
-            <cover-view>Zps</cover-view>
+    <video class="video" id="video" objectFit="fill" controls="{{true}}" src="{{videoUrl}}" binderror="" bindtimeupdate="addNickName" bindended="pullFromRound">
+        <cover-view class="name-con" style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);opacity: {{isShowFaterName ? 1 : 0}}">
+            <cover-view>{{father}}</cover-view>
         </cover-view>
-        <cover-view class="name-con" style="left: {{sonName.left}}rpx; top: {{sonName.top}}rpx; opacity: {{isShowSonName ? 1 : 0}}">
-            <cover-view>陆陆陆柒丶</cover-view>
+        <cover-view class="name-con" style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx); opacity: {{isShowSonName ? 1 : 0}}">
+            <cover-view>{{son}}</cover-view>
+        </cover-view>
+        <!-- 封面图 -->
+        <cover-view class="poster" style="display: {{isShowPlayBtn ? 'block' : 'none'}}">
+            <cover-image class="poster-img" src="/static/imgs/poster.jpg">/</cover-image>
+            <cover-view class="poster-modal">
+                <cover-image class="play-img" src="/static/imgs/play-btn.png">/</cover-image>
+                <cover-image class="hand-img" src="/static/imgs/hand.png">/</cover-image>
+                <cover-view class="text1">点击观看视频</cover-view>
+                <cover-view class="text2">就可以领到橘子呦</cover-view>
+            </cover-view>
         </cover-view>
         <!-- video 下面不能使用自定义组件 -->
         <button wx:if="{{isShowPlayBtn}}" open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetuserinfo">
-            <cover-image class="play-btn" src="/static/imgs/play-btn.png"></cover-image>
+            <cover-view class="play-btn"></cover-view>
         </button>
         <cover-view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
             <cover-view class="share-modal" catchtap="stopPropagation">
                 <cover-view class="close-btn" bindtap="closeShareModal">
                     <cover-image src="/static/imgs/close.png"></cover-image>
                 </cover-view>
-                <cover-view class="share-title">生成成功</cover-view>
+                <cover-view class="share-title">
+                    <cover-image src="/static/imgs/right.png"></cover-image>
+                    生成成功
+                </cover-view>
                 <!-- <cover-image src="/static/imgs/shareModal.jpg" class="share-modal-img"></cover-image> -->
                 <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
-                    <cover-view class="auth-fill">发橘子</cover-view>
+                    <!-- <cover-view class="auth-fill">发橘子</cover-view> -->
+                    <cover-image src="/static/imgs/video-share.png"></cover-image>
                 </button>
             </cover-view>
         </cover-view>
@@ -47,7 +60,7 @@
         <!-- 发橘子 -->
         <form report-submit="{{true}}" bindsubmit="saveFormId">
             <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrange">
-                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send"  />
+                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
             </button>
         </form>
     </view>

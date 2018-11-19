@@ -31,7 +31,7 @@
         <block wx:if="{{!isShowAddrPanel && !isShowWithdrawModal}}">
             <view class="remain-input">
                 <text>提现橘子</text>
-                <input type="number" value="{{withdrawNum}}" bindblur="setWithdrawNum" />
+                <input type="number" value="{{withdrawNum}}" bindinput="setWithdrawNum" />
                 <text>个</text>
                 <text class="postage">（邮费{{postage}}元）</text>
             </view>
@@ -116,7 +116,7 @@
                 </view>
                 <!-- 提现选择 -->
                 <radio-group bindchange="chooseWithDrawType">
-                    <view class="item">
+                    <view class="item {{withdrawType == 0 ? 'active' : ''}}">
                         <label for="">
                             <radio value="0" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 0}}" class="withdraw-radio"></radio>
                             <view class="item-main">
@@ -132,7 +132,7 @@
                             </view>
                         </label>
                     </view>
-                    <view class="item">
+                    <view class="item {{withdrawType == 1 ? 'active' : ''}}">
                         <label for="">
                             <radio value="1" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
                             <view class="item-main">

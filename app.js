@@ -16,6 +16,7 @@ App({
     },
     onLaunch() {
         this.checkAuth()
+        
     },
     checkAuth() {
         let userInfo = wx.getStorageSync('userInfo')

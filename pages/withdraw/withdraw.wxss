@@ -1,7 +1,4 @@
-@font-face {
-    font-family: 'xiawucha';
-    src: url('https://orange.geinigejuzichi.top/font.ttf') format('truetype');
-}
+
 
 .remain {
     display: flex;
@@ -272,6 +269,7 @@
 }
 .withdraw-panel .item.active label {
     background: url('https://orange.geinigejuzichi.top/demo1.jpg') center;
+    background-size: cover;
 }
 .item-title {
     font-size: 34rpx;
@@ -293,6 +291,10 @@
     margin-top: 10rpx;
     line-height: 44rpx;
     font-family: 'xiawucha'
+}
+.item-tips text {
+    font-size: 34rpx;
+    color: #ff6c00;
 }
 .item-desc image {
     width: 28rpx;

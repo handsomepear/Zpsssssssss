@@ -147,6 +147,13 @@ let lifeCycleFunctions = {
             orangeMin: app.globalData.orangeMin,
             postage: app.globalData.postage
         })
+        wx.loadFontFace({
+            family: 'xiawucha',
+            source: 'url("https://orange.geinigejuzichi.top/font.ttf")',
+            success() {
+                console.log('字体加载完毕')
+            }
+        })
     },
     onShow() {
         this.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })

@@ -121,14 +121,14 @@
                             <radio value="0" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 0}}" class="withdraw-radio"></radio>
                             <view class="item-main">
                                 <view class="item-title">
-                                    方案1 包邮提现
+                                    方案1  包邮提现
                                     <image src="/static/imgs/tuijian.png" />
                                 </view>
                                 <view class="item-desc">
                                     <image src="/static/imgs/tanhao.png" />
                                     提现60个（约十斤）橘子以上，免邮费
                                 </view>
-                                <view class="item-tips">您当前提现数量20个，再购买40个即可包邮，需支付18.5元～</view>
+                                <view class="item-tips">您当前提现数量<text>20</text>个，再购买<text>40</text>个即可包邮，需支付<text>18.5</text>元～</view>
                             </view>
                         </label>
                     </view>
@@ -136,7 +136,7 @@
                         <label for="">
                             <radio value="1" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
                             <view class="item-main">
-                                <view class="item-title">方案2 自付提现</view>
+                                <view class="item-title">方案2  自付提现</view>
                                 <view class="item-desc">
                                     <image src="/static/imgs/tanhao.png" />
                                     提现数量小于60个，需自付邮费

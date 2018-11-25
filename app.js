@@ -1,5 +1,5 @@
 const utils = require('/utils/utils.js')
-const {request} = require('/utils/request.js')
+const { request } = require('/utils/request.js')
 let fetch = request.fetch.bind(request)
 let getServerUrl = request.getServerUrl.bind(request)
 App({
@@ -16,7 +16,6 @@ App({
     },
     onLaunch() {
         this.checkAuth()
-        
     },
     checkAuth() {
         let userInfo = wx.getStorageSync('userInfo')

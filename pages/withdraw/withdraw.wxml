@@ -33,11 +33,11 @@
                 <text>提现橘子</text>
                 <input type="number" value="{{withdrawNum}}" bindinput="setWithdrawNum" />
                 <text>个</text>
-                <text class="postage">（邮费{{postage}}元）</text>
+                <text class="postage">（超过{{orangeMin}}个可包邮）</text>
             </view>
         </block>
         <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
+            <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="count">
                 <view class="withdraw-btn">提现</view>
             </button>
         </form>
@@ -128,7 +128,34 @@
                                     <image src="/static/imgs/tanhao.png" />
                                     提现60个（约十斤）橘子以上，免邮费
                                 </view>
-                                <view class="item-tips">您当前提现数量<text>20</text>个，再购买<text>40</text>个即可包邮，需支付<text>18.5</text>元～</view>
+                                <view class="item-tips">
+                                    您当前提现数量
+                                    <text>{{withdrawNum}}</text>
+                                    个，
+                                    <!-- 提现个数 = 余额 < 包邮个数 -->
+                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum == orangeTotal && orangeTotal < 60 }}">
+                                        再购买
+                                        <text>{{withdrawData.diff}}</text>
+                                        个即可包邮，需支付
+                                        <text>{{withdrawData.noPostagePrice}}</text>
+                                        元～
+                                    </block>
+                                    <!-- 包邮个数 <= 提现个数 <= 余额 -->
+                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum < orangeTotal  && orangeTotal >= 60 }}">
+                                        再提现
+                                        <text>{{withdrawData.diff}}</text>
+                                        个即可包邮，确定包邮提现吗？
+                                    </block>
+                                    <!-- 提现个数 < 余额 < 包邮个数 -->
+                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum < orangeTotal && orangeTotal < 60 }}">
+                                        余额有{{orangeTotal}}个，再购买
+                                        <text>{{withdrawData.diff}}</text>
+                                        个即可包邮，需支付
+                                        <text>{{withdrawData.noPostagePrice}}</text>
+                                        元～
+                                    </block>
+                                    <block wx:if="{{withdrawData.diff <= 0}}">可包邮</block>
+                                </view>
                             </view>
                         </label>
                     </view>
@@ -136,12 +163,14 @@
                         <label for="">
                             <radio value="1" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
                             <view class="item-main">
-                                <view class="item-title">方案2  自付提现</view>
+                                <view class="item-title">方案2  自付邮费提现</view>
                                 <view class="item-desc">
                                     <image src="/static/imgs/tanhao.png" />
                                     提现数量小于60个，需自付邮费
                                 </view>
-                                <view class="item-tips">您当前提现数量30个，需支付邮费10元</view>
+                                <view class="item-tips">
+                                    您当前提现数量{{withdrawNum}}个，需支付邮费{{withdrawData.postagePrice}}元
+                                </view>
                             </view>
                         </label>
                     </view>

@@ -26,24 +26,44 @@ let eventFunctions = {
         // 如果提现个数不满包邮数 直接提示
         let that = this
         let data = that.data
-        // 包邮提现
-        console.log(data.withdrawNum)
-        if (data.withdrawNum == null) {
-            return wx.showToastWithoutIcon('请填写提现橘子个数')
+        var money = 0 // 默认包邮
+        var type = 0 // 默认包邮
+        var withdrawNum = data.withdrawNum
+        var realReceiveNum = 0
+        const orangeMin = data.orangeMin
+        // const orangeTotal = data.orangeTotal
+        // 方案1 包邮提现
+        if (data.withdrawType == 0) {
+            if (withdrawNum >= orangeMin) {
+                realReceiveNum = withdrawNum
+            } else {
+                // 提现个数 = 余额 < 包邮个数 & // 提现个数  < 余额 < 包邮个数
+                type = 1
+                money = data.withdrawData.postagePrice * 100
+                realReceiveNum = orangeMin
+            }
         }
-        // if (data.withdrawNum > this.data.orangeTotal) {
-        //     return wx.showToastWithoutIcon('您没有这么多橘子')
-        // }
-        // if (this.data.orangeTotal < this.data.orangeMin) {
-        //     return wx.showToastWithoutIcon('橘子余额不足，请充值或者领取好友橘子')
-        // }
-        // 检测是否有地址
-        if (!this.data.addrInfo) {
-            // 如果没有地址 直接使用微信地址
-            return this.getWxAddress()
+        // 方案2  自付邮费提现
+        if (data.withdrawType == 1) {
+            money = data.withdrawData.postagePrice * 100
+            type = 2
+            realReceiveNum = withdrawNum
         }
-        this.setData({ isShowWithdrawModal: true })
-
+        withdraw({
+            withdrawNum: realReceiveNum, // 实际到手的数量
+            addr: data.addrInfo.detailInfo,
+            tel: data.addrInfo.telNumber,
+            consignee: data.addrInfo.userName,
+            money: money,
+            orangeAccount: data.orangeTotal,
+            type: type
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                wx.showToastWithoutIcon('提现失败')
+            })
         // if (this.data.withdrawType == 0) {
         //     // 提现
         //     withdraw({
@@ -75,6 +95,35 @@ let eventFunctions = {
         //         })
         // }
         // 最后才提现
+    },
+    // 根据用户输入的橘子个数生成方案数据
+    count() {
+        const that = this
+        const data = that.data
+        if (data.withdrawNum === null || data.withdrawNum.trim() === '') {
+            return wx.showToastWithoutIcon('请至少提现一个橘子')
+        }
+        if (data.withdrawNum > data.orangeTotal) {
+            return wx.showToastWithoutIcon('您没有这么多橘子')
+        }
+        if (!data.addrInfo) {
+            // 如果没有地址 直接使用微信地址
+            return this.getWxAddress()
+        }
+
+        const diff = data.orangeMin - data.withdrawNum
+        data.withdrawData.diff = diff
+        if (diff > 0 && data.orangeTotal < data.orangeMin) {
+            // 提现 <= 余额 < 包邮数量 
+            data.withdrawData.noPostagePrice = this.reckonMoneyByOrange(data.orangeMin - data.orangeTotal) / 100
+            data.withdrawData.postagePrice = this.rekonPostageByOrange(data.withdrawNum)
+        }
+        if (diff <= 0) {
+            // 达到包邮标准
+            data.withdrawData.postagePrice = this.rekonPostageByOrange(data.withdrawNum)
+        }
+        data.isShowWithdrawModal = true
+        that.setData(data)
     },
     toggleConfirmAddress() {
         this.setData({ isConfirmAddress: !this.data.isConfirmAddress })
@@ -217,7 +266,52 @@ Page({
         isConfirmAddress: false,
         addrInfo: null,
         region: [],
-        isShowWithdrawModal: false
+        isShowWithdrawModal: false, // 提现方案弹窗
+        withdrawData: {
+            diff: 0, // 距离包邮还差多少个橘子
+            noPostagePrice: 0, // 达到包邮标准的邮费
+            postagePrice: 0 // 不包邮的邮费
+        }
+    },
+    /**
+     * 根据橘子数量计算邮费
+     * @param orange 橘子个数
+     */
+    rekonPostageByOrange(orange) {
+        if (orange <= 20) {
+            return 15
+        } else {
+            if ((orange - 20) % 5 == 0) {
+                return ((orange - 20) * 2) / 5 + 15
+            } else {
+                return Math.ceil((orange - 20) / 5) * 2 + 15
+            }
+        }
+    },
+
+    /**
+     * 根据橘子数量计算金额
+     */
+    reckonMoneyByOrange(diffOrange) {
+        var orange = diffOrange
+        var money = 0
+        var priceList = app.globalData.priceList
+        while (orange > 0) {
+            for (var i = priceList.length - 1; i >= 0; i--) {
+                var priceItem = priceList[i]
+                if (orange >= priceItem.amonut) {
+                    money += priceItem.price
+                    orange -= priceItem.amonut
+                    break
+                }
+            }
+            if (orange < priceList[0].amonut) {
+                money += (priceList[0].price / priceList[0].amonut) * orange
+                orange = 0
+            }
+        }
+        console.log(money)
+        return money
     },
     updateUserAddr(addr) {
         updateUserAddr(addr).then(res => {})

@@ -13,7 +13,7 @@ module.exports = {
                     app.globalData.orangeMin = res.data.orange_min
                     app.globalData.videoUrl = res.data.video_url
                     app.globalData.priceList = res.data.price_list
-                    app.globalData.shareImgList = res.data.share_img_url
+                    app.globalData.shareImgList = res.data.share_img_url,
                     cb && cb()
                 })
                 .catch(err => {

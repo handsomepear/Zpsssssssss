@@ -61,7 +61,7 @@ let request = {
                     })
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log(err)
                     // wx.showToastWithoutIcon('获取openId失败')
                 })
         }
@@ -83,7 +83,7 @@ let request = {
                             if (res.data.result == 0) {
                                 resolve(res.data.data.openid)
                             } else {
-                                console.log(res);
+                                console.log(res)
                                 reject(res)
                             }
                         },

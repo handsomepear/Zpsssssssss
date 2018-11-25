@@ -77,18 +77,18 @@ module.exports = {
             data: { rid }
         })
     },
-    // 充值
+    // 充值 type : 1:买橘子, 2:提现邮费, 3: 凑包邮橘子费用
     rechargeOrange({ amount, priceId, detail }) {
         return fetch({
             url: getServerUrl('/money/pay'),
-            data: { amount, detail, priceId }
+            data: { amount, detail, priceId, type: 1 }
         })
     },
     // 提现
-    withdraw({ withdrawNum, addr, tel, consignee }) {
+    withdraw({ withdrawNum, addr, tel, consignee, money, orangeAccount, type }) {
         return fetch({
             url: getServerUrl('/money/withDraw'),
-            data: { orange_number: withdrawNum, addr, tel, consignee }
+            data: { orange_number: withdrawNum, addr, tel, consignee, money, orange_account: orangeAccount, type }
         })
     },
     // 上传formid

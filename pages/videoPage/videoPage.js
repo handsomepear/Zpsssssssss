@@ -17,6 +17,7 @@ let eventFunctions = {
                 that.setData({ timer })
             })
             .catch(err => {
+                wx.showToastWithoutIcon(err.msg)
                 wx.navigateTo({
                     url:
                         '/pages/result/result?gameId=' +
@@ -42,7 +43,6 @@ let eventFunctions = {
     },
     // 视频中根据人物位置添加对应的用户昵称
     addNickName(e) {
-        
         if (!this.data.isSelf) {
             let currentTime = Math.round(e.detail.currentTime)
             let d = this.data
@@ -144,7 +144,9 @@ let lifeCycleFunctions = {
                 isShowShareModal: false,
                 shareOpenId: opts.shareOpenId,
                 shareUsername: opts.shareUsername,
-                father: opts.shareUsername
+                father: opts.shareUsername,
+                isShowFaterName: false,
+                isShowSonName: false
             })
             if (openId && openId == this.data.shareOpenId) {
                 this.setData({ isSelf: true })
@@ -251,7 +253,7 @@ Page({
             top: 150
         },
         isShowPullResult: false, // 领取橘子成功之后通知
-        isShowShareModal: false,
+        isShowShareModal: false, 
         timer: null,
         shareOpenId: '', // 分享链接的参数
         shareUsername: ''

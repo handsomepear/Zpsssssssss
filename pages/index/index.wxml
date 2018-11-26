@@ -87,7 +87,12 @@
                 <block wx:for="{{roundList}}" wx:key="{{item.id}}">
                     <button form-type="submit" plain="{{true}}" class="item" data-game-id="{{item.id}}" data-total="{{item.total}}" data-received="{{item.received}}" bindtap="viewGameDetail">
                         <view class="item-wrap">
-                            <view class="top">您发了{{item.total}}个橘子</view>
+                            <view class="top">
+                                您发了
+                                <text>{{item.total}}</text>
+                                个
+                                <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
+                            </view>
                             <view class="bottom">
                                 <text class="desc">已有 {{item.received}} 人领取～</text>
                                 <text class="time">{{item.time}}</text>

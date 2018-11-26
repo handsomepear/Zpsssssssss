@@ -1,9 +1,9 @@
 <view class="video-page">
     <video class="video" id="video" objectFit="fill" controls="{{true}}" src="{{videoUrl}}" binderror="" bindtimeupdate="addNickName" bindended="pullFromRound">
-        <cover-view class="name-con" style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);opacity: {{isShowFaterName ? 1 : 0}}">
+        <cover-view class="name-con {{isShowFaterName ? 'show' : 'hide'}}" style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);">
             <cover-view>{{father}}</cover-view>
         </cover-view>
-        <cover-view class="name-con" style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx); opacity: {{isShowSonName ? 1 : 0}}">
+        <cover-view class="name-con {{isShowSonName ? 'show' : 'hide'}}" style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx);">
             <cover-view>{{son}}</cover-view>
         </cover-view>
         <!-- 封面图 -->
@@ -27,7 +27,7 @@
                 </cover-view>
                 <cover-view class="share-title">
                     <cover-image src="/static/imgs/right.png"></cover-image>
-                    生成成功
+                    <cover-view>生成成功</cover-view>
                 </cover-view>
                 <!-- <cover-image src="/static/imgs/shareModal.jpg" class="share-modal-img"></cover-image> -->
                 <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">

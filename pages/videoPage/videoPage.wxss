@@ -75,6 +75,13 @@ page {
     height: 100%;
     text-align: center;
     text-overflow: ellipsis;
+    
+}
+.video .name-con.show {
+    opacity: 1;
+}
+.video .name-con.hide {
+    opacity: 0;
 }
 
 .video .auth-btn-init {

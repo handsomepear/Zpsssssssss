@@ -33,7 +33,7 @@
                 <text>提现橘子</text>
                 <input type="number" value="{{withdrawNum}}" bindinput="setWithdrawNum" />
                 <text>个</text>
-                <text class="postage">（超过{{orangeMin}}个可包邮）</text>
+                <text class="postage">（满{{orangeMin}}个可包邮）</text>
             </view>
         </block>
         <form report-submit="{{true}}" bindsubmit="saveFormId">

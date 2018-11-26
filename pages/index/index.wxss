@@ -162,23 +162,25 @@
     text-align: center;
     padding: 10rpx 30rpx;
     margin-top: 30rpx;
+    color: #fc661b
 }
 
 .game-container .line-con {
     display: flex;
     align-items: center;
+    
 }
 
 .game-container .line {
     width: 230rpx;
     height: 2rpx;
-    background-color: #999;
+    background-color: #fc661b;
 }
 .game-container .dot {
     width: 8rpx;
     height: 8rpx;
     border-radius: 50%;
-    background-color: #000;
+    background-color: #fc661b;
 }
 
 .game-list {
@@ -202,7 +204,21 @@
 }
 
 .item .top {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10rpx;
     font-size: 32rpx;
+    line-height: 1;
+}
+.item .top text {
+    margin: 0 10rpx;
+    font-weight: 500;
+    font-size: 38rpx;
+    line-height: 1;
+    color: #fc661b
+}
+.item .top .juzi-img {
+    margin-left: 14rpx;
 }
 .item .avatar {
     width: 90rpx;

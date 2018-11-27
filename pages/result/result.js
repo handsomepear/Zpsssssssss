@@ -52,7 +52,7 @@ let wxRelevantFunctions = {
         const that = this
         if(e.from == 'button') {
             return {
-                title: '发橘子',
+                title: '我买几个橘子去。你就在此地，不要走动。',
                 imageUrl: randomShareImg(app.globalData.shareImgList),
                 path: '/pages/videoPage/videoPage?gameId=' + that.gameId + '&shareOpenId=' + app.globalData.openId
             }

@@ -174,29 +174,32 @@
 .game-container .line {
     width: 230rpx;
     height: 2rpx;
-    background-color: #fc661b;
+    /* background-color: #fc661b; */
+    background-color: #ccc;
 }
 .game-container .dot {
     width: 8rpx;
     height: 8rpx;
     border-radius: 50%;
-    background-color: #fc661b;
+    /* background-color: #fc661b; */
+    background-color: #ccc;
 }
 
 .game-list {
     height: 100%;
-    padding-bottom: 300rpx;
+    padding: 0 30rpx 300rpx;
     box-sizing: border-box;
 }
 .game-list .item {
     display: flex;
     width: 100%;
     line-height: 1.4;
-    padding: 20rpx 30rpx;
+    padding: 20rpx 0;
     border-bottom: 1rpx solid #e5e5e5;
     box-sizing: border-box;
     text-align: left;
     color: #000;
+    border-radius: 0;
 }
 .item-wrap {
     flex: 1;

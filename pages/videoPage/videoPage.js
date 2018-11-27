@@ -1,7 +1,8 @@
 const app = getApp()
 const { navigateTo, randomShareImg } = require('../../utils/utils')
 const { pullFromRound, register } = require('../../server/api')
-const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
+const { getConfigHandle, saveFormId } = require('../../server/common')
+
 // 事件函数
 let eventFunctions = {
     navigateTo: navigateTo,
@@ -13,7 +14,7 @@ let eventFunctions = {
                 that.setData({ isShowPullResult: true })
                 var timer = setTimeout(() => {
                     that.setData({ isShowPullResult: false })
-                }, 2000)
+                }, 3000)
                 that.setData({ timer })
             })
             .catch(err => {
@@ -194,7 +195,7 @@ let wxRelevantFunctions = {
         }
         console.log(path)
         return {
-            title: '领橘子了～',
+            title: '我买几个橘子去。你就在此地，不要走动。',
             imageUrl: randomShareImg(app.globalData.shareImgList),
             path: path
         }

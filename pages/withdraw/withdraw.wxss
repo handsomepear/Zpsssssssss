@@ -236,7 +236,8 @@
     top: 180rpx;
     transform: translateX(-50%);
     width: 650rpx;
-    height: 816rpx;
+    /* height: 816rpx; */
+    padding-bottom: 75rpx;
     border-radius: 10rpx;
     background-color: #fff;
 }
@@ -310,5 +311,5 @@
     font-size: 36rpx;
     text-align: center;
     color: #fff;
-    margin-top: 40rpx;
+    margin-top: 30rpx;
 }

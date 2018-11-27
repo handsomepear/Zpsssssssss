@@ -1,7 +1,7 @@
 const app = getApp()
-const {navigateTo, randomShareImg} = require('../../utils/utils.js')
-const {startRound, getMyRounds} = require('../../server/api')
-const {getConfigHandle, getGameUserInfo, saveFormId} = require('../../server/common')
+const { navigateTo, randomShareImg } = require('../../utils/utils.js')
+const { startRound, getMyRounds } = require('../../server/api')
+const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
     navigateTo: navigateTo,
@@ -12,13 +12,12 @@ let eventFunctions = {
         })
     },
     showNumInput() {
-        this.setData({isShowNumInput: true})
+        this.setData({ isShowNumInput: true })
     },
     hideNumInput(e) {
-        this.setData({isShowNumInput: false})
+        this.setData({ isShowNumInput: false })
     },
-    stopPropagation() {
-    },
+    stopPropagation() {},
 
     toVideoPage() {
         wx.navigateTo({
@@ -68,30 +67,29 @@ let lifeCycleFunctions = {
     },
     onShow() {
         let that = this
-        this.setData({isAuthorized: app.globalData.isAuthorized})
+        this.setData({ isAuthorized: app.globalData.isAuthorized })
         this.getMyRounds()
         getGameUserInfo(() => {
-            that.setData({orangeTotal: app.globalData.gameUserInfo.orangeTotal})
+            that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
         })
     },
-    onHide() {
-    }
+    onHide() {}
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
     onShareAppMessage(e) {
         return {
-            title: '给你一个橘子吃',
+            title: '我买几个橘子去。你就在此地，不要走动。',
             imageUrl: randomShareImg(app.globalData.shareImgList),
             path: '/pages/index/index'
         }
     },
     // 授权之后触发
     handleAuthorize(e) {
-        this.setData({isAuthorized: true})
+        this.setData({ isAuthorized: true })
         if (e.detail) {
-            wx.navigateTo({url: e.detail})
+            wx.navigateTo({ url: e.detail })
         }
     },
     saveFormId
@@ -116,7 +114,7 @@ Page({
         let that = this
         getMyRounds().then(res => {
             if (that.data.roundList.length === 0) {
-                that.setData({roundList: res.data})
+                that.setData({ roundList: res.data })
             }
         })
     }

@@ -13,10 +13,10 @@ let eventFunctions = {
     swiperChange(e) {
         const data = this.data
         this.setData({ currentTab: e.detail.current })
-        if(data.currentTab == 0 && data.incomeList.length == 0) {
+        if (data.currentTab == 0 && data.incomeList.length == 0) {
             this.getIncomeList()
         }
-        if(data.currentTab == 1 && data.outcomeList.length == 0) {
+        if (data.currentTab == 1 && data.outcomeList.length == 0) {
             this.getOutcomeList()
         }
     },
@@ -59,10 +59,10 @@ let wxRelevantFunctions = {
             isAuth: true
         })
     },
-    onReachBottom(){
-        if(this.data.currentTab == 0) {
+    onReachBottom() {
+        if (this.data.currentTab == 0) {
             this.getIncomeList()
-        }else if(this.data.currentTab == 1) {
+        } else if (this.data.currentTab == 1) {
             this.getOutcomeList()
         }
     }
@@ -81,7 +81,9 @@ Page({
         incomeList: [], // 收入列表
         outcomeList: [], // 支出列表
         incomeTotal: 0,
-        outcomeTotal: 0
+        outcomeTotal: 0,
+        hasMoreOutcome: true,
+        hasMoreIncome: true
     },
     // 计算设备高度
     getSystemHeight() {
@@ -99,42 +101,48 @@ Page({
     getIncomeList() {
         const that = this
         const data = that.data
-        getIncome({ page: data.incomePage, size: data.size }).then(res => {
-            data.incomeTotal = res.data.total
-            if (data.incomePage == 0) {
-                data.incomeList = res.data.getList
-            } else {
-                data.incomeList = data.incomeList.concat(res.data.getList)
-            }
-            if (!res.data.getList || res.data.getList.length == 0) {
-                data.incomePage = --data.incomePage
-            } else {
-                data.incomePage = ++data.incomePage
-            }
-            that.setData(data)
-        }).catch(err => {
-            wx.showToastWithoutIcon(err)
-        })
+        if (data.hasMoreIncome) {
+            getIncome({ page: data.incomePage, size: data.size })
+                .then(res => {
+                    data.incomeTotal = res.data.total
+                    if (data.incomePage == 0) {
+                        data.incomeList = res.data.getList
+                    } else {
+                        data.incomeList = data.incomeList.concat(res.data.getList)
+                    }
+                    if (res.data.getList && res.data.getList.length < data.size) {
+                        data.hasMoreIncome = false
+                    }
+                    data.incomePage = ++data.incomePage
+                    that.setData(data)
+                })
+                .catch(err => {
+                    wx.showToastWithoutIcon(err)
+                })
+        }
     },
     getOutcomeList() {
         const that = this
         const data = that.data
-        getOutcome({ page: data.outcomePage, size: data.size }).then(res => {
-            data.outcomeTotal = res.data.total
-            if (data.outcomePage == 0) {
-                data.outcomeList = res.data.getList
-            } else {
-                data.outcomeList = data.outcomeList.concat(res.data.getList)
-            }
-            if (!res.data.getList || res.data.getList.length == 0) {
-                data.outcomePage = --data.outcomePage
-            } else {
-                data.outcomePage = ++data.outcomePage
-            }
-            that.setData(data)
-        }).catch(err => {
-            wx.showToastWithoutIcon(err)
-        })
+        if (data.hasMoreOutcome) {
+            getOutcome({ page: data.outcomePage, size: data.size })
+                .then(res => {
+                    data.outcomeTotal = res.data.total
+                    if (data.outcomePage == 0) {
+                        data.outcomeList = res.data.getList
+                    } else {
+                        data.outcomeList = data.outcomeList.concat(res.data.getList)
+                    }
+                    if (res.data.getList && res.data.getList.length < data.size) {
+                        data.hasMoreOutcome  = false
+                    }
+                    data.outcomePage = ++data.outcomePage
+                    that.setData(data)
+                })
+                .catch(err => {
+                    wx.showToastWithoutIcon(err)
+                })
+        }
     },
     saveFormId
 })

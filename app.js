@@ -12,7 +12,8 @@ App({
         postage: '', // 邮费
         priceList: [], // 提现个数选择
         gameUserInfo: {},
-        shareImgList: [] // 分享图列表
+        shareImgList: [], // 分享图列表
+        videoEnable: true // 视频页是否激活
     },
     onLaunch() {
         this.checkAuth()

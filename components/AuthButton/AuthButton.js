@@ -10,6 +10,7 @@ Component({
     methods: {
         // 授权回调
         handleGetuserinfo(e) {
+            const that = this
             console.log(app.globalData.isAuthorized);
             if (!app.globalData.isAuthorized) {
                 let userInfo = e.detail.userInfo
@@ -22,6 +23,7 @@ Component({
                         channel: app.globalData.channel,
                         gender: userInfo.gender
                     }).then(res => {
+                        that.triggerEvent('handleAuthorize', that.data.pageUrl)
                         console.log(res.msg);
                     })
                 } else {
@@ -29,7 +31,7 @@ Component({
                     return
                 }
             }
-            this.triggerEvent('handleAuthorize', this.data.pageUrl)
+            
         },
         saveFormId(e) {
             let formId = e.detail.formId

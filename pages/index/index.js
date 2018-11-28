@@ -40,6 +40,7 @@ let eventFunctions = {
     },
     // 发橘子
     startRound() {
+        const that = this
         if (!this.data.orangeTotal) {
             wx.showToastWithoutIcon('您没有橘子')
             return
@@ -52,10 +53,16 @@ let eventFunctions = {
         }
         // 服务端请求 开启游戏
         startRound(this.data.sendOrangeNum).then(res => {
-            // 跳转到视频页
-            wx.navigateTo({
-                url: '/pages/videoPage/videoPage?gameId=' + res.data.id + '&from=index'
-            })
+            if (that.data.videoEnable) {
+                // 跳转到视频页
+                wx.navigateTo({
+                    url: '/pages/videoPage/videoPage?gameId=' + res.data.id + '&from=index'
+                })
+            } else {
+                wx.navigateTo({
+                    url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
+                })
+            }
         })
     }
 }
@@ -63,7 +70,12 @@ let eventFunctions = {
 // 生命周期函数（属性值只能为function）
 let lifeCycleFunctions = {
     onLoad() {
-        getConfigHandle()
+        const that = this
+        getConfigHandle(() => {
+            that.setData({
+                videoEnable: app.globalData.videoEnable
+            })
+        })
     },
     onShow() {
         let that = this
@@ -102,12 +114,13 @@ Page({
     name: 'index',
     data: {
         isAuthorized: false,
-        orangeTotal: 2, // 账户橘子个数
+        orangeTotal: 0, // 账户橘子个数
         sendOrangeNum: null, // 发橘子个数
         gameId: null,
         isShowNumInput: false, // 显示真正的输入框
         isShowShareModal: false,
-        roundList: []
+        roundList: [],
+        videoEnable: true
     },
     // 获取我的游戏记录
     getMyRounds() {

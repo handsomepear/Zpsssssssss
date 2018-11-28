@@ -12,10 +12,6 @@ let eventFunctions = {
         pullFromRound(this.data.gameId)
             .then(res => {
                 that.setData({ isShowPullResult: true })
-                var timer = setTimeout(() => {
-                    that.setData({ isShowPullResult: false })
-                }, 3000)
-                that.setData({ timer })
             })
             .catch(err => {
                 wx.showToastWithoutIcon(err.msg)
@@ -175,7 +171,13 @@ let lifeCycleFunctions = {
     onHide() {
         this.data.videoContext.pause()
         // 显示播放按钮 去除分享框
-        this.setData({ isShowPlayBtn: true, isShowShareModal: false, isShowFaterName: false, isShowSonName: false })
+        this.setData({
+            isShowPlayBtn: true,
+            isShowShareModal: false,
+            isShowFaterName: false,
+            isShowSonName: false,
+            isShowPullResult: false
+        })
     }
 }
 // 开放能力 & 组件相关（属性值只能为function）
@@ -193,7 +195,6 @@ let wxRelevantFunctions = {
                 '&shareUsername=' +
                 this.data.shareUsername
         }
-        console.log(path)
         return {
             title: '我买几个橘子去。你就在此地，不要走动。',
             imageUrl: randomShareImg(app.globalData.shareImgList),
@@ -254,8 +255,7 @@ Page({
             top: 150
         },
         isShowPullResult: false, // 领取橘子成功之后通知
-        isShowShareModal: false, 
-        timer: null,
+        isShowShareModal: false,
         shareOpenId: '', // 分享链接的参数
         shareUsername: ''
     },

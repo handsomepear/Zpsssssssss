@@ -36,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -67,6 +67,12 @@
 					"name": "提现橘子",
 					"pathName": "pages/withdraw/withdraw",
 					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "sharePage",
+					"pathName": "pages/sharePage/sharePage",
+					"query": "gameId=35&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&shareUsername=dangerous"
 				}
 			]
 		}

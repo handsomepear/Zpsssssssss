@@ -19,11 +19,6 @@ let eventFunctions = {
     },
     stopPropagation() {},
 
-    toVideoPage() {
-        wx.navigateTo({
-            url: '/pages/videoPage/videoPage?gameId=' + this.data.gameId
-        })
-    },
     // 查看某局游戏详情
     viewGameDetail(e) {
         let dataset = e.currentTarget.dataset
@@ -53,30 +48,16 @@ let eventFunctions = {
         }
         // 服务端请求 开启游戏
         startRound(this.data.sendOrangeNum).then(res => {
-            if (that.data.videoEnable) {
-                // 跳转到视频页
-                wx.navigateTo({
-                    url: '/pages/videoPage/videoPage?gameId=' + res.data.id + '&from=index'
-                })
-            } else {
-                wx.navigateTo({
-                    url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
-                })
-            }
+            wx.navigateTo({
+                url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
+            })
         })
     }
 }
 
 // 生命周期函数（属性值只能为function）
 let lifeCycleFunctions = {
-    onLoad() {
-        const that = this
-        getConfigHandle(() => {
-            that.setData({
-                videoEnable: app.globalData.videoEnable
-            })
-        })
-    },
+    onLoad() {},
     onShow() {
         let that = this
         this.setData({ isAuthorized: app.globalData.isAuthorized })
@@ -120,7 +101,6 @@ Page({
         isShowNumInput: false, // 显示真正的输入框
         isShowShareModal: false,
         roundList: [],
-        videoEnable: true
     },
     // 获取我的游戏记录
     getMyRounds() {

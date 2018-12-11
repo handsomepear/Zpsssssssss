@@ -62,14 +62,6 @@
         <view class="ps">PS.给朋友发个橘子吃吧~他们领一个橘子，叫一声baba哟～</view>
     </view>
     <!-- sharebox -->
-    <!-- <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
-        <view class="share-modal" catchtap="stopPropagation">
-            <view class="close-btn" bindtap="closeShareModal">+</view>
-            <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" bindtap="toVideoPage">
-                <view class="auth-fill">发橘子</view>
-            </button>
-        </view>
-    </view> -->
     <view class="game-container">
         <view class="title">
             <view class="line-con">

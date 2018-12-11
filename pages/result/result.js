@@ -54,7 +54,7 @@ let wxRelevantFunctions = {
             return {
                 title: '我买几个橘子去。你就在此地，不要走动。',
                 imageUrl: randomShareImg(app.globalData.shareImgList),
-                path: '/pages/videoPage/videoPage?gameId=' + that.gameId + '&shareOpenId=' + app.globalData.openId
+                path: '/pages/sharePage/sharePage?gameId=' + that.gameId + '&shareOpenId=' + app.globalData.openId
             }
         }
     },

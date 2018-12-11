@@ -7,13 +7,11 @@ App({
         channel: 'self', // 来源
         isAuthorized: false,
         openId: '',
-        videoUrl: '', // 视频连接
         orangeMin: '', // 最少提现橘子数量
         postage: '', // 邮费
         priceList: [], // 提现个数选择
         gameUserInfo: {},
         shareImgList: [], // 分享图列表
-        videoEnable: true // 视频页是否激活
     },
     onLaunch() {
         this.checkAuth()

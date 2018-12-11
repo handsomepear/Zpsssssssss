@@ -38,7 +38,10 @@ let lifeCycleFunctions = {
                 isShowShareModal: false,
                 shareOpenId: opts.shareOpenId,
             })
-            this.pullFromRound(opts.gameId)
+            getConfigHandle(() => {
+                this.pullFromRound(opts.gameId)
+            })
+
         }
     },
     onShow() {},

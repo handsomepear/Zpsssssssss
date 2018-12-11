@@ -1,16 +1,32 @@
 <view class="video-page">
     <view class="image">
         <image src="http://orange.geinigejuzichi.top/orange.gif" />
+        <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
+            <view class="share-modal" catchtap="stopPropagation">
+                <view class="close-btn" bindtap="closeShareModal">
+                    <image src="/static/imgs/close.png"></image>
+                </view>
+                <view class="share-title">
+                    <image src="/static/imgs/right.png"></image>
+                    <view>生成成功</view>
+                </view>
+                <!-- <cover-image src="/static/imgs/shareModal.jpg" class="share-modal-img"></cover-image> -->
+                <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
+                    <!-- <cover-view class="auth-fill">发橘子</cover-view> -->
+                    <image src="/static/imgs/video-share.png"></image>
+                </button>
+            </view>
+        </view>
     </view>
     <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
-        <cover-view class="tips" wx:if="{{isShowPullResult}}">
-            <cover-image class="bg" src="/static/imgs/shipinye_tishikuang.png"></cover-image>
-            <cover-view class="tips-text">
-                <cover-view>获得 1 个</cover-view>
-                <cover-image class="juzi-img" src="/static/imgs/juzi.png"></cover-image>
-                <cover-view>，可以提现哟~</cover-view>
-            </cover-view>
-        </cover-view>
+        <view class="tips" wx:if="{{isShowPullResult}}">
+            <image class="bg" src="/static/imgs/shipinye_tishikuang.png"></image>
+            <view class="tips-text">
+                <view>获得 1 个</view>
+                <image class="juzi-img" src="/static/imgs/juzi.png"></image>
+                <view>，可以提现哟~</view>
+            </view>
+        </view>
         <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
             <!-- 历史记录 -->
             <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="" bindtap="navigateTo" />

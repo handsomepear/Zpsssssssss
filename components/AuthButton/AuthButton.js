@@ -11,7 +11,6 @@ Component({
         // 授权回调
         handleGetuserinfo(e) {
             const that = this
-            console.log(app.globalData.isAuthorized);
             if (!app.globalData.isAuthorized) {
                 let userInfo = e.detail.userInfo
                 if (userInfo) {
@@ -30,6 +29,8 @@ Component({
                     wx.showToastWithoutIcon('拒绝授权')
                     return
                 }
+            }else {
+                that.triggerEvent('handleAuthorize', that.data.pageUrl)
             }
             
         },

@@ -30,21 +30,23 @@ let eventFunctions = {
                         package: res.data.package,
                         paySign: res.data.paySign,
                         success() {
-                            getUserInfo()
-                                .then(res => {
-                                    app.globalData.gameUserInfo.orangeTotal = res.data.orange
-                                    app.globalData.gameUserInfo.addr = res.data.addr
-                                    that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
-                                    wx.navigateBack() // 返回首页
-                                })
-                                .catch(err => {
-                                    // console.log(err);
-                                })
+                            setTimeout(() => {
+                                getUserInfo()
+                                    .then(res => {
+                                        app.globalData.gameUserInfo.orangeTotal = res.data.orange
+                                        app.globalData.gameUserInfo.addr = res.data.addr
+                                        that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
+                                        wx.navigateBack() // 返回首页
+                                    })
+                                    .catch(err => {
+                                        // console.log(err);
+                                    })
+                            }, 1000)
                         },
                         fail() {
                             wx.showToastWithoutIcon('充值失败')
                         },
-                        complete(){
+                        complete() {
                             that.setData({ canPay: true })
                         }
                     })
@@ -71,12 +73,14 @@ let lifeCycleFunctions = {
             that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
         })
     },
-    onHide() {}
+    onHide() {
+    }
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
-    onShareAppMessage() {},
+    onShareAppMessage() {
+    },
     handleAuthorize() {
         this.setData({
             isAuth: true

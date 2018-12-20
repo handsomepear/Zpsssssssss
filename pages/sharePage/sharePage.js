@@ -1,5 +1,5 @@
 const app = getApp()
-const { navigateTo, randomShareImg } = require('../../utils/utils')
+const { navigateTo, random } = require('../../utils/utils')
 const { pullFromRound, register, getRound } = require('../../server/api')
 const { getConfigHandle, saveFormId } = require('../../server/common')
 
@@ -31,7 +31,7 @@ let lifeCycleFunctions = {
         this.setData({
             gameId: opts.gameId
         })
-        if (opts.from == 'index') {
+        if (opts.from === 'index') {
             this.setData({
                 isShowShareModal: true,
                 shareOpenId: app.globalData.openId,
@@ -116,7 +116,7 @@ let wxRelevantFunctions = {
         console.log(path)
         return {
             title: '我买几个橘子去。你就在此地，不要走动。',
-            imageUrl: randomShareImg(app.globalData.shareImgList),
+            imageUrl: random(app.globalData.shareImgList),
             path: path
         }
     }
@@ -154,7 +154,10 @@ Page({
     // 领橘子（视频播放完毕之后触发）
     pullFromRound(cb) {
         const that = this
-        pullFromRound(this.data.gameId)
+        pullFromRound({
+            gameId: that.data.gameId,
+            call: random(app.globalData.calls)
+        })
             .then(res => {
                 cb && cb()
                 that.setData({ isShowPullResult: true })

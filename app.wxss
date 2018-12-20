@@ -56,7 +56,7 @@ button[plain] {
 }
 .panel-allow-fudan .panel .au2 {
     text-align: center;
-    line-height: 38rpx;
+    line-height: 70rpx;
     padding-bottom: 58rpx;
     border-bottom: 1rpx solid #ccc;
     font-weight: bold;

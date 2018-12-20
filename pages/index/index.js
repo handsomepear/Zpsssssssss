@@ -1,5 +1,5 @@
 const app = getApp()
-const { navigateTo, randomShareImg } = require('../../utils/utils.js')
+const { navigateTo, random } = require('../../utils/utils.js')
 const { startRound, getMyRounds } = require('../../server/api')
 const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
@@ -17,7 +17,8 @@ let eventFunctions = {
     hideNumInput(e) {
         this.setData({ isShowNumInput: false })
     },
-    stopPropagation() {},
+    stopPropagation() {
+    },
 
     toVideoPage() {
         wx.navigateTo({
@@ -53,14 +54,14 @@ let eventFunctions = {
         }
         // 服务端请求 开启游戏
         startRound(this.data.sendOrangeNum).then(res => {
-            if (that.data.videoEnable) {
+            if (!app.globalData.gifEnable) {
+                wx.navigateTo({
+                    url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
+                })
+            } else {
                 // 跳转到视频页
                 wx.navigateTo({
                     url: '/pages/videoPage/videoPage?gameId=' + res.data.id + '&from=index'
-                })
-            } else {
-                wx.navigateTo({
-                    url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
                 })
             }
         })
@@ -73,7 +74,8 @@ let lifeCycleFunctions = {
         const that = this
         getConfigHandle(() => {
             that.setData({
-                videoEnable: app.globalData.videoEnable
+                videoEnable: app.globalData.videoEnable,
+                gifUrl: app.globalData.gifUrl
             })
         })
     },
@@ -85,7 +87,8 @@ let lifeCycleFunctions = {
             that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
         })
     },
-    onHide() {}
+    onHide() {
+    }
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
@@ -93,7 +96,7 @@ let wxRelevantFunctions = {
     onShareAppMessage(e) {
         return {
             title: '我买几个橘子去。你就在此地，不要走动。',
-            imageUrl: randomShareImg(app.globalData.shareImgList),
+            imageUrl: random(app.globalData.shareImgList),
             path: '/pages/index/index'
         }
     },
@@ -120,7 +123,8 @@ Page({
         isShowNumInput: false, // 显示真正的输入框
         isShowShareModal: false,
         roundList: [],
-        videoEnable: true
+        videoEnable: true,
+        gifUrl: ''
     },
     // 获取我的游戏记录
     getMyRounds() {

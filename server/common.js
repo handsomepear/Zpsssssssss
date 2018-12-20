@@ -14,6 +14,10 @@ module.exports = {
                     app.globalData.videoUrl = res.data.video_url
                     app.globalData.priceList = res.data.price_list
                     app.globalData.videoEnable = res.data.enable
+                    app.globalData.gifUrl = res.data.gif.url
+                    app.globalData.gifDuration = res.data.gif.duration
+                    app.globalData.calls = res.data.calls
+                    app.globalData.gifEnable = res.data.gif.enable
                     ;(app.globalData.shareImgList = res.data.share_img_url), cb && cb()
                 })
                 .catch(err => {
@@ -30,19 +34,6 @@ module.exports = {
     },
     // 获取用户橘子信息
     getGameUserInfo(cb) {
-        // if (!app.globalData.gameUserInfo.orangeTotal) {
-        //     getUserInfo()
-        //         .then(res => {
-        //             app.globalData.gameUserInfo.orangeTotal = res.data.orange
-        //             app.globalData.gameUserInfo.addr = res.data.addr
-        //             cb && cb()
-        //         })
-        //         .catch(err => {
-        //             // console.log(err);
-        //         })
-        // } else {
-        //     cb && cb()
-        // }
         getUserInfo()
             .then(res => {
                 app.globalData.gameUserInfo.orangeTotal = res.data.orange
@@ -53,7 +44,7 @@ module.exports = {
                 // console.log(err);
             })
     },
-    // 保存formid
+    // 保存formId
     saveFormId(e) {
         console.log(e.detail.formId)
         if (e.detail.formId && e.detail.formId != 'the formId is a mock one') {

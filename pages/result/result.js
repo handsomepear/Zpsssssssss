@@ -1,5 +1,5 @@
 const app = getApp()
-const { navigateTo , randomShareImg} = require('../../utils/utils.js')
+const { navigateTo , random} = require('../../utils/utils.js')
 const { getRound } = require('../../server/api')
 const { saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
@@ -53,7 +53,7 @@ let wxRelevantFunctions = {
         if(e.from == 'button') {
             return {
                 title: '我买几个橘子去。你就在此地，不要走动。',
-                imageUrl: randomShareImg(app.globalData.shareImgList),
+                imageUrl: random(app.globalData.shareImgList),
                 path: '/pages/videoPage/videoPage?gameId=' + that.gameId + '&shareOpenId=' + app.globalData.openId
             }
         }

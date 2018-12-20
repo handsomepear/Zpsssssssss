@@ -10,26 +10,26 @@
         <button open-type="contact" plain="{{true}}" class="contact-btn">联系客服</button>
     </view>
     <form report-submit="{{true}}" bindsubmit="saveFormId">
-        <view class="class-list">
-            <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
-                <button form-type="submit" plain="{{true}}" class="{{index == remainTypeIndex ? 'active' : ''}}" data-index="{{index}}" bindtap="chooseRemainType">
-                    <view class="item ">
-                        <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
-                            <view class="triangle">
-                                <view class="white-check"></view>
-                            </view>
-                        </view>
-                        <image class="juzi-img" src="/static/imgs/juzi.png" />
-                        <view class="num">{{item.amonut}}个</view>
-                        <view class="money">
-                            <text>{{TOOLS.priceFilter(item.price)}}</text>
-                            元
+    <view class="class-list">
+        <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
+            <button form-type="submit" plain="{{true}}" class="{{index == remainTypeIndex ? 'active' : ''}}" data-index="{{index}}" bindtap="chooseRemainType">
+                <view class="item ">
+                    <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
+                        <view class="triangle">
+                            <view class="white-check"></view>
                         </view>
                     </view>
-                </button>
-            </block>
-        </view>
-    </form>
+                    <image class="juzi-img" src="/static/imgs/juzi.png" />
+                    <view class="num">{{item.amonut}}个</view>
+                    <view class="money">
+                        <text>{{TOOLS.priceFilter(item.price)}}</text>
+                        元
+                    </view>
+                </view>
+            </button>
+        </block>
+    </view>
+</form>
     <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
         <button form-type="submit" class="remain-con" plain="{{true}}">
             <view class="remain-btn" bindtap="rechargeOrange">充值</view>

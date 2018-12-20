@@ -64,10 +64,10 @@ module.exports = {
         })
     },
     // 领取橘子
-    pullFromRound(rid) {
+    pullFromRound({gameId, call}) {
         return fetch({
             url: getServerUrl('/partake/pullFromRound'),
-            data: { rid } // 某一局的id
+            data: { rid: gameId, call: call || '' } // 某一局的id 和 称呼
         })
     },
     // 获取某一局游戏点信息

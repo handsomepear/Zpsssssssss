@@ -17,11 +17,11 @@ function navigateTo(e) {
 }
 
 // 随机出分享图
-function randomShareImg(shareImgList) {
-    return shareImgList[Math.floor(Math.random() * shareImgList.length)]
+function random(list) {
+    return list[Math.floor(Math.random() * list.length)]
 }
 
 module.exports = {
     navigateTo,
-    randomShareImg
+    random
 }

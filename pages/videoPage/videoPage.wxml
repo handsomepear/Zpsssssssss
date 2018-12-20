@@ -1,6 +1,35 @@
 <view class="video-page">
     <view class="image">
-        <image src="http://orange.geinigejuzichi.top/orange.gif" />
+        <view class="gif-img">
+            <view class="name-con {{isShowFatherName ? 'show' : 'hide'}}"
+                        style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);">
+                <view>{{father}}</view>
+            </view>
+            <view class="name-con {{isShowSonName ? 'show' : 'hide'}}"
+                        style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx);">
+                <view>{{son}}</view>
+            </view>
+            <block wx:if="{{showGif}}">
+                <image src="{{gifUrl}}" bindload="onImageLoad" />
+            </block>
+            <block wx:if="{{showPoster}}">
+                <!-- 封面图 -->
+                <view class="poster">
+                    <image class="poster-img" src="/static/imgs/poster.jpg" />
+                    <block wx:if="{{showPlayBtn}}">
+                        <view class="poster-modal" bindtap="startLoadGif">
+                            <image class="play-img" src="/static/imgs/play-btn.png" />
+                            <image class="hand-img" src="/static/imgs/hand.png" />
+                            <view class="text1">点击观看视频</view>
+                            <view class="text2">就可以领到橘子呦</view>
+                        </view>
+                    </block>
+                </view>
+            </block>
+            <button wx:if="{{showPlayBtn}}" open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetuserinfo">
+                <view class="play-btn"></view>
+            </button>
+        </view>
         <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
             <view class="share-modal" catchtap="stopPropagation">
                 <view class="close-btn" bindtap="closeShareModal">
@@ -10,10 +39,10 @@
                     <image src="/static/imgs/right.png"></image>
                     <view>生成成功</view>
                 </view>
-                <!-- <cover-image src="/static/imgs/shareModal.jpg" class="share-modal-img"></cover-image> -->
+                <!-- <image src="/static/imgs/shareModal.jpg" class="share-modal-img"></image> -->
                 <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
-                    <!-- <cover-view class="auth-fill">发橘子</cover-view> -->
-                    <image src="/static/imgs/video-share.png"></image>
+                    <!-- <view class="auth-fill">发橘子</view> -->
+                    <image src="/static/imgs/share-orange.png"></image>
                 </button>
             </view>
         </view>

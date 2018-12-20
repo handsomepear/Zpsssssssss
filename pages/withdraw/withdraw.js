@@ -1,5 +1,5 @@
 const app = getApp()
-const { updateUserAddr, withdraw, getUserInfo } = require('../../server/api')
+const { updateUserAddr, withdraw, getUserInfo, rechargeOrange } = require('../../server/api')
 const { saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
@@ -7,7 +7,7 @@ let eventFunctions = {
         this.setData({ isShowAddrPanel: true })
     },
     closeAddressPanel() {
-        this.setData({ isShowAddrPanel: false })
+        this.setData({ isShowAddrPanel: false, canWithdraw: true })
     },
     bindRegionChange(e) {
         var that = this
@@ -16,154 +16,29 @@ let eventFunctions = {
             regionCode: e.detail.code
         })
     },
-    setWithdrawNum(e) {
-        this.setData({ withdrawNum: e.detail.value })
+    chooseRemainType(e) {
+        this.setData({
+            remainTypeIndex: e.currentTarget.dataset.index
+        })
     },
-    stopPropagation() {},
+    stopPropagation() {
+    },
     // 橘子提现
-    // TODO: 检测提现类型 和 提现个数
     withdraw() {
-        // 如果提现个数不满包邮数 直接提示
-        let that = this
-        let data = that.data
-        var money = 0 // 默认包邮
-        var type = 0 // 默认包邮
-        var withdrawNum = data.withdrawNum
-        var realReceiveNum = 0
-        const orangeMin = data.orangeMin
-        const orangeTotal = data.orangeTotal
-        wx.showLoading()
-        // 方案1 包邮提现
-        if (data.withdrawType == 0) {
-            if (withdrawNum >= orangeMin) {
-                realReceiveNum = withdrawNum
-            } else {
-                // 提现个数 = 余额 < 包邮个数 & // 提现个数  < 余额 < 包邮个数
-                if (withdrawNum <= orangeTotal && orangeTotal < orangeMin) {
-                    type = 1
-                }
-                if (withdrawNum <= orangeTotal && orangeTotal >= orangeMin) {
-                    type = 0
-                }
-                money = data.withdrawData.noPostagePrice * 100
-                realReceiveNum = orangeMin
-            }
-        }
-        // 方案2  自付邮费提现
-        if (data.withdrawType == 1) {
-            money = data.withdrawData.postagePrice * 100
-            type = 2
-            realReceiveNum = withdrawNum
-        }
-        // 提现接口
-        if (data.canWithdraw) {
-            data.canWithdraw = false
-            withdraw({
-                withdrawNum: realReceiveNum, // 实际到手的数量
-                addr: data.addrInfo.detailInfo,
-                tel: data.addrInfo.telNumber,
-                consignee: data.addrInfo.userName,
-                money: money,
-                orangeAccount: data.orangeTotal,
-                type: type
-            })
-                .then(res => {
-                    // 不用补费用
-                    getUserInfo()
-                        .then(res => {
-                            app.globalData.gameUserInfo.orangeTotal = res.data.orange
-                            app.globalData.gameUserInfo.addr = res.data.addr
-                            that.setData({
-                                orangeTotal: app.globalData.gameUserInfo.orangeTotal,
-                                isShowWithdrawModal: false,
-                                withdrawNum: null,
-                                canWithdraw: true
-                            })
-                            wx.hideLoading()
-                            wx.showToastWithoutIcon('提现成功')
-                        })
-                        .catch(err => {
-                            that.setData({
-                                canWithdraw: true
-                            })
-                            console.log(err)
-                        })
-                })
-                .catch(res => {
-                    if (res.result == 200) {
-                        // 须支付
-                        wx.hideLoading()
-                        wx.requestPayment({
-                            timeStamp: String(res.data.timeStamp),
-                            nonceStr: res.data.nonceStr,
-                            package: res.data.package,
-                            signType: 'MD5',
-                            paySign: res.data.paySign,
-                            success() {
-                                getUserInfo()
-                                    .then(res => {
-                                        app.globalData.gameUserInfo.orangeTotal = res.data.orange
-                                        app.globalData.gameUserInfo.addr = res.data.addr
-                                        that.setData({
-                                            orangeTotal: app.globalData.gameUserInfo.orangeTotal,
-                                            isShowWithdrawModal: false,
-                                            withdrawNum: null,
-                                            canWithdraw: true
-                                        })
-                                    })
-                                    .catch(err => {
-                                        that.setData({
-                                            canWithdraw: true
-                                        })
-                                        console.log(err)
-                                    })
-                            },
-                            fail() {
-                                that.setData({
-                                    canWithdraw: true
-                                })
-                                wx.showToastWithoutIcon('取消支付')
-                            }
-                        })
-                    } else {
-                        that.setData({
-                            isShowWithdrawModal: false,
-                            canWithdraw: true
-                        })
-                        wx.hideLoading()
-                        wx.showToastWithoutIcon('好像出了点问题，请稍后重试')
-                    }
-                })
-        }
-    },
-    // 根据用户输入的橘子个数生成方案数据
-    count() {
         const that = this
         const data = that.data
-        if (data.withdrawNum === null || data.withdrawNum.trim() === '') {
-            return wx.showToastWithoutIcon('请至少提现一个橘子')
+        if (data.orangeTotal < data.orangeMin) {
+            return wx.showToastWithoutIcon('您的橘子余额不足' + data.orangeMin + '个', 3000)
         }
-        if (data.withdrawNum > data.orangeTotal) {
-            return wx.showToastWithoutIcon('您没有这么多橘子')
-        }
-        if (!data.addrInfo) {
-            // 如果没有地址 直接使用微信地址
-            return this.getWxAddress()
+        if (data.canWithdraw) {
+            this.setData({
+                canWithdraw: false
+            })
+            this.openAddressPanel()
         }
 
-        var diff = data.orangeMin - data.withdrawNum
-        
-        if (diff > 0 && data.orangeTotal < data.orangeMin) {
-            // 提现 <= 余额 < 包邮数量
-            diff = data.orangeMin - data.orangeTotal
-            data.withdrawData.noPostagePrice = this.reckonMoneyByOrange(data.orangeMin - data.orangeTotal) / 100
-        }
-        data.withdrawData.diff = diff
-        data.withdrawData.postagePrice = this.rekonPostageByOrange(data.withdrawNum)
-        data.isShowWithdrawModal = true
-        data.withdrawType = 0
-        that.setData(data)
     },
+    // 根据用户输入的橘子个数生成方案数据
     toggleConfirmAddress() {
         this.setData({ isConfirmAddress: !this.data.isConfirmAddress })
     },
@@ -192,9 +67,9 @@ let eventFunctions = {
             flag = true
             // 添加地址到服务端
             updateUserAddr(
-                `${addrInfo.userName} ${addrInfo.telNumber} ${addrInfo.region[0]} ${addrInfo.region[1]} ${
+                `${addrInfo.userName.replace(/\s+/g, '')} ${addrInfo.telNumber} ${addrInfo.region[0]} ${addrInfo.region[1]} ${
                     addrInfo.region[2]
-                } ${addrInfo.detailInfo}`
+                    } ${addrInfo.detailInfo.replace(/\s+/g, '')}`
             ).then(res => {
                 that.setData({
                     addrInfo: {
@@ -204,28 +79,110 @@ let eventFunctions = {
                     },
                     region: addrInfo.region
                 })
+                if (!data.canWithdraw) {
+                    withdraw({
+                        withdrawNum: data.orangeMin, // 实际到手的数量
+                        addr: data.addrInfo.detailInfo,
+                        tel: data.addrInfo.telNumber,
+                        consignee: data.addrInfo.userName,
+                        money: 0,
+                        orangeAccount: data.orangeTotal,
+                        type: 0
+                    }).then(res => {
+                        // 不用补费用
+                        getUserInfo()
+                            .then(res => {
+                                app.globalData.gameUserInfo.orangeTotal = res.data.orange
+                                app.globalData.gameUserInfo.addr = res.data.addr
+                                that.setData({
+                                    orangeTotal: app.globalData.gameUserInfo.orangeTotal,
+                                    canWithdraw: true
+                                })
+                                wx.hideLoading()
+                                wx.showToastWithoutIcon('提现成功')
+                            })
+                            .catch(err => {
+                                wx.showToastWithoutIcon(err.msg)
+                                that.setData({
+                                    canWithdraw: true
+                                })
+                                console.log(err)
+                            })
+                    }).catch(err => {
+                        wx.showToastWithoutIcon(err.msg)
+                        that.setData({
+                            canWithdraw: true
+                        })
+                    })
+
+                }
             })
-            this.closeAddressPanel()
+            this.setData({
+                isShowAddrPanel: false
+            })
         }
         if (!flag) {
             wx.showToastWithoutIcon(warn)
         }
     },
-    // 改变提现类型
-    chooseWithDrawType(e) {
-        this.setData({ withdrawType: e.detail.value })
-    },
-    // 隐藏提现类型弹窗
-    closeWithdrawModal() {
-        this.setData({ isShowWithdrawModal: false })
+    // 充值
+    rechargeOrange() {
+        const that = this
+        const data = that.data
+        if (data.canPay) {
+            if (data.remainTypeIndex === null) {
+                return wx.showToastWithoutIcon('请选择充值类型')
+            }
+            that.setData({ canPay: false })
+            rechargeOrange({
+                amount: that.data.remainTypeList[that.data.remainTypeIndex].price,
+                detail: '充值',
+                priceId: that.data.remainTypeList[that.data.remainTypeIndex].id
+            })
+                .then(res => {
+                    console.log(res)
+                    wx.requestPayment({
+                        timeStamp: res.data.timeStamp + '',
+                        nonceStr: res.data.nonceStr,
+                        signType: res.data.signType,
+                        package: res.data.package,
+                        paySign: res.data.paySign,
+                        success() {
+                            setTimeout(() => {
+                                getUserInfo()
+                                    .then(res => {
+                                        app.globalData.gameUserInfo.orangeTotal = res.data.orange
+                                        app.globalData.gameUserInfo.addr = res.data.addr
+                                        that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
+                                    })
+                                    .catch(err => {
+                                        // console.log(err);
+                                    })
+                            }, 1000)
+                        },
+                        fail() {
+                            wx.showToastWithoutIcon('充值失败')
+                        },
+                        complete() {
+                            that.setData({ canPay: true })
+                        }
+                    })
+                })
+                .catch(err => {
+                    wx.showToastWithoutIcon(err.msg)
+                    that.setData({ canPay: true })
+                })
+        }
     }
 }
 
 // 生命周期函数（属性值只能为function）
 let lifeCycleFunctions = {
     onLoad() {
+        let that = this
         let addrArr = app.globalData.gameUserInfo.addr.split(' ')
         this.setData({
+            remainTypeList: app.globalData.priceList, // 价格列表
             region: [addrArr[2], addrArr[3], addrArr[4]],
             addrInfo: {
                 userName: addrArr[0],
@@ -233,34 +190,21 @@ let lifeCycleFunctions = {
                 detailInfo: addrArr[5]
             },
             orangeMin: app.globalData.orangeMin,
-            postage: app.globalData.postage
-        })
-        wx.loadFontFace({
-            family: 'xiawucha',
-            source: 'url("https://orange.geinigejuzichi.top/font.ttf")',
-            success() {
-                console.log('字体加载完毕')
-            }
+            postage: app.globalData.postage,
+
         })
     },
     onShow() {
         this.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
-        // 如果橘子总数小于提现个数 直接默认自费包邮
-        // if (this.data.orangeTotal < app.globalData.orangeMin) {
-        //     this.setData({ withdrawType: '1' })
-        // } else {
-        //     this.setData({
-        //         withdrawType: '0',
-        //         withdrawNum: app.globalData.orangeMin
-        //     })
-        // }
     },
-    onHide() {}
+    onHide() {
+    }
 }
 
 // 开放能力 & 组件相关（属性值只能为function）
 let wxRelevantFunctions = {
-    onShareAppMessage() {},
+    onShareAppMessage() {
+    },
     handleAuthorize() {
         this.setData({
             isAuth: true
@@ -292,36 +236,32 @@ Page({
     ...eventFunctions, // 放到上面 避免覆盖Page里面的内容
     ...lifeCycleFunctions,
     ...wxRelevantFunctions,
-    name: 'index',
+    name: 'withdraw',
     data: {
         orangeTotal: '',
+
+        orangeMin: 60,
         isAuth: app.globalData.isAuthorized,
-        orangeMin: app.globalData.orangeMin, // 最少提现橘子个数
-        postage: app.globalData.postage,
         isShowAddrPanel: false, // 控制地址弹窗是否显示
-        withdrawType: '0', // 提现橘子类型
         withdrawNum: null, // 提现橘子个数
         hasAddrInfo: false,
         isConfirmAddress: false,
+        remainTypeList: [], // 充值价格
+        remainTypeIndex: 0,
         addrInfo: null,
         region: [],
-        isShowWithdrawModal: false, // 提现方案弹窗
-        withdrawData: {
-            diff: 0, // 距离包邮还差多少个橘子
-            noPostagePrice: 0, // 达到包邮标准的邮费
-            postagePrice: 0 // 不包邮的邮费
-        },
-        canWithdraw: true // 能否点击提现按钮
+        canWithdraw: true, // 能否点击提现按钮
+        canPay: true
     },
     /**
      * 根据橘子数量计算邮费
      * @param orange 橘子个数
      */
-    rekonPostageByOrange(orange) {
+    reckonPostageByOrange(orange) {
         if (orange <= 20) {
             return 15
         } else {
-            if ((orange - 20) % 5 == 0) {
+            if ((orange - 20) % 5 === 0) {
                 return ((orange - 20) * 2) / 5 + 15
             } else {
                 return Math.ceil((orange - 20) / 5) * 2 + 15
@@ -350,11 +290,7 @@ Page({
                 orange = 0
             }
         }
-        console.log(money)
         return money
-    },
-    updateUserAddr(addr) {
-        updateUserAddr(addr).then(res => {})
     },
     saveFormId
 })

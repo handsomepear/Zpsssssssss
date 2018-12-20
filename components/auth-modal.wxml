@@ -1,7 +1,10 @@
 <view class="panel-allow-wrap panel-allow-fudan" wx:if="{{showAuthPanel}}">
   <view class="panel">
     <view class="au1 font-36">授权提示</view>
-    <view class="au2 font-38">完成授权才可领橘子</view>
+    <view class="au2 font-38">
+      <view>完成授权才可领橘子</view>
+      <view>新用户可以获得两个橘子哟</view>
+    </view>
     <view class="btn-auth tc">
     	<view class="btn-in-fudan font-36 fc-orange">去授权</view>
       <button style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; opacity: 0;" class="ib" open-type="getUserInfo" bindgetuserinfo="handleGetuserinfo">授权</button>

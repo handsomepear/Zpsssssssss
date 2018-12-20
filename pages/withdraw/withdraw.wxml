@@ -1,44 +1,52 @@
 <wxs src="../../utils/tools.wxs" module="TOOLS"></wxs>
 <view class="withdraw-page">
     <view class="remain">
-        <view class="remain-title">橘子余额</view>
-        <view class="remain-num">
-            <text>{{orangeTotal}}</text>
-            个
-            <image class="juzi-img" src="/static/imgs/juzi.png" />
+        <view class="main">
+            <view class="remain-con">
+                <view class="remain-title">橘子余额</view>
+                <view class="remain-num">
+                    <text>{{orangeTotal}}</text>
+                    个
+                    <image class="juzi-img" src="/static/imgs/juzi.png" />
+                </view>
+            </view>
+            <form report-submit="{{true}}" bindsubmit="saveFormId">
+                <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
+                    <view class="withdraw-btn">提现{{orangeMin}}个，约10斤</view>
+                </button>
+            </form>
+        </view>
+        <view class="tips">
+            注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现60个，约十斤。
         </view>
     </view>
     <view class="container">
-        <!-- <radio-group bindchange="chooseWithDrawType">
-            <view class="withdraw-type">
-                <label for="">
-                    <view class="item">
-                        <radio value="0" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 0}}" class="withdraw-radio"></radio>
-                        <text>{{orangeMin}}个包邮</text>
-                    </view>
-                </label>
-                <label for="">
-                    <view class="item">
-                        <radio value="1" color="#ff6c00" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
-                        <text>自付邮费</text>
-                    </view>
-                </label>
-            </view>
-        </radio-group>
-        <view class="remain-desc" wx:if="{{withdrawType == 0 && orangeTotal < orangeMin}}">
-            现有{{orangeTotal}}个，需要再购买{{TOOLS.countDifference(orangeMin, orangeTotal)}}个
-        </view> -->
-        <block wx:if="{{!isShowAddrPanel && !isShowWithdrawModal}}">
-            <view class="remain-input">
-                <text>提现橘子</text>
-                <input type="number" value="{{withdrawNum}}" bindinput="setWithdrawNum" />
-                <text>个</text>
-                <text class="postage">（满{{orangeMin}}个可包邮）</text>
-            </view>
-        </block>
+        <!-- 充值 -->
         <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="count">
-                <view class="withdraw-btn">提现</view>
+            <view class="class-list">
+                <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
+                    <button form-type="submit" plain="{{true}}" class="{{index == remainTypeIndex ? 'active' : ''}}"
+                            data-index="{{index}}" bindtap="chooseRemainType">
+                        <view class="item ">
+                            <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
+                                <view class="triangle">
+                                    <view class="white-check"></view>
+                                </view>
+                            </view>
+                            <image class="juzi-img" src="/static/imgs/juzi.png" />
+                            <view class="num">{{item.amonut}}个</view>
+                            <view class="money">
+                                <text>{{TOOLS.priceFilter(item.price)}}</text>
+                                元
+                            </view>
+                        </view>
+                    </button>
+                </block>
+            </view>
+        </form>
+        <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
+            <button form-type="submit" class="remain-con" plain="{{true}}">
+                <view class="remain-btn" bindtap="rechargeOrange">购买</view>
             </button>
         </form>
         <form report-submit="{{true}}" bindsubmit="saveFormId">
@@ -75,7 +83,7 @@
                     </view>
                     <view class="phone">
                         <view class="head">联系电话</view>
-                        <input type="number" name="telNumber" value="{{TOOLS.hideTelNumber(addrInfo.telNumber)}}" />
+                        <input type="number" name="telNumber" value="{{addrInfo.telNumber}}" />
                     </view>
                 </view>
                 <view class="item">
@@ -104,84 +112,4 @@
             </view>
         </form>
     </view>
-    <!-- 提现面板 -->
-    <block wx:if="{{isShowWithdrawModal}}">
-        <view class="withdraw-modal" bindtap="closeWithdrawModal">
-            <view class="withdraw-panel" catchtap="stopPropagation">
-                <!-- 标题 -->
-                <view class="title">提现</view>
-                <!-- 关闭按钮 -->
-                <view class="close-btn" bindtap="closeWithdrawModal">
-                    <image src="/static/imgs/close.png" />
-                </view>
-                <!-- 提现选择 -->
-                <radio-group bindchange="chooseWithDrawType">
-                    <view class="item {{withdrawType == 0 ? 'active' : ''}}">
-                        <label for="">
-                            <radio value="0" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 0}}" class="withdraw-radio"></radio>
-                            <view class="item-main">
-                                <view class="item-title">
-                                    方案1  包邮提现
-                                    <image src="/static/imgs/tuijian.png" />
-                                </view>
-                                <view class="item-desc">
-                                    <image src="/static/imgs/tanhao.png" />
-                                    提现60个（约十斤）橘子以上，免邮费
-                                </view>
-                                <view class="item-tips">
-                                    您当前提现数量
-                                    <text>{{withdrawNum}}</text>
-                                    个，
-                                    <!-- 提现个数 = 余额 < 包邮个数 -->
-                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum == orangeTotal && orangeTotal < 60 }}">
-                                        再购买
-                                        <text>{{withdrawData.diff}}</text>
-                                        个即可包邮，需支付
-                                        <text>{{withdrawData.noPostagePrice}}</text>
-                                        元～
-                                    </block>
-                                    <!-- 包邮个数 <= 提现个数 <= 余额 -->
-                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum < orangeTotal  && orangeTotal >= 60 }}">
-                                        再提现
-                                        <text>{{withdrawData.diff}}</text>
-                                        个即可包邮，确定包邮提现吗？
-                                    </block>
-                                    <!-- 提现个数 < 余额 < 包邮个数 -->
-                                    <block wx:if="{{withdrawData.diff > 0 && withdrawNum < orangeTotal && orangeTotal < 60 }}">
-                                        余额有{{orangeTotal}}个，再购买
-                                        <text>{{withdrawData.diff}}</text>
-                                        个即可包邮，需支付
-                                        <text>{{withdrawData.noPostagePrice}}</text>
-                                        元～
-                                    </block>
-                                    <block wx:if="{{withdrawData.diff <= 0}}">可包邮</block>
-                                </view>
-                            </view>
-                        </label>
-                    </view>
-                    <view class="item {{withdrawType == 1 ? 'active' : ''}}">
-                        <label for="">
-                            <radio value="1" color="{{orangeTotal < orange ? '': '#ff6c00'}}" checked="{{withdrawType == 1}}" class="withdraw-radio"></radio>
-                            <view class="item-main">
-                                <view class="item-title">方案2  自付邮费提现</view>
-                                <view class="item-desc">
-                                    <image src="/static/imgs/tanhao.png" />
-                                    提现数量小于60个，需自付邮费
-                                </view>
-                                <view class="item-tips">
-                                    您当前提现数量{{withdrawNum}}个，需支付邮费{{withdrawData.postagePrice}}元
-                                </view>
-                            </view>
-                        </label>
-                    </view>
-                </radio-group>
-                <!-- 提现按钮 -->
-                <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button form-type="submit" plain="{{true}}" bindtap="withdraw">
-                        <view class="confirm-btn">确定提现</view>
-                    </button>
-                </form>
-            </view>
-        </view>
-    </block>
 </view>

@@ -1,3 +1,4 @@
+<wxs src="../../utils/tools.wxs" module="TOOLS"></wxs>
 <view class="mine-page">
     <view class="tab-title">
         <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" data-current="0" bindtap="chooseTab">
@@ -23,7 +24,7 @@
                             <view class="item-wrap">
                                 <view class="top">叫了 {{item.nickName}}</view>
                                 <view class="bottom">
-                                    <text class="desc">一声baba，获得 1 个橘子</text>
+                                    <text class="desc">一声{{item.call}}，获得 1 个橘子</text>
                                     <text class="time">{{item.time}}</text>
                                 </view>
                             </view>
@@ -46,7 +47,7 @@
         <swiper-item>
             <view class="head">
                 共发出
-                <text>12</text>
+                <text>{{outcomeTotal}}</text>
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" />
             </view>
@@ -60,7 +61,7 @@
                             <view class="item-wrap">
                                 <view class="top">{{item.nickName}}</view>
                                 <view class="bottom">
-                                    <text class="desc">领了一个橘子，并叫了你一声baba</text>
+                                    <text class="desc">领了一个橘子，并叫了你一声{{item.call}}</text>
                                     <text class="time">{{item.time}}</text>
                                 </view>
                             </view>

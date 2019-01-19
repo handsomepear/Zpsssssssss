@@ -19,10 +19,15 @@ page {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 244rpx;
+    height: 300rpx;
     align-items: center;
     padding-top: 80rpx;
     box-sizing: border-box;
+}
+.getFinished {
+    color: #aaa;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
 }
 .avatar {
     position: absolute;
@@ -30,7 +35,8 @@ page {
     height: 126rpx;
     border-radius: 50%;
     top: 0;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     overflow: hidden;
 }
 .avatar image {
@@ -114,7 +120,7 @@ page {
 .card-btns {
     display: flex;
     justify-content: space-between;
-    margin-top: 30rpx;
+    /*margin-top: 30rpx;*/
     padding: 0 30rpx;
     box-sizing: border-box;
 }

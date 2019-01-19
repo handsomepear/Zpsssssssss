@@ -1,5 +1,5 @@
 <view class="result">
-    <view class="result-card">
+    <view class="result-card" style="height: {{isx ? '1300rpx' : '1100rpx'}}">
         <view class="user-about">
             <view class="avatar">
                 <image src="{{avatar}}" />
@@ -10,9 +10,17 @@
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
             </view>
+            <block wx:if="{{showResultState && pullState === '1'}}">
+                <block wx:if="{{gameState === 1}}">
+                    <view class="getFinished" >手慢了，橘子已被领完</view>
+                </block>
+                <block wx:if="{{gameState === 2}}">
+                    <view class="getFinished" >已超过24小时，无法领取</view>
+                </block>
+            </block>
         </view>
         <view class="card-info">
-            <scroll-view class="result-list" scroll-y="{{true}}">
+            <scroll-view class="result-list" style="height: {{isx ? '880rpx' : '670rpx'}}" scroll-y="{{true}}">
                 <block wx:if="{{getList.length > 0}}">
                     <!-- <view class="get-state">橘子已领完</view> -->
                     <block wx:for="{{getList}}" wx:key="{{index}}">
@@ -25,8 +33,8 @@
                                     <view class="item-username">{{item.nickName}}</view>
                                     <view class="item-time">{{item.time}}</view>
                                 </view>
-                                <view class="item-quantity" wx:if="{{isSelf}}">领了 1 个橘子，并叫了您一声baba</view>
-                                <view class="item-quantity" wx:else>领了 1 个橘子，并叫了{{nickName}}一声baba</view>
+                                <view class="item-quantity" wx:if="{{isSelf}}">领了 1 个橘子，并叫了您一声{{item.call}}</view>
+                                <view class="item-quantity" wx:else>领了 1 个橘子，并叫了{{nickName}}一声{{item.call}}</view>
                             </view>
                         </view>
                     </block>
@@ -47,7 +55,7 @@
                     </auth-button>
                 </view>
                 <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button wx:if="{{gameState == 3}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
+                    <button wx:if="{{gameState !== 0}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
                         <image src="/static/imgs/send-lg.png" mode="widthFix" />
                     </button>
                      <button wx:else form-type="submit" open-type="share" class="btn" plain="{{true}}" >

@@ -1,5 +1,5 @@
 <view class="share-page">
-    <view class="result-card">
+    <view class="result-card" style="height: {{isx ? '1300rpx' : '1100rpx'}}">
         <view class="user-about">
             <view class="avatar">
                 <image src="{{avatar}}" />
@@ -10,9 +10,17 @@
                 个
                 <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
             </view>
+            <block wx:if="{{showResultState}}">
+                <block wx:if="{{pullState === -4}}">
+                    <view class="getFinished">手慢了，橘子已被领完</view>
+                </block>
+                <block wx:if="{{pullState === -5}}">
+                    <view class="getFinished" >已超过24小时，无法领取</view>
+                </block>
+            </block>
         </view>
         <view class="card-info">
-            <scroll-view class="result-list" scroll-y="{{true}}">
+            <scroll-view class="result-list" style="height: {{isx ? '880rpx' : '670rpx'}}" scroll-y="{{true}}">
                 <block wx:if="{{getList.length > 0}}">
                     <!-- <view class="get-state">橘子已领完</view> -->
                     <block wx:for="{{getList}}" wx:key="{{index}}">
@@ -54,11 +62,12 @@
                         <view>，可以提现哟~</view>
                     </view>
                 </view>
-                <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
+                <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine"
+                             onhandleAuthorize="handleAuthorize">
                     <!-- 历史记录 -->
-                    <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bindtap="navigateTo" />
+                    <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine"
+                           bindtap="navigateTo" />
                 </auth-button>
-                <!-- <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bindtap="navigateTo" /> -->
                 <form report-submit="{{true}}" bindsubmit="saveFormId">
                     <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
                         <!-- 发好友 -->

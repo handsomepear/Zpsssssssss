@@ -12,7 +12,7 @@
 		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.95",
+	"libVersion": "2.4.2",
 	"appid": "wx1443885c9558e2f9",
 	"projectname": "orange",
 	"debugOptions": {
@@ -37,13 +37,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
 					"name": "领取结果",
 					"pathName": "pages/result/result",
-					"query": "gameId=15&shareOpenId=213131"
+					"query": "gameId=82&source=template"
 				},
 				{
 					"id": -1,
@@ -55,7 +55,7 @@
 					"id": 2,
 					"name": "视频",
 					"pathName": "pages/videoPage/videoPage",
-					"query": "gameId=15&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&shareUsername=dangerous"
+					"query": "gameId=82&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&source=template"
 				},
 				{
 					"id": -1,
@@ -73,7 +73,13 @@
 					"id": 5,
 					"name": "sharePage",
 					"pathName": "pages/sharePage/sharePage",
-					"query": "gameId=35&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&shareUsername=dangerous"
+					"query": "gameId=108&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS"
+				},
+				{
+					"id": -1,
+					"name": "提现列表",
+					"pathName": "pages/orderList/orderList",
+					"query": "gameId=82&shareOpenId=213131"
 				}
 			]
 		}

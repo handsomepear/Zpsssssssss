@@ -86,7 +86,8 @@ page {
 
 .name-con view {
     font-size: 44rpx;
-    color: #4a412f;
+    color: #777777;
+    font-weight: bolder;
     width: 100%;
     height: 100%;
     text-align: center;

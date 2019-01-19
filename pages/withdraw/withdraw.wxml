@@ -2,19 +2,22 @@
 <view class="withdraw-page">
     <view class="remain">
         <view class="main">
-            <view class="remain-con">
+            <view class="remain-top">
                 <view class="remain-title">橘子余额</view>
+                <view class="list-entry" data-page="/pages/orderList/orderList"  bindtap="navigateTo">提现记录</view>
+            </view>
+            <view class="withdraw-options">
                 <view class="remain-num">
                     <text>{{orangeTotal}}</text>
                     个
                     <image class="juzi-img" src="/static/imgs/juzi.png" />
                 </view>
+                <form report-submit="{{true}}" bindsubmit="saveFormId">
+                    <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
+                        <view class="withdraw-btn">提现{{orangeMin}}个，约10斤</view>
+                    </button>
+                </form>
             </view>
-            <form report-submit="{{true}}" bindsubmit="saveFormId">
-                <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
-                    <view class="withdraw-btn">提现{{orangeMin}}个，约10斤</view>
-                </button>
-            </form>
         </view>
         <view class="tips">
             注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现60个，约十斤。

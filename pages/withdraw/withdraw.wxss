@@ -1,13 +1,19 @@
 
+
+.withdraw-page {
+    padding-bottom: 100rpx;
+}
 .remain {
     padding: 42rpx 30rpx 22rpx;
     background-color: #f5f5f5;
     box-sizing: border-box;
 }
-.remain .main {
+.remain-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-bottom: 30rpx;
+}
+.remain .main {
     position: relative;
     width: 100%;
     margin-bottom: 26rpx;
@@ -21,7 +27,6 @@
 .remain-title {
     font-size: 26rpx;
     line-height: 1;
-    margin-bottom: 35rpx;
 }
 
 .remain-num {
@@ -75,8 +80,16 @@
     color: #999;
     margin-top: 30rpx;
 }
+.withdraw-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-
+.list-entry {
+    text-align: right;
+    color: #5590e1;
+}
 .withdraw-btn {
     width: 420rpx;
     height: 90rpx;

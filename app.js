@@ -1,7 +1,5 @@
 const utils = require('/utils/utils.js')
 const { request } = require('/utils/request.js')
-let fetch = request.fetch.bind(request)
-let getServerUrl = request.getServerUrl.bind(request)
 App({
     globalData: {
         channel: 'self',         // 来源
@@ -17,10 +15,29 @@ App({
         gifUrl: '',              // gif图
         gifEnable: false,        // 是否需要gif图
         calls: [],               // 称呼
-        gifDuration: 27000       // gif 时长
+        gifDuration: 27000,      // gif 时长
+        isx: false,
+        newUserFlag: false
     },
     onLaunch() {
+        const that = this
         this.checkAuth()
+        wx.getSystemInfo({
+            success: res => {
+                let modelmes = res.model.toLowerCase()
+                if (
+                    modelmes.search(/<iphone10,3>/) !== -1 || // @"国行(A1865)、日行(A1902)iPhone X";
+                    modelmes.search(/<iphone10,6>/) !== -1 || // @"美版(Global/A1901)iPhone X";
+                    modelmes.search(/<iphone11,2>/) !== -1 || // @"iPhone XS";
+                    modelmes.search(/<iphone11,4>/) !== -1 || // @"iPhone XS Max";
+                    modelmes.search(/<iphone11,6>/) !== -1 || // @"iPhone XS Max";
+                    modelmes.search(/<iphone11,8>/) !== -1 || // @"iPhone XR";
+                    modelmes.search(/iphone x/) !== -1
+                ) {
+                    that.globalData.isx = true
+                }
+            }
+        })
     },
     checkAuth() {
         let userInfo = wx.getStorageSync('userInfo')

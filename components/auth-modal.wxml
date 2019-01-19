@@ -7,7 +7,7 @@
     </view>
     <view class="btn-auth tc">
     	<view class="btn-in-fudan font-36 fc-orange">去授权</view>
-      <button style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; opacity: 0;" class="ib" open-type="getUserInfo" bindgetuserinfo="handleGetuserinfo">授权</button>
+      <button style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; opacity: 0;" class="ib" open-type="getUserInfo" bindgetuserinfo="handleGetUserInfo">授权</button>
     </view>
   </view>
 </view>

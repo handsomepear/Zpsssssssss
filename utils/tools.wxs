@@ -18,8 +18,14 @@ function priceFilter(price) {
     return price / 100
 }
 
+// 昵称随机展示
+function randomCall(callList) {
+    return callList[Math.floor(Math.random() * callList.length)]
+}
+
 module.exports = {
     countDifference: countDifference,
     hideTelNumber: hideTelNumber,
-    priceFilter:priceFilter
+    priceFilter:priceFilter,
+    randomCall: randomCall
 }

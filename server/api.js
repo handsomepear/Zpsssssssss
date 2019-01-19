@@ -91,6 +91,12 @@ module.exports = {
             data: { orange_number: withdrawNum, addr, tel, consignee, money, orange_account: orangeAccount, type }
         })
     },
+    // 获取提现列表
+    getMyWithdraw(){
+        return fetch({
+            url: getServerUrl('/withdraw/getMyWithDraw')
+        })
+    },
     // 上传formid
     saveFormId(formId) {
         return fetch({

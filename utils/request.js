@@ -60,10 +60,6 @@ let request = {
                         })
                     })
                 })
-                .catch(err => {
-                    console.log(err)
-                    // wx.showToastWithoutIcon('获取openId失败')
-                })
         }
     },
     getOpenId() {

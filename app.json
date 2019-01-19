@@ -6,7 +6,8 @@
         "pages/sharePage/sharePage",
         "pages/mine/mine",
         "pages/recharge/recharge",
-        "pages/withdraw/withdraw"
+        "pages/withdraw/withdraw",
+        "pages/orderList/orderList"
     ],
     "window": {
         "backgroundTextStyle": "light",

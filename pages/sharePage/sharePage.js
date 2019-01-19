@@ -16,7 +16,8 @@ let eventFunctions = {
             url: '/pages/index/index'
         })
     },
-    stopPropagation() {},
+    stopPropagation() {
+    },
     // 关闭分享弹窗
     closeShareModal() {
         this.setData({ isShowShareModal: false })
@@ -27,9 +28,14 @@ let eventFunctions = {
  */
 let lifeCycleFunctions = {
     onLoad(opts) {
+        let pages = getCurrentPages()
+        if (pages[pages.length - 2] && pages[pages.length - 2].name === 'index') {
+            this.setData({ showResultState: false })
+        }
         const that = this
         this.setData({
-            gameId: opts.gameId
+            gameId: opts.gameId,
+            isx: app.globalData.isx
         })
         if (opts.from === 'index') {
             this.setData({
@@ -55,13 +61,13 @@ let lifeCycleFunctions = {
                 })
             }
 
-            if (openId && openId == this.data.shareOpenId) {
+            if (openId && openId === this.data.shareOpenId) {
                 this.setData({ isSelf: true })
             }
         }
         getConfigHandle(() => {
             var openId = wx.getStorageSync('openId')
-            if (openId == this.shareOpenId) {
+            if (openId === this.shareOpenId) {
                 // 表示是自己
                 that.setData({
                     isSelf: true
@@ -84,7 +90,7 @@ let wxRelevantFunctions = {
         wx.navigateTo({ url: e.detail })
     },
     // 按钮授权
-    handleGetuserinfo(e) {
+    handleGetUserInfo(e) {
         let that = this
         if (!app.globalData.isAuthorized) {
             let userInfo = e.detail.userInfo
@@ -107,15 +113,14 @@ let wxRelevantFunctions = {
     },
 
     onShareAppMessage(obj) {
-        let userInfo = wx.getStorageSync('userInfo')
         let that = this
         let path = '/pages/sharePage/sharePage'
-        if (obj.from == 'button') {
+        if (obj.from === 'button') {
             path = '/pages/sharePage/sharePage?shareOpenId=' + this.data.shareOpenId + '&gameId=' + that.data.gameId
         }
         console.log(path)
         return {
-            title: '我买几个橘子去。你就在此地，不要走动。',
+            title: '我买几个橘子去，你就在此地，不要走动~',
             imageUrl: random(app.globalData.shareImgList),
             path: path
         }
@@ -127,6 +132,7 @@ Page({
     ...lifeCycleFunctions,
     ...wxRelevantFunctions,
     data: {
+        showResultState: true,
         shareOpenId: '',
         showAuthPanel: false,
         isSelf: false,
@@ -137,7 +143,8 @@ Page({
         avatar: '',
         nickName: '',
         currentGameOrange: '',
-        gameState: 3
+        gameState: 3,
+        pullState: 1
     },
     getRound() {
         const that = this
@@ -160,11 +167,13 @@ Page({
         })
             .then(res => {
                 cb && cb()
-                that.setData({ isShowPullResult: true })
+                that.setData({ isShowPullResult: true})
             })
             .catch(err => {
+                // -5 超时 -4是已领完
+                that.setData({ pullState: err.result || err.resesult})
                 cb && cb()
-                wx.showToastWithoutIcon(err.msg)
+                //wx.showToastWithoutIcon(err.msg)
             })
     },
     saveFormId

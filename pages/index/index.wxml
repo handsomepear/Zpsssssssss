@@ -1,6 +1,6 @@
 <view class="count">
     <view class="banner">
-        <image src="/static/imgs/banner.png" mode="widthFix" />
+        <image src="{{bannerUrl}}" mode="widthFix" />
     </view>
     <!-- 余额 -->
     <view class="index-mid">
@@ -54,7 +54,7 @@
                 <!-- <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" wx:if="{{orangeTotal && sendOrangeNum && sendOrangeNum != 0 && orangeTotal >= sendOrangeNum}}">
                     <view class="auth-fill">发橘子</view>
                 </button> -->
-                <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRound">
+                <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRoundHandle">
                     <view class="auth-fill">发橘子</view>
                 </button>
             </form>

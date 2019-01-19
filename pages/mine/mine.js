@@ -35,18 +35,6 @@ let lifeCycleFunctions = {
             outcomePage: 0
         })
         this.getIncomeList()
-        // let getIncomeList = getIncome({ page: this.data.page, size: this.data.size })
-        // let getOutComeList = getOutcome({ page: this.data.page, size: this.data.size })
-        // // 获取收入支出列表
-        // Promise.all([getIncomeList, getOutComeList]).then(res => {
-        //     console.log(res)
-        //     that.setData({
-        //         incomeTotal: res[0].data.total,
-        //         incomeList: res[0].data.getList,
-        //         outcomeTotal: res[1].data.total,
-        //         outcomeList: res[1].data.getList
-        //     })
-        // })
     },
     onHide() {}
 }

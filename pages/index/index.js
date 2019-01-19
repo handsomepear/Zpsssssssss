@@ -40,8 +40,9 @@ let eventFunctions = {
         })
     },
     // 发橘子
-    startRound() {
+    startRoundHandle() {
         const that = this
+
         if (!this.data.orangeTotal) {
             wx.showToastWithoutIcon('您没有橘子')
             return
@@ -52,15 +53,22 @@ let eventFunctions = {
             wx.showToastWithoutIcon('您发送橘子数量超过了您橘子的个数')
             return
         }
+        // 节流
+        if (!this.data.canSend) {
+            return
+        } else {
+            this.setData({ canSend: false })
+        }
         // 服务端请求 开启游戏
         startRound(this.data.sendOrangeNum).then(res => {
+            that.setData({ canSend: true })
             if (!app.globalData.gifEnable) {
                 wx.navigateTo({
                     url: '/pages/sharePage/sharePage?gameId=' + res.data.id + '&from=index'
                 })
             } else {
                 // 跳转到视频页
-                wx.navigateTo({
+                wx.reLaunch({
                     url: '/pages/videoPage/videoPage?gameId=' + res.data.id + '&from=index'
                 })
             }
@@ -75,7 +83,8 @@ let lifeCycleFunctions = {
         getConfigHandle(() => {
             that.setData({
                 videoEnable: app.globalData.videoEnable,
-                gifUrl: app.globalData.gifUrl
+                gifUrl: app.globalData.gifUrl,
+                bannerUrl: app.globalData.bannerUrl
             })
         })
     },
@@ -84,7 +93,11 @@ let lifeCycleFunctions = {
         this.setData({ isAuthorized: app.globalData.isAuthorized })
         this.getMyRounds()
         getGameUserInfo(() => {
+            // 老用户
             that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
+        }, () => {
+            // 新用户
+            that.setData({ orangeTotal: 2 })
         })
     },
     onHide() {
@@ -95,16 +108,24 @@ let lifeCycleFunctions = {
 let wxRelevantFunctions = {
     onShareAppMessage(e) {
         return {
-            title: '我买几个橘子去。你就在此地，不要走动。',
+            title: '我买几个橘子去，你就在此地，不要走动~',
             imageUrl: random(app.globalData.shareImgList),
             path: '/pages/index/index'
         }
     },
     // 授权之后触发
     handleAuthorize(e) {
-        this.setData({ isAuthorized: true })
+        const that = this
+        that.setData({ isAuthorized: true })
         if (e.detail) {
             wx.navigateTo({ url: e.detail })
+        } else {
+            //// 发橘子按钮
+            //getGameUserInfo(() => {
+            //    that.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })
+            //})
+
+            that.startRoundHandle()
         }
     },
     saveFormId
@@ -116,6 +137,8 @@ Page({
     ...wxRelevantFunctions,
     name: 'index',
     data: {
+        canSend: true,
+        bannerUrl: '',
         isAuthorized: false,
         orangeTotal: 0, // 账户橘子个数
         sendOrangeNum: null, // 发橘子个数
@@ -130,9 +153,7 @@ Page({
     getMyRounds() {
         let that = this
         getMyRounds().then(res => {
-            if (that.data.roundList.length === 0) {
-                that.setData({ roundList: res.data })
-            }
+            that.setData({ roundList: res.data })
         })
     }
 })

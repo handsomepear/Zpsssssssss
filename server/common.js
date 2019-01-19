@@ -18,6 +18,7 @@ module.exports = {
                     app.globalData.gifDuration = res.data.gif.duration
                     app.globalData.calls = res.data.calls
                     app.globalData.gifEnable = res.data.gif.enable
+                    app.globalData.bannerUrl = res.data.banner_url
                     ;(app.globalData.shareImgList = res.data.share_img_url), cb && cb()
                 })
                 .catch(err => {
@@ -33,15 +34,17 @@ module.exports = {
         }
     },
     // 获取用户橘子信息
-    getGameUserInfo(cb) {
+    getGameUserInfo(successCb,failCb) {
         getUserInfo()
             .then(res => {
                 app.globalData.gameUserInfo.orangeTotal = res.data.orange
                 app.globalData.gameUserInfo.addr = res.data.addr
-                cb && cb()
+                successCb && successCb()
             })
             .catch(err => {
-                // console.log(err);
+                if(err.result === -2) {
+                    failCb && failCb()
+                }
             })
     },
     // 保存formId

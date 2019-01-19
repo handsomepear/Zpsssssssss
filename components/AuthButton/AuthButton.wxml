@@ -1,6 +1,6 @@
 <view class="c-auth-button">
   <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="">
-    <button open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" form-type="submit" bindgetuserinfo="handleGetuserinfo" >
+    <button open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" form-type="submit" bindgetuserinfo="handleGetUserInfo" >
       <slot></slot>
     </button>
   </form>

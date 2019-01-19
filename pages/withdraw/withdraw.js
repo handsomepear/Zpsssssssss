@@ -1,13 +1,19 @@
 const app = getApp()
+const { navigateTo } = require('../../utils/utils')
 const { updateUserAddr, withdraw, getUserInfo, rechargeOrange } = require('../../server/api')
-const { saveFormId } = require('../../server/common')
+const { saveFormId, getConfigHandle } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
+    navigateTo: navigateTo,
     openAddressPanel() {
+        if (!this.data.addrInfo) {
+            // 如果没有地址 直接使用微信地址
+            this.getWxAddress()
+        }
         this.setData({ isShowAddrPanel: true })
     },
     closeAddressPanel() {
-        this.setData({ isShowAddrPanel: false, canWithdraw: true })
+        this.setData({ isShowAddrPanel: false, canWithdraw: true, isConfirmAddress: false })
     },
     bindRegionChange(e) {
         var that = this
@@ -30,6 +36,11 @@ let eventFunctions = {
         if (data.orangeTotal < data.orangeMin) {
             return wx.showToastWithoutIcon('您的橘子余额不足' + data.orangeMin + '个', 3000)
         }
+        if (!data.addrInfo) {
+            // 如果没有地址 直接使用微信地址
+            return that.getWxAddress()
+        }
+
         if (data.canWithdraw) {
             this.setData({
                 canWithdraw: false
@@ -79,7 +90,7 @@ let eventFunctions = {
                     },
                     region: addrInfo.region
                 })
-                if (!data.canWithdraw) {
+                if (data.canWithdraw) {
                     withdraw({
                         withdrawNum: data.orangeMin, // 实际到手的数量
                         addr: data.addrInfo.detailInfo,
@@ -99,7 +110,11 @@ let eventFunctions = {
                                     canWithdraw: true
                                 })
                                 wx.hideLoading()
-                                wx.showToastWithoutIcon('提现成功')
+                                wx.showToast({
+                                    title: '提现成功',
+                                    icon: 'success',
+                                    duration: 2000
+                                })
                             })
                             .catch(err => {
                                 wx.showToastWithoutIcon(err.msg)
@@ -180,19 +195,33 @@ let eventFunctions = {
 let lifeCycleFunctions = {
     onLoad() {
         let that = this
-        let addrArr = app.globalData.gameUserInfo.addr.split(' ')
+        let addrArr = []
+        if (app.globalData.gameUserInfo.addr) {
+            addrArr = app.globalData.gameUserInfo.addr.split(' ')
+            this.setData({
+                region: [addrArr[2], addrArr[3], addrArr[4]],
+                addrInfo: {
+                    userName: addrArr[0],
+                    telNumber: addrArr[1],
+                    detailInfo: addrArr[5]
+                },
+            })
+        }
         this.setData({
             remainTypeList: app.globalData.priceList, // 价格列表
-            region: [addrArr[2], addrArr[3], addrArr[4]],
-            addrInfo: {
-                userName: addrArr[0],
-                telNumber: addrArr[1],
-                detailInfo: addrArr[5]
-            },
             orangeMin: app.globalData.orangeMin,
             postage: app.globalData.postage,
 
         })
+        if (!(this.data.remainTypeList && this.data.remainTypeList.length)) {
+            getConfigHandle(() => {
+                that.setData({
+                    remainTypeList: app.globalData.priceList,
+                    orangeMin: app.globalData.orangeMin,
+                    postage: app.globalData.postage
+                })
+            })
+        }
     },
     onShow() {
         this.setData({ orangeTotal: app.globalData.gameUserInfo.orangeTotal })

@@ -1,0 +1,27 @@
+.order-item {
+    padding:30rpx 30rpx;
+    border-bottom:1rpx solid #e9e9e9;
+}
+.order-info {
+    display: flex;
+    align-items: flex-end;
+}
+
+.orange-num {
+    margin-left: 10rpx;
+}
+
+.order-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size:26rpx;
+    color:#434242;
+    margin-top:20rpx;
+}
+.empty {
+    font-size: 33rpx;
+    color: #ccc;
+    text-align: center;
+    margin-top: 100rpx;
+}

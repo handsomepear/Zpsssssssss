@@ -9,7 +9,7 @@ Component({
     onReady() {},
     methods: {
         // 授权回调
-        handleGetuserinfo(e) {
+        handleGetUserInfo(e) {
             const that = this
             if (!app.globalData.isAuthorized) {
                 let userInfo = e.detail.userInfo

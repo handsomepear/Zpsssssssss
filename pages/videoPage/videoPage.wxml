@@ -1,77 +1,47 @@
 <view class="video-page">
-    <view class="image">
-        <view class="gif-img">
-            <view class="name-con {{isShowFatherName ? 'show' : 'hide'}}"
-                        style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);">
-                <view>{{father}}</view>
+  <view class="image">
+    <view class="gif-img">
+      <view class="name-con {{isShowFatherName ? 'show' : 'hide'}}" style="transform: translate({{fatherName.left}}rpx, {{fatherName.top}}rpx);">
+        <view>{{father}}</view>
+      </view>
+      <view class="name-con {{isShowSonName ? 'show' : 'hide'}}" style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx);">
+        <view>{{son}}</view>
+      </view>
+      <block wx:if="{{showGif}}">
+        <image src="{{gifUrl}}" bindload="onImageLoad" />
+      </block>
+      <block wx:if="{{showPoster}}">
+        <!-- 封面图 -->
+        <view class="poster">
+          <image class="poster-img" src="/static/imgs/poster.jpg" />
+          <block wx:if="{{showPlayBtn}}">
+            <view class="poster-modal" bindtap="startLoadGif">
+              <image class="play-img" src="/static/imgs/play-btn.png" />
+              <image class="hand-img" src="/static/imgs/hand.png" />
+              <view class="text1">点击观看视频</view>
+              <view class="text2">就可以领到橘子呦</view>
             </view>
-            <view class="name-con {{isShowSonName ? 'show' : 'hide'}}"
-                        style="transform: translate({{sonName.left}}rpx, {{sonName.top}}rpx);">
-                <view>{{son}}</view>
-            </view>
-            <block wx:if="{{showGif}}">
-                <image src="{{gifUrl}}" bindload="onImageLoad" />
-            </block>
-            <block wx:if="{{showPoster}}">
-                <!-- 封面图 -->
-                <view class="poster">
-                    <image class="poster-img" src="/static/imgs/poster.jpg" />
-                    <block wx:if="{{showPlayBtn}}">
-                        <view class="poster-modal" bindtap="startLoadGif">
-                            <image class="play-img" src="/static/imgs/play-btn.png" />
-                            <image class="hand-img" src="/static/imgs/hand.png" />
-                            <view class="text1">点击观看视频</view>
-                            <view class="text2">就可以领到橘子呦</view>
-                        </view>
-                    </block>
-                </view>
-            </block>
-            <button wx:if="{{showPlayBtn}}" open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetUserInfo">
-                <view class="play-btn"></view>
-            </button>
+          </block>
         </view>
-        <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
-            <view class="share-modal" catchtap="stopPropagation">
-                <view class="close-btn" bindtap="closeShareModal">
-                    <image src="/static/imgs/close.png"></image>
-                </view>
-                <view class="share-title">
-                    <image src="/static/imgs/right.png"></image>
-                    <view>生成成功</view>
-                </view>
-                <!-- <image src="/static/imgs/shareModal.jpg" class="share-modal-img"></image> -->
-                <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
-                    <!-- <view class="auth-fill">发橘子</view> -->
-                    <image src="/static/imgs/share-orange.png"></image>
-                </button>
-            </view>
-        </view>
+      </block>
     </view>
-    <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
-        <view class="tips" wx:if="{{isShowPullResult}}">
-            <image class="bg" src="/static/imgs/shipinye_tishikuang.png"></image>
-            <view class="tips-text">
-                <view>获得 1 个</view>
-                <image class="juzi-img" src="/static/imgs/juzi.png"></image>
-                <view>，可以提现哟~</view>
-            </view>
+  </view>
+  <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
+    <!-- 我要做爸爸 -->
+    <form report-submit="{{true}}" bindsubmit="saveFormId">
+      <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrangeHandle">
+        <view class="send">我要做爸爸</view>
+      </button>
+    </form>
+    <!-- 发好友 -->
+    <form report-submit="{{true}}" bindsubmit="saveFormId">
+      <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
+        <!-- 发好友 -->
+        <view class="share">
+          <image src="../../static/imgs/share-icon.png" binderror="" bindload=""></image>
+          <view>发好友</view>
         </view>
-        <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
-            <!-- 历史记录 -->
-            <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="" bindtap="navigateTo" />
-        </auth-button>
-        <!-- <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bindtap="navigateTo" /> -->
-        <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
-                <!-- 发好友 -->
-                <image src="/static/imgs/share-green.png" class="share" />
-            </button>
-        </form>
-        <!-- 发橘子 -->
-        <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrangeHandle">
-                <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
-            </button>
-        </form>
-    </view>
+      </button>
+    </form>
+  </view>
 </view>

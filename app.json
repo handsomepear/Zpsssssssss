@@ -1,23 +1,23 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/result/result",
-        "pages/videoPage/videoPage",
-        "pages/sharePage/sharePage",
-        "pages/mine/mine",
-        "pages/recharge/recharge",
-        "pages/withdraw/withdraw",
-        "pages/orderList/orderList"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "橘子",
-        "navigationBarTextStyle": "black",
-        "onReachBottomDistance": 500,
-        "backgroundColor": "#f6f6f6"
-    },
-    "networkTimeout": {
-        "request": 10000
-    }
+  "pages": [
+    "pages/index/index",
+    "pages/result/result",
+    "pages/videoPage/videoPage",
+    "pages/sharePage/sharePage",
+    "pages/mine/mine",
+    "pages/recharge/recharge",
+    "pages/withdraw/withdraw",
+    "pages/orderList/orderList"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "橘子",
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance": 500,
+    "backgroundColor": "#f6f6f6"
+  },
+  "networkTimeout": {
+    "request": 10000
+  }
 }

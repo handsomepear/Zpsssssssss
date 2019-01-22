@@ -1,130 +1,128 @@
-
 .remain {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    width: 100%;
-    height: 182rpx;
-    padding: 42rpx 30rpx 22rpx;
-    background-color: #f5f5f5;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 182rpx;
+  padding: 42rpx 30rpx 22rpx;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
 }
 .remain-title {
-    font-size: 26rpx;
-    line-height: 1;
+  font-size: 26rpx;
+  line-height: 1;
 }
 
 .remain-num {
-    display: flex;
-    align-items: flex-end;
-    font-size: 35rpx;
-    font-weight: bold;
+  display: flex;
+  align-items: flex-end;
+  font-size: 35rpx;
+  font-weight: bold;
 }
 .remain-num text {
-    line-height: 1;
-    font-size: 60rpx;
-    margin-right: 15rpx;
+  line-height: 1;
+  font-size: 60rpx;
+  margin-right: 15rpx;
 }
 .remain-num .juzi-img {
-    margin-left: 10rpx;
+  margin-left: 10rpx;
 }
 button.contact-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 20rpx;
-    font-size: 24rpx;
-    color: #5590e1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20rpx;
+  font-size: 24rpx;
+  color: #5590e1;
 }
 
 .class-list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-    flex: 1;
-    background-color: #fff;
-    padding: 28rpx;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  flex: 1;
+  background-color: #fff;
+  padding: 28rpx;
+  box-sizing: border-box;
 }
 .item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 210rpx;
-    height: 220rpx;
-    border: 2rpx solid #a2a2a2;
-    margin-bottom: 50rpx;
-    border-radius: 10rpx;
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 210rpx;
+  height: 220rpx;
+  border: 2rpx solid #a2a2a2;
+  margin-bottom: 50rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
 }
-.active .item{
-    border: 3rpx solid #ff6c00;
+.active .item {
+  border: 3rpx solid #ff6c00;
 }
 
 .item .active-flag {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .item .active-flag .triangle {
-    position: absolute;
-    top: -32rpx;
-    left: -32rpx;
-    width: 64rpx;
-    height: 64rpx;
-    background-color: #ff6c00;
-    transform: rotateZ(-45deg);
+  position: absolute;
+  top: -32rpx;
+  left: -32rpx;
+  width: 64rpx;
+  height: 64rpx;
+  background-color: #ff6c00;
+  transform: rotateZ(-45deg);
 }
 .item .active-flag .white-check {
-    position: absolute;
-    top: 44rpx;
-    left: 26rpx;
-    width: 10rpx;
-    height: 8rpx;
-    border-bottom: 4rpx solid #fff;
-    border-left: 4rpx solid #fff;
+  position: absolute;
+  top: 44rpx;
+  left: 26rpx;
+  width: 10rpx;
+  height: 8rpx;
+  border-bottom: 4rpx solid #fff;
+  border-left: 4rpx solid #fff;
 }
 
 .item .money {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    width: 122rpx;
-    height: 52rpx;
-    line-height: 52rpx;
-    border-radius: 52rpx;
-    background-color: #ff6c00;
-    color: #fff;
-    font-size: 22rpx;
-    margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 122rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  border-radius: 52rpx;
+  background-color: #ff6c00;
+  color: #fff;
+  font-size: 22rpx;
+  margin-top: 20rpx;
 }
 .item .num {
-    font-size: 24rpx;
+  font-size: 24rpx;
 }
 
 .money text {
-    font-size: 30rpx;
+  font-size: 30rpx;
 }
 
 button.remain-con {
-    position: fixed;
-    width: 100%;
-    bottom: 0rpx;
-    left: 0;
-    padding: 20rpx 30rpx 30rpx;
-    background-color: #fff;
+  position: fixed;
+  width: 100%;
+  bottom: 0rpx;
+  left: 0;
+  padding: 20rpx 30rpx 30rpx;
+  background-color: #fff;
 }
 .remain-btn {
-    height: 90rpx;
-    line-height: 90rpx;
-    background-color: #1aad19;
-    color: #fff;
-    font-size: 34rpx;
-    text-align: center;
-    border-radius: 8rpx;
-    
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #1aad19;
+  color: #fff;
+  font-size: 34rpx;
+  text-align: center;
+  border-radius: 8rpx;
 }

@@ -1,107 +1,172 @@
-<view class="count">
+<view class="index-page">
+  <image class="gif_entry" src="../../static/imgs/gif_entry.png" mode="widthFix" bindtap="toVideoPage" />
+  <view class="banner-con">
     <view class="banner">
-        <image src="{{bannerUrl}}" mode="widthFix" />
+      <image src="../../static/imgs/index_bg.png" mode="widthFix" />
     </view>
-    <!-- 余额 -->
-    <view class="index-mid">
+    <view class="father-name">
+      <block wx:if="{{source === 'share'}}">
+        <view class="avatar">
+          <image src="{{fatherAvatarUrl}}"></image>
+        </view>
+        <view class="nickName">{{fatherName}}</view>
+      </block>
+      <block wx:else>
+        <view class="avatar">
+          <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class="nickName">
+          <open-data type="userNickName"></open-data>
+        </view>
+      </block>
+    </view>
+    <view class="son-name">
+      <block wx:if="{{source === 'share'}}">
+        <view class="avatar">
+          <image src="{{getList[getIndex].avatarUrl}}"></image>
+        </view>
+        <view class="nickName">{{getList[getIndex].nickName}}</view>
+      </block>
+      <block wx:else>
+        <view class="nickName">给好友发个橘子试试~</view>
+      </block>
+    </view>
+    <view class="arrow-con" wx:if="{{getList.length > 0}}">
+      <view class="arrow-left" bindtap="pre" wx:if="{{getIndex > 0}}">
+        <image src="/static/imgs/arrow-left.png" />
+      </view>
+      <view class="arrow-right" bindtap="next" wx:if="{{getIndex < getList.length - 1}}">
+        <image src="/static/imgs/arrow-right.png" />
+      </view>
+    </view>
+  </view>
+  <view class="main">
+    <view class="main-content">
+      <!-- 余额 -->
+      <view class="index-mid">
         <view class="remain">
-            橘子余额：
-            <text class="remain-quantity">{{orangeTotal}}</text>
-            个
-            <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
+          橘子余额：
+          <text class="remain-quantity">{{orangeTotal}}</text>
+          个
+          <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
         </view>
         <view class="mid-options">
-            <auth-button auth-btn-init="auth-btn-init recharge" pageUrl="/pages/recharge/recharge" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
-                充橘子 >
-            </auth-button>
-            <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="">
-                <button wx:if="{{isAuthorized}}" plain="{{true}}" form-type="submit" class="recharge" data-page="/pages/recharge/recharge" bindtap="navigateTo">
-                    充橘子 >
-                </button>
-            </form>
-            <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/withdraw/withdraw" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
-                提橘子 >
-            </auth-button>
-            <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="">
-                <button wx:if="{{isAuthorized}}" plain="{{true}}" form-type="submit" class="get" data-page="/pages/withdraw/withdraw" bindtap="navigateTo">
-                    提橘子 >
-                </button>
-            </form>
+          <auth-button auth-btn-init="auth-btn-init recharge" pageUrl="/pages/recharge/recharge" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
+            充橘子
+          </auth-button>
+          <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="">
+            <button wx:if="{{isAuthorized}}" plain="{{true}}" form-type="submit" class="recharge" data-page="/pages/recharge/recharge" bindtap="navigateTo">
+              充橘子
+            </button>
+          </form>
+          <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/withdraw/withdraw" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
+            提橘子
+          </auth-button>
+          <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="">
+            <button wx:if="{{isAuthorized}}" plain="{{true}}" form-type="submit" class="get" data-page="/pages/withdraw/withdraw" bindtap="navigateTo">
+              提橘子
+            </button>
+          </form>
         </view>
-    </view>
-    <!-- 发橘子 -->
-    <view class="send-con">
+      </view>
+      <!-- 发橘子 -->
+      <view class="send-con">
         <view class="quantity-con">
-            <text>橘子个数</text>
-            <view class="quantity">
-                <view class="input-con">
-                    <!-- <view class="number" wx:if="{{!isShowNumInput}}" style="color : {{sendOrangeNum != null && sendOrangeNum != 0 ? '#000' : '#aaa'}}" bindtap="showNumInput">
-                        {{ sendOrangeNum == null || sendOrangeNum == 0 ? '填写个数': sendOrangeNum}}
-                    </view> -->
-                    <!-- wx:if="{{isShowNumInput}}" -->
-                    <block>
-                        <input type="number" class="number" value="{{sendOrangeNum}}" cursor="{{120}}" placeholder="填写个数" placeholder-style="color: #aaa;font-size: 28rpx;" bindinput="getSendOrangeNum" bindblur="hideNumInput" />
-                    </block>
-                </view>
-                <text>个</text>
+          <text>橘子个数</text>
+          <view class="quantity">
+            <view class="input-con">
+              <view class="number" wx:if="{{showGetOrangeModal}}" style="color : #aaa">填写个数</view>
+              <block wx:if="{{!showGetOrangeModal && !isShowShareModal}}">
+                <input type="number" class="number" value="{{sendOrangeNum}}" cursor="{{120}}" placeholder="填写个数" placeholder-style="color: #aaa;font-size: 28rpx;" bindinput="getSendOrangeNum" bindblur="hideNumInput" />
+              </block>
             </view>
+            <text>个</text>
+          </view>
         </view>
         <view class="send-btn">
-            <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
-                <view class="auth-fill">发橘子</view>
-            </auth-button>
-            <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="" wx:else>
-                <!-- <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" wx:if="{{orangeTotal && sendOrangeNum && sendOrangeNum != 0 && orangeTotal >= sendOrangeNum}}">
-                    <view class="auth-fill">发橘子</view>
-                </button> -->
-                <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRoundHandle">
-                    <view class="auth-fill">发橘子</view>
-                </button>
-            </form>
-        </view>
-        <view class="ps">PS.给朋友发个橘子吃吧~他们领一个橘子，叫一声baba哟～</view>
-    </view>
-    <!-- sharebox -->
-    <!-- <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
-        <view class="share-modal" catchtap="stopPropagation">
-            <view class="close-btn" bindtap="closeShareModal">+</view>
-            <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" bindtap="toVideoPage">
-                <view class="auth-fill">发橘子</view>
+          <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
+            <view class="auth-fill">发橘子</view>
+          </auth-button>
+          <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="" wx:else>
+            <!-- <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" wx:if="{{orangeTotal && sendOrangeNum && sendOrangeNum != 0 && orangeTotal >= sendOrangeNum}}">
+              <view class="auth-fill">发橘子</view>
+            </button> -->
+            <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRoundHandle">
+              <view class="auth-fill">发橘子</view>
             </button>
+          </form>
         </view>
-    </view> -->
-    <view class="game-container">
-        <view class="title">
-            <view class="line-con">
-                <view class="line"></view>
-                <view class="dot"></view>
-            </view>
-            <view class="text">发橘子记录</view>
-            <view class="line-con">
-                <view class="dot"></view>
-                <view class="line"></view>
-            </view>
-        </view>
-        <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <view class="game-list" wx:if="{{roundList.length > 0}}">
-                <block wx:for="{{roundList}}" wx:key="{{item.id}}">
-                    <button form-type="submit" plain="{{true}}" class="item" data-game-id="{{item.id}}" data-total="{{item.total}}" data-received="{{item.received}}" bindtap="viewGameDetail">
-                        <view class="item-wrap">
-                            <view class="top">
-                                您发了
-                                <text>{{item.total}}</text>
-                                个
-                                <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
-                            </view>
-                            <view class="bottom">
-                                <text class="desc">已有 {{item.received}} 人领取～</text>
-                                <text class="time">{{item.time}}</text>
-                            </view>
-                        </view>
-                    </button>
-                </block>
-            </view>
-        </form>
-        <view class="empty-list" wx:if="{{roundList.length == 0}}">还没有发橘子记录哦</view>
+        <view class="ps">春运将至，儿子们就要上火车了，快去给他们买些橘子吃吧～</view>
+      </view>
     </view>
+  </view>
+  <block wx:if="{{getList.length > 0}}">
+    <view class="game-container">
+      <view class="title">
+        <view class="avatar">
+          <image src="{{fatherAvatarUrl}}" binderror="" bindload=""></image>
+        </view>
+        <view class="nickname">{{fatherName}}</view>
+        <view wx:if="{{getList.length === currentGameOrange}}">本次发的橘子已领完</view>
+        <view wx:else>本次发了 {{currentGameOrange}} 个橘子</view>
+      </view>
+      <form report-submit="{{true}}" bindsubmit="saveFormId">
+        <view class="game-list">
+          <block wx:for="{{getList}}" wx:key="{{item.id}}">
+            <button form-type="submit" plain="{{true}}">
+              <view class="item">
+                <view class="avatar">
+                  <image src="{{item.avatarUrl}}" binderror="" bindload=""></image>
+                </view>
+                <view class="item-wrap">
+                  <view class="top">{{item.nickName}}</view>
+                  <view class="bottom">领了一个橘子，并叫了{{fatherName}}一声{{item.call}}</view>
+                </view>
+              </view>
+            </button>
+          </block>
+        </view>
+      </form>
+    </view>
+  </block>
+  <view class="bottom-options" wx:if="{{source === 'share'}}">
+    <view class="history" bindtap="viewHistory">历史记录</view>
+    <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
+      <!-- 发好友 -->
+      <view class="share">
+        <image src="../../static/imgs/share-icon.png" binderror="" bindload=""></image>
+        <view>发好友</view>
+      </view>
+    </button>
+  </view>
+  <view class="bottom-options" wx:else>
+    <view class="history" style="width: 100%" bindtap="viewHistory">历史记录</view>
+  </view>
+  <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
+    <view class="share-modal" catchtap="stopPropagation">
+      <view class="close-btn" bindtap="closeShareModal">
+        <image src="/static/imgs/close.png"></image>
+      </view>
+      <view class="share-title">
+        <image src="/static/imgs/right.png"></image>
+        <view>生成成功</view>
+      </view>
+      <!-- <image src="/static/imgs/shareModal.jpg" class="share-modal-img"></image> -->
+      <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
+        <!-- <view class="auth-fill">发橘子</view> -->
+        <image src="/static/imgs/share-orange.png"></image>
+      </button>
+    </view>
+  </view>
+  <view class="get-orange-wrap" wx:if="{{showGetOrangeModal}}" bindtap="closeGetOrangeModal">
+    <view class="get-orange-modal" catchtap="stopPropagation">
+      <view class="title">
+        获得
+        <text>1</text>
+        个橘子
+        <image src="../../static/imgs/juzi.png" class="juzi-img" />
+      </view>
+      <view class="confirm-btn" bindtap="closeGetOrangeModal">确定</view>
+    </view>
+  </view>
 </view>

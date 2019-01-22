@@ -1,20 +1,22 @@
 <view class="order-list">
-    <block wx:if="{{orderList.length > 0}}" >
-        <view class="order-item" wx:for="{{orderList}}" wx:key="{{index}}">
-            <view class="order-info">
-                <view class="state" style="color: {{item.state == '待发货' ? '#aaa' : '#d92641'}}">{{item.state}} | </view>
-                <view class="orange-num">
-                    {{item.amonut}} 个
-                    <image class="juzi-img" src="/static/imgs/juzi.png"></image>
-                </view>
-            </view>
-            <view class="order-number">
-                <view>订单编号：{{item.id}}</view>
-                <view class="time">{{item.time}}</view>
-            </view>
+  <block wx:if="{{orderList.length > 0}}">
+    <view class="order-item" wx:for="{{orderList}}" wx:key="{{index}}">
+      <view class="order-info">
+        <view class="state" style="color: {{item.state == '待发货' ? '#aaa' : '#d92641'}}">
+          {{item.state}} |
         </view>
-    </block>
-    <block wx:else>
-        <view class="empty">您还没有体现记录哦~</view>
-    </block>
+        <view class="orange-num">
+          {{item.amonut}} 个
+          <image class="juzi-img" src="/static/imgs/juzi.png"></image>
+        </view>
+      </view>
+      <view class="order-number">
+        <view>订单编号：{{item.id}}</view>
+        <view class="time">{{item.time}}</view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="empty">您还没有体现记录哦~</view>
+  </block>
 </view>

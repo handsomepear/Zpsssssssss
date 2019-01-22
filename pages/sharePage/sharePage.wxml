@@ -1,103 +1,97 @@
 <view class="share-page">
-    <view class="result-card" style="height: {{isx ? '1300rpx' : '1100rpx'}}">
-        <view class="user-about">
-            <view class="avatar">
-                <image src="{{avatar}}" />
-            </view>
-            <view class="username">{{nickName}}</view>
-            <view class="quantity">
-                <text>{{currentGameOrange}}</text>
-                个
-                <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
-            </view>
-            <block wx:if="{{showResultState}}">
-                <block wx:if="{{pullState === -4}}">
-                    <view class="getFinished">手慢了，橘子已被领完</view>
-                </block>
-                <block wx:if="{{pullState === -5}}">
-                    <view class="getFinished" >已超过24小时，无法领取</view>
-                </block>
-            </block>
-        </view>
-        <view class="card-info">
-            <scroll-view class="result-list" style="height: {{isx ? '880rpx' : '670rpx'}}" scroll-y="{{true}}">
-                <block wx:if="{{getList.length > 0}}">
-                    <!-- <view class="get-state">橘子已领完</view> -->
-                    <block wx:for="{{getList}}" wx:key="{{index}}">
-                        <view class="result-item">
-                            <view class="item-avatar">
-                                <image src="{{item.avatarUrl}}" />
-                            </view>
-                            <view class="item-info">
-                                <view class="item-username-time">
-                                    <view class="item-username">{{item.nickName}}</view>
-                                    <view class="item-time">{{item.time}}</view>
-                                </view>
-                                <view class="item-quantity" wx:if="{{isSelf}}">
-                                    领了 1 个橘子，并叫了您一声baba
-                                </view>
-                                <view class="item-quantity" wx:else>
-                                    领了 1 个橘子，并叫了{{nickName}}一声baba
-                                </view>
-                            </view>
-                        </view>
-                    </block>
-                </block>
-                <block wx:else>
-                    <block wx:if="{{gameState == 3}}">
-                        <view class="empty">已过期～</view>
-                    </block>
-                    <block wx:else>
-                        <view class="empty" wx:if="{{isSelf}}">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
-                        <view class="empty" wx:else>还没有人来领橘子，快来领取吧～</view>
-                    </block>
-                </block>
-            </scroll-view>
-            <view class="options">
-                <view class="tips" wx:if="{{isShowPullResult}}">
-                    <image class="bg" src="/static/imgs/shipinye_tishikuang.png"></image>
-                    <view class="tips-text">
-                        <view>获得 1 个</view>
-                        <image class="juzi-img" src="/static/imgs/juzi.png"></image>
-                        <view>，可以提现哟~</view>
-                    </view>
+  <view class="result-card" style="height: {{isx ? '1300rpx' : '1100rpx'}}">
+    <view class="user-about">
+      <view class="avatar">
+        <image src="{{avatar}}" />
+      </view>
+      <view class="username">{{nickName}}</view>
+      <view class="quantity">
+        <text>{{currentGameOrange}}</text>
+        个
+        <image src="/static/imgs/juzi.png" class="juzi-img" mode="widthFix" />
+      </view>
+      <block wx:if="{{showResultState}}">
+        <block wx:if="{{pullState === -4}}">
+          <view class="getFinished">手慢了，橘子已被领完</view>
+        </block>
+        <block wx:if="{{pullState === -5}}">
+          <view class="getFinished">已超过24小时，无法领取</view>
+        </block>
+      </block>
+    </view>
+    <view class="card-info">
+      <scroll-view class="result-list" style="height: {{isx ? '880rpx' : '670rpx'}}" scroll-y="{{true}}">
+        <block wx:if="{{getList.length > 0}}">
+          <!-- <view class="get-state">橘子已领完</view> -->
+          <block wx:for="{{getList}}" wx:key="{{index}}">
+            <view class="result-item">
+              <view class="item-avatar">
+                <image src="{{item.avatarUrl}}" />
+              </view>
+              <view class="item-info">
+                <view class="item-username-time">
+                  <view class="item-username">{{item.nickName}}</view>
+                  <view class="item-time">{{item.time}}</view>
                 </view>
-                <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine"
-                             onhandleAuthorize="handleAuthorize">
-                    <!-- 历史记录 -->
-                    <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine"
-                           bindtap="navigateTo" />
-                </auth-button>
-                <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
-                        <!-- 发好友 -->
-                        <image src="/static/imgs/share-green.png" class="share" />
-                    </button>
-                </form>
-                <!-- 发橘子 -->
-                <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrange">
-                        <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
-                    </button>
-                </form>
+                <view class="item-quantity" wx:if="{{isSelf}}">领了 1 个橘子，并叫了您一声baba</view>
+                <view class="item-quantity" wx:else>领了 1 个橘子，并叫了{{nickName}}一声baba</view>
+              </view>
             </view>
+          </block>
+        </block>
+        <block wx:else>
+          <block wx:if="{{gameState == 3}}">
+            <view class="empty">已过期～</view>
+          </block>
+          <block wx:else>
+            <view class="empty" wx:if="{{isSelf}}">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
+            <view class="empty" wx:else>还没有人来领橘子，快来领取吧～</view>
+          </block>
+        </block>
+      </scroll-view>
+      <view class="options">
+        <view class="tips" wx:if="{{isShowPullResult}}">
+          <image class="bg" src="/static/imgs/shipinye_tishikuang.png"></image>
+          <view class="tips-text">
+            <view>获得 1 个</view>
+            <image class="juzi-img" src="/static/imgs/juzi.png"></image>
+            <view>，可以提现哟~</view>
+          </view>
         </view>
+        <auth-button auth-btn-init="auth-btn-init" pageUrl="/pages/mine/mine" onhandleAuthorize="handleAuthorize">
+          <!-- 历史记录 -->
+          <image src="/static/imgs/shipinye_lsjlan.png" class="history" data-page="/pages/mine/mine" bindtap="navigateTo" />
+        </auth-button>
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+          <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
+            <!-- 发好友 -->
+            <image src="/static/imgs/share-green.png" class="share" />
+          </button>
+        </form>
+        <!-- 发橘子 -->
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+          <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrange">
+            <image src="/static/imgs/shipinye_fajuzianniu.png" class="send" />
+          </button>
+        </form>
+      </view>
     </view>
-    <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
-        <view class="share-modal" catchtap="stopPropagation">
-            <view class="close-btn" bindtap="closeShareModal">
-                <image src="/static/imgs/close.png"></image>
-            </view>
-            <view class="share-title">
-                <image src="/static/imgs/right.png"></image>
-                <view>生成成功</view>
-            </view>
-            <!-- <image src="/static/imgs/shareModal.jpg" class="share-modal-img"></image> -->
-            <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
-                <view class="auth-fill">分 享</view>
-                <!-- <image src="/static/imgs/share-green.png"></image> -->
-            </button>
-        </view>
+  </view>
+  <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
+    <view class="share-modal" catchtap="stopPropagation">
+      <view class="close-btn" bindtap="closeShareModal">
+        <image src="/static/imgs/close.png"></image>
+      </view>
+      <view class="share-title">
+        <image src="/static/imgs/right.png"></image>
+        <view>生成成功</view>
+      </view>
+      <!-- <image src="/static/imgs/shareModal.jpg" class="share-modal-img"></image> -->
+      <button form-type="submit" open-type="share" class="share-btn" plain="{{true}}">
+        <view class="auth-fill">分 享</view>
+        <!-- <image src="/static/imgs/share-green.png"></image> -->
+      </button>
     </view>
-    <include src="/components/auth-modal.wxml"></include>
+  </view>
+  <include src="/components/auth-modal.wxml"></include>
 </view>

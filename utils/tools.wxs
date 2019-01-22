@@ -1,31 +1,31 @@
 function countDifference(n1, n2) {
-    console.log(n1, n2)
-    return n1 - n2
+  console.log(n1, n2)
+  return n1 - n2
 }
 
 // 处理手机号码显示
 function hideTelNumber(telNumber) {
-    telNumber = '' + telNumber
-    var reg = getRegExp('^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$')
-    if (reg.test(telNumber)) {
-      return telNumber.substring(0, 3) + '****' + telNumber.substring(7)
-    }
-    return telNumber
+  telNumber = '' + telNumber
+  var reg = getRegExp('^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$')
+  if (reg.test(telNumber)) {
+    return telNumber.substring(0, 3) + '****' + telNumber.substring(7)
   }
+  return telNumber
+}
 
 // 将分转换成元
 function priceFilter(price) {
-    return price / 100
+  return price / 100
 }
 
 // 昵称随机展示
 function randomCall(callList) {
-    return callList[Math.floor(Math.random() * callList.length)]
+  return callList[Math.floor(Math.random() * callList.length)]
 }
 
 module.exports = {
-    countDifference: countDifference,
-    hideTelNumber: hideTelNumber,
-    priceFilter:priceFilter,
-    randomCall: randomCall
+  countDifference: countDifference,
+  hideTelNumber: hideTelNumber,
+  priceFilter: priceFilter,
+  randomCall: randomCall
 }

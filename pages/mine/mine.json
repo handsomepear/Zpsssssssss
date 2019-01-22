@@ -1,9 +1,6 @@
 {
-    "navigationBarTitleText": "个人中心",
-    "usingComponents": {
-      "auth-button": "/components/AuthButton/AuthButton"
-    }
+  "navigationBarTitleText": "历史记录",
+  "usingComponents": {
+    "auth-button": "/components/AuthButton/AuthButton"
   }
-  
-
-  
+}

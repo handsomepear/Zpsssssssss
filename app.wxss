@@ -1,76 +1,76 @@
 page {
-    font-size: 28rpx;
-    color: #000;
+  font-size: 28rpx;
+  color: #000;
 }
 
 .juzi-img {
-    width: 50rpx;
-    height: 54rpx;
-    vertical-align: bottom;
+  width: 50rpx;
+  height: 54rpx;
+  vertical-align: bottom;
 }
 
 button {
-    padding: 0;
-    margin: 0;
-    line-height: auto;
+  padding: 0;
+  margin: 0;
+  line-height: auto;
 }
 button[plain] {
-    border: none;
+  border: none;
 }
 
 /* 授权弹窗 */
 .panel-allow-wrap {
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .panel-allow-wrap .panel .btn-auth {
-    position: relative;
+  position: relative;
 }
 .panel-allow-fudan .panel {
-    position: relative;
-    width: 590rpx;
-    height: auto;
-    background: #fafafa;
-    padding: 0;
-    border-radius: 12rpx;
+  position: relative;
+  width: 590rpx;
+  height: auto;
+  background: #fafafa;
+  padding: 0;
+  border-radius: 12rpx;
 }
 .panel-allow-fudan .panel .btn-auth .btn-in-fudan {
-    width: 200rpx;
-    line-height: 36rpx;
-    padding: 38rpx;
-    margin: 0 auto;
+  width: 200rpx;
+  line-height: 36rpx;
+  padding: 38rpx;
+  margin: 0 auto;
 }
 .panel-allow-fudan .panel .au1 {
-    padding: 54rpx 0 38rpx;
-    line-height: 36rpx;
-    color: #666;
-    text-align: center;
+  padding: 54rpx 0 38rpx;
+  line-height: 36rpx;
+  color: #666;
+  text-align: center;
 }
 .panel-allow-fudan .panel .au2 {
-    text-align: center;
-    line-height: 70rpx;
-    padding-bottom: 58rpx;
-    border-bottom: 1rpx solid #ccc;
-    font-weight: bold;
+  text-align: center;
+  line-height: 70rpx;
+  padding-bottom: 58rpx;
+  border-bottom: 1rpx solid #ccc;
+  font-weight: bold;
 }
 
 .tc {
-    text-align: center;
+  text-align: center;
 }
 .fc-orange {
-    color: #ff6c00;
+  color: #ff6c00;
 }
 .font-36 {
-    font-size: 36rpx;
+  font-size: 36rpx;
 }
 .font-38 {
-    font-size: 38rpx;
+  font-size: 38rpx;
 }

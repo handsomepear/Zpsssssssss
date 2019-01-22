@@ -1,118 +1,117 @@
 <wxs src="../../utils/tools.wxs" module="TOOLS"></wxs>
 <view class="withdraw-page">
-    <view class="remain">
-        <view class="main">
-            <view class="remain-top">
-                <view class="remain-title">橘子余额</view>
-                <view class="list-entry" data-page="/pages/orderList/orderList"  bindtap="navigateTo">提现记录</view>
-            </view>
-            <view class="withdraw-options">
-                <view class="remain-num">
-                    <text>{{orangeTotal}}</text>
-                    个
-                    <image class="juzi-img" src="/static/imgs/juzi.png" />
-                </view>
-                <form report-submit="{{true}}" bindsubmit="saveFormId">
-                    <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
-                        <view class="withdraw-btn">提现{{orangeMin}}个，约10斤</view>
-                    </button>
-                </form>
-            </view>
+  <view class="remain">
+    <view class="main">
+      <view class="remain-top">
+        <view class="remain-title">橘子余额</view>
+        <view class="list-entry" data-page="/pages/orderList/orderList" bindtap="navigateTo">
+          提现记录
         </view>
-        <view class="tips">
-            注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现60个，约十斤。
+      </view>
+      <view class="withdraw-options">
+        <view class="remain-num">
+          <text>{{orangeTotal}}</text>
+          个
+          <image class="juzi-img" src="/static/imgs/juzi.png" />
         </view>
-    </view>
-    <view class="container">
-        <!-- 充值 -->
         <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <view class="class-list">
-                <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
-                    <button form-type="submit" plain="{{true}}" class="{{index == remainTypeIndex ? 'active' : ''}}"
-                            data-index="{{index}}" bindtap="chooseRemainType">
-                        <view class="item ">
-                            <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
-                                <view class="triangle">
-                                    <view class="white-check"></view>
-                                </view>
-                            </view>
-                            <image class="juzi-img" src="/static/imgs/juzi.png" />
-                            <view class="num">{{item.amonut}}个</view>
-                            <view class="money">
-                                <text>{{TOOLS.priceFilter(item.price)}}</text>
-                                元
-                            </view>
-                        </view>
-                    </button>
-                </block>
-            </view>
+          <button form-type="submit" class="withdraw-con" plain="{{true}}" bindtap="withdraw">
+            <view class="withdraw-btn">提现{{orangeMin}}个，约10斤</view>
+          </button>
         </form>
-        <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
-            <button form-type="submit" class="remain-con" plain="{{true}}">
-                <view class="remain-btn" bindtap="rechargeOrange">购买</view>
-            </button>
-        </form>
-        <form report-submit="{{true}}" bindsubmit="saveFormId">
-            <button form-type="submit" class="address-entry" plain="{{true}}" bindtap="openAddressPanel">
-                收货地址 >
-            </button>
-        </form>
-        <view class="address-info" wx:if="{{addrInfo}}">
-            <view class="addr-item addr-name">
-                <text>收货人：</text>
-                {{addrInfo.userName}}
+      </view>
+    </view>
+    <view class="tips">注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现60个，约十斤。</view>
+  </view>
+  <view class="container">
+    <!-- 充值 -->
+    <form report-submit="{{true}}" bindsubmit="saveFormId">
+      <view class="class-list">
+        <block wx:for="{{remainTypeList}}" wx:key="{{index}}">
+          <button form-type="submit" plain="{{true}}" class="{{index == remainTypeIndex ? 'active' : ''}}" data-index="{{index}}" bindtap="chooseRemainType">
+            <view class="item ">
+              <view class="active-flag" wx:if="{{index == remainTypeIndex}}">
+                <view class="triangle">
+                  <view class="white-check"></view>
+                </view>
+              </view>
+              <image class="juzi-img" src="/static/imgs/juzi.png" />
+              <view class="num">{{item.amonut}}个</view>
+              <view class="money">
+                <text>{{TOOLS.priceFilter(item.price)}}</text>
+                元
+              </view>
             </view>
-            <view class="addr-item addr-phone">
-                <text>电话号码：</text>
-                {{TOOLS.hideTelNumber(addrInfo.telNumber)}}
-            </view>
-            <view class="addr-item addr-name">
-                <text>详细地址：</text>
-                {{region[0]}}{{region[1]}}{{region[2]}}{{addrInfo.detailInfo}}
-            </view>
+          </button>
+        </block>
+      </view>
+    </form>
+    <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
+      <button form-type="submit" class="remain-con" plain="{{true}}">
+        <view class="remain-btn" bindtap="rechargeOrange">购买</view>
+      </button>
+    </form>
+    <form report-submit="{{true}}" bindsubmit="saveFormId">
+      <button form-type="submit" class="address-entry" plain="{{true}}" bindtap="openAddressPanel">
+        收货地址 >
+      </button>
+    </form>
+    <view class="address-info" wx:if="{{addrInfo}}">
+      <view class="addr-item addr-name">
+        <text>收货人：</text>
+        {{addrInfo.userName}}
+      </view>
+      <view class="addr-item addr-phone">
+        <text>电话号码：</text>
+        {{TOOLS.hideTelNumber(addrInfo.telNumber)}}
+      </view>
+      <view class="addr-item addr-name">
+        <text>详细地址：</text>
+        {{region[0]}}{{region[1]}}{{region[2]}}{{addrInfo.detailInfo}}
+      </view>
+    </view>
+  </view>
+  <!-- 收货地址面板 -->
+  <view class="addr-edit-modal" wx:if="{{isShowAddrPanel}}" bindtap="closeAddressPanel">
+    <form report-submit="{{true}}" bindsubmit="setAddress">
+      <view class="addr-edit-panel" catchtap="stopPropagation">
+        <view class="close-btn" bindtap="closeAddressPanel">+</view>
+        <view wx:if="{{hasAddrInfo}}" class="addr-edit-title">是否使用该收货地址</view>
+        <view wx:else class="addr-edit-title">请填写收货信息</view>
+        <view class="item flex">
+          <view class="name">
+            <view class="head">收件人</view>
+            <input type="text" name="userName" value="{{addrInfo.userName}}" />
+          </view>
+          <view class="phone">
+            <view class="head">联系电话</view>
+            <input type="number" name="telNumber" value="{{addrInfo.telNumber}}" />
+          </view>
         </view>
-    </view>
-    <!-- 收货地址面板 -->
-    <view class="addr-edit-modal" wx:if="{{isShowAddrPanel}}" bindtap="closeAddressPanel">
-        <form report-submit="{{true}}" bindsubmit="setAddress">
-            <view class="addr-edit-panel" catchtap="stopPropagation">
-                <view class="close-btn" bindtap="closeAddressPanel">+</view>
-                <view wx:if="{{hasAddrInfo}}" class="addr-edit-title">是否使用该收货地址</view>
-                <view wx:else class="addr-edit-title">请填写收货信息</view>
-                <view class="item flex">
-                    <view class="name">
-                        <view class="head">收件人</view>
-                        <input type="text" name="userName" value="{{addrInfo.userName}}" />
-                    </view>
-                    <view class="phone">
-                        <view class="head">联系电话</view>
-                        <input type="number" name="telNumber" value="{{addrInfo.telNumber}}" />
-                    </view>
-                </view>
-                <view class="item">
-                    <view class="head">收货地址</view>
-                    <picker mode="region" name="region" bindchange="bindRegionChange" value="{{region}}">
-                        <view class="picker">
-                            <view class="region">
-                                <text>{{region[0]}}</text>
-                                <text>{{region[1]}}</text>
-                                <text>{{region[2]}}</text>
-                            </view>
-                        </view>
-                    </picker>
-                </view>
-                <view class="item">
-                    <view class="head">详细地址</view>
-                    <input type="text" name="detailInfo" value="{{addrInfo.detailInfo}}" />
-                </view>
-                <view class="confirm-radio" bindtap="toggleConfirmAddress">
-                    <radio value="none" color="#ff6c00" checked="{{isConfirmAddress}}" class="withdraw-radio"></radio>
-                    <text>我已经确认以上所有信息填写正确</text>
-                </view>
-                <view class="addr-options">
-                    <button class="btn" form-type="submit" plain="{{true}}">确定</button>
-                </view>
+        <view class="item">
+          <view class="head">收货地址</view>
+          <picker mode="region" name="region" bindchange="bindRegionChange" value="{{region}}">
+            <view class="picker">
+              <view class="region">
+                <text>{{region[0]}}</text>
+                <text>{{region[1]}}</text>
+                <text>{{region[2]}}</text>
+              </view>
             </view>
-        </form>
-    </view>
+          </picker>
+        </view>
+        <view class="item">
+          <view class="head">详细地址</view>
+          <input type="text" name="detailInfo" value="{{addrInfo.detailInfo}}" />
+        </view>
+        <view class="confirm-radio" bindtap="toggleConfirmAddress">
+          <radio value="none" color="#ff6c00" checked="{{isConfirmAddress}}" class="withdraw-radio"></radio>
+          <text>我已经确认以上所有信息填写正确</text>
+        </view>
+        <view class="addr-options">
+          <button class="btn" form-type="submit" plain="{{true}}">确定</button>
+        </view>
+      </view>
+    </form>
+  </view>
 </view>

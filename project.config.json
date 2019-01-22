@@ -12,7 +12,7 @@
 		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.2",
+	"libVersion": "2.5.0",
 	"appid": "wx1443885c9558e2f9",
 	"projectname": "orange",
 	"debugOptions": {
@@ -55,7 +55,7 @@
 					"id": 2,
 					"name": "视频",
 					"pathName": "pages/videoPage/videoPage",
-					"query": "gameId=82&shareOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBS&source=template"
+					"query": "fatherName=Zps&sonName=Zps"
 				},
 				{
 					"id": -1,
@@ -80,6 +80,12 @@
 					"name": "提现列表",
 					"pathName": "pages/orderList/orderList",
 					"query": "gameId=82&shareOpenId=213131"
+				},
+				{
+					"id": 7,
+					"name": "分享着陆",
+					"pathName": "pages/index/index",
+					"query": "gameSponsorOpenId=null&gameId=380&fatherName=Zps&fatherAvatarUrl=https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoUto5RyfmUt7oaVzXCU048bHxlndzuKVKqiay1G2EjC8aSQ4JIbME0ke2WIZe2Y2mCfy7bEqYK03A/132&source=share"
 				}
 			]
 		}

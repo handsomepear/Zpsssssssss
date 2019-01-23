@@ -2,7 +2,11 @@
 
 .banner-con {
   margin-top: 100rpx;
+  height: 466rpx;
   position: relative;
+}
+swiper {
+  height: 100%;
 }
 .banner {
   width: 100%;

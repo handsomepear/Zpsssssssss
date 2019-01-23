@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -85,7 +85,7 @@
 					"id": 7,
 					"name": "分享着陆",
 					"pathName": "pages/index/index",
-					"query": "gameSponsorOpenId=null&gameId=380&fatherName=Zps&fatherAvatarUrl=https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoUto5RyfmUt7oaVzXCU048bHxlndzuKVKqiay1G2EjC8aSQ4JIbME0ke2WIZe2Y2mCfy7bEqYK03A/132&source=share"
+					"query": "gameSponsorOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBSE&gameId=388&fatherName=null&fatherAvatarUrl=null&source=share"
 				}
 			]
 		}

@@ -1,6 +1,5 @@
 const app = getApp()
 const { navigateTo, random } = require('../../utils/utils')
-const { register } = require('../../server/api')
 const { getConfigHandle, saveFormId } = require('../../server/common')
 
 // 事件函数

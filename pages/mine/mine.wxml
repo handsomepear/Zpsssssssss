@@ -2,16 +2,47 @@
 <view class="mine-page">
   <view class="tab-title">
     <view class="tab-item {{currentTab == 0 ? 'active' : ''}}" data-current="0" bindtap="chooseTab">
-      收入
+      记录
     </view>
     <view class="tab-item {{currentTab == 1 ? 'active' : ''}}" data-current="1" bindtap="chooseTab">
-      支出
+      收入
     </view>
     <view class="tab-item {{currentTab == 2 ? 'active' : ''}}" data-current="2" bindtap="chooseTab">
-      记录
+      支出
     </view>
   </view>
   <swiper class="mine-swiper" current="{{currentTab}}" duration="500" style="height: {{winHeight}}px" bindchange="swiperChange">
+     <!-- 记录 -->
+    <swiper-item class="game-list">
+      <block wx:if="{{roundList.length > 0}}">
+        <scroll-view scroll-y="true" class="mine-scroll">
+          <block wx:for="{{roundList}}" wx:key="{{item.id}}" wx:if="{{roundList.length > 0}}">
+            <view class="round-item" data-game-id="{{item.id}}" data-total="{{item.total}}" data-received="{{item.received}}" bindtap="viewGameDetail">
+              <view class="round-item-wrap">
+                <view class="top">
+                  您发了
+                  <text>{{item.total}}</text>
+                  个
+                  <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
+                </view>
+                <view class="bottom">
+                  <text class="desc">已有 {{item.received}} 人领取～</text>
+                  <text class="time">{{item.time}}</text>
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </block>
+      <block wx:else>
+        <view class="empty">您还没有发过橘子，快去给好友发橘子吧～</view>
+      </block>
+      <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo">
+        <button form-type="submit" plain="{{true}}">
+          <view class="send-btn">发橘子</view>
+        </button>
+      </form>
+    </swiper-item>
     <!-- 收入 -->
     <swiper-item>
       <view class="head">
@@ -79,36 +110,6 @@
         </button>
       </form>
     </swiper-item>
-    <!-- 记录 -->
-    <swiper-item class="game-list">
-      <block wx:if="{{roundList.length > 0}}">
-        <scroll-view scroll-y="true" class="mine-scroll">
-          <block wx:for="{{roundList}}" wx:key="{{item.id}}" wx:if="{{roundList.length > 0}}">
-            <view class="round-item" data-game-id="{{item.id}}" data-total="{{item.total}}" data-received="{{item.received}}" bindtap="viewGameDetail">
-              <view class="round-item-wrap">
-                <view class="top">
-                  您发了
-                  <text>{{item.total}}</text>
-                  个
-                  <image class="juzi-img" src="/static/imgs/juzi.png" mode="widthFix" />
-                </view>
-                <view class="bottom">
-                  <text class="desc">已有 {{item.received}} 人领取～</text>
-                  <text class="time">{{item.time}}</text>
-                </view>
-              </view>
-            </view>
-          </block>
-        </scroll-view>
-      </block>
-      <block wx:else>
-        <view class="empty">您还没有发过橘子，快去给好友发橘子吧～</view>
-      </block>
-      <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo">
-        <button form-type="submit" plain="{{true}}">
-          <view class="send-btn">发橘子</view>
-        </button>
-      </form>
-    </swiper-item>
+   
   </swiper>
 </view>

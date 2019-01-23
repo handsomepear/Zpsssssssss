@@ -1,43 +1,112 @@
 <view class="index-page">
   <image class="gif_entry" src="../../static/imgs/gif_entry.png" mode="widthFix" bindtap="toVideoPage" />
-  <view class="banner-con">
-    <view class="banner">
-      <image src="../../static/imgs/index_bg.png" mode="widthFix" />
-    </view>
-    <view class="father-name">
-      <block wx:if="{{source === 'share'}}">
-        <view class="avatar">
-          <image src="{{fatherAvatarUrl}}"></image>
-        </view>
-        <view class="nickName">{{fatherName}}</view>
+  <!-- 生成的图片 -->
+  <view wx:if="{{getList.length > 0}}"  class="banner-con">
+    <swiper current="{{getIndex}}" duration="500" bindchange="">
+      <block wx:for="{{getList}}" wx:key="{{index}}">
+        <swiper-item>
+          <view class="banner">
+            <image src="../../static/imgs/index_bg.png" mode="widthFix" />
+          </view>
+          <!-- 游戏所有者名字 -->
+          <view class="father-name">
+            <block wx:if="{{source === 'share'}}">
+              <view class="avatar">
+                <image src="{{gameData.fatherAvatarUrl}}"></image>
+              </view>
+              <view class="nickName">{{gameData.fatherName}}</view>
+            </block>
+            <block wx:else>
+              <view class="avatar">
+                <open-data type="userAvatarUrl"></open-data>
+              </view>
+              <view class="nickName">
+                <open-data type="userNickName"></open-data>
+              </view>
+            </block>
+          </view>
+          <!-- 领橘子者名字 -->
+          <view class="son-name">
+            <block wx:if="{{source === 'share'}}">
+              <block wx:if="{{pullstate === 0}}">
+                <view class="avatar">
+                  <open-data type="userAvatarUrl"></open-data>
+                </view>
+                <view class="nickName">
+                  <open-data type="userNickName"></open-data>
+                </view>
+              </block>
+              <block wx:else>
+                <view class="avatar">
+                  <image src="{{getList[getIndex].avatarUrl}}"></image>
+                </view>
+                <view class="nickName">{{getList[getIndex].nickName}}</view>
+              </block>
+            </block>
+            <block wx:else>
+              <view class="nickName">给好友发个橘子试试~</view>
+            </block>
+          </view>
+        </swiper-item>
       </block>
-      <block wx:else>
-        <view class="avatar">
-          <open-data type="userAvatarUrl"></open-data>
-        </view>
-        <view class="nickName">
-          <open-data type="userNickName"></open-data>
-        </view>
-      </block>
-    </view>
-    <view class="son-name">
-      <block wx:if="{{source === 'share'}}">
-        <view class="avatar">
-          <image src="{{getList[getIndex].avatarUrl}}"></image>
-        </view>
-        <view class="nickName">{{getList[getIndex].nickName}}</view>
-      </block>
-      <block wx:else>
-        <view class="nickName">给好友发个橘子试试~</view>
-      </block>
-    </view>
-    <view class="arrow-con" wx:if="{{getList.length > 0}}">
+    </swiper>
+    <view class="arrow-con">
       <view class="arrow-left" bindtap="pre" wx:if="{{getIndex > 0}}">
         <image src="/static/imgs/arrow-left.png" />
       </view>
       <view class="arrow-right" bindtap="next" wx:if="{{getIndex < getList.length - 1}}">
         <image src="/static/imgs/arrow-right.png" />
       </view>
+    </view>
+  </view>
+  <view wx:else class="banner-con">
+    <view class="banner">
+      <image src="../../static/imgs/index_bg.png" mode="widthFix" />
+    </view>
+    <view class="father-name">
+      <block wx:if="{{source === 'share'}}">
+        <view class="avatar">
+          <image src="{{gameData.fatherAvatarUrl}}"></image>
+        </view>
+        <view class="nickName">{{gameData.fatherName}}</view>
+      </block>
+      <block wx:else>
+        <block wx:if="isAuthorized">
+          <view class="avatar">
+            <image src="{{userInfo.avatarUrl}}"></image>
+          </view>
+          <view class="nickName">{{userInfo.nickName}}</view>
+        </block>
+        <block wx:else>
+          <view class="avatar">
+            <open-data type="userAvatarUrl"></open-data>
+          </view>
+          <view class="nickName">
+            <open-data type="userNickName"></open-data>
+          </view>
+        </block>
+      </block>
+    </view>
+    <view class="son-name">
+      <block wx:if="{{source === 'share'}}">
+        <block wx:if="{{pullstate === 0}}">
+          <view class="avatar">
+            <open-data type="userAvatarUrl"></open-data>
+          </view>
+          <view class="nickName">
+            <open-data type="userNickName"></open-data>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="avatar">
+            <image src="{{getList[getIndex].avatarUrl}}"></image>
+          </view>
+          <view class="nickName">{{getList[getIndex].nickName}}</view>
+        </block>
+      </block>
+      <block wx:else>
+        <view class="nickName">给好友发个橘子试试~</view>
+      </block>
     </view>
   </view>
   <view class="main">
@@ -100,36 +169,38 @@
       </view>
     </view>
   </view>
-  <block wx:if="{{getList.length > 0}}">
+  <block wx:if="{{gameData}}">
     <view class="game-container">
       <view class="title">
         <view class="avatar">
-          <image src="{{fatherAvatarUrl}}" binderror="" bindload=""></image>
+          <image src="{{gameData.fatherAvatarUrl}}" binderror="" bindload=""></image>
         </view>
-        <view class="nickname">{{fatherName}}</view>
-        <view wx:if="{{getList.length === currentGameOrange}}">本次发的橘子已领完</view>
-        <view wx:else>本次发了 {{currentGameOrange}} 个橘子</view>
+        <view class="nickname">{{gameData.fatherName}}</view>
+        <view wx:if="{{getList.length === gameData.currentGameOrange}}">本次发的橘子已领完</view>
+        <view wx:else>本次发了 {{gameData.currentGameOrange}} 个橘子</view>
       </view>
-      <form report-submit="{{true}}" bindsubmit="saveFormId">
-        <view class="game-list">
-          <block wx:for="{{getList}}" wx:key="{{item.id}}">
-            <button form-type="submit" plain="{{true}}">
-              <view class="item">
-                <view class="avatar">
-                  <image src="{{item.avatarUrl}}" binderror="" bindload=""></image>
+      <block wx:if="{{getList.length > 0}}">
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+          <view class="game-list">
+            <block wx:for="{{getList}}" wx:key="{{item.id}}">
+              <button form-type="submit" plain="{{true}}">
+                <view class="item">
+                  <view class="avatar">
+                    <image src="{{item.avatarUrl}}" binderror="" bindload=""></image>
+                  </view>
+                  <view class="item-wrap">
+                    <view class="top">{{item.nickName}}</view>
+                    <view class="bottom">领了一个橘子，并叫了{{gameData.fatherName}}一声{{item.call}}</view>
+                  </view>
                 </view>
-                <view class="item-wrap">
-                  <view class="top">{{item.nickName}}</view>
-                  <view class="bottom">领了一个橘子，并叫了{{fatherName}}一声{{item.call}}</view>
-                </view>
-              </view>
-            </button>
-          </block>
-        </view>
-      </form>
+              </button>
+            </block>
+          </view>
+        </form>
+      </block>
     </view>
   </block>
-  <view class="bottom-options" wx:if="{{source === 'share'}}">
+  <view class="bottom-options" wx:if="{{source === 'share' || gameData.currentGameOrange < getList.length}}">
     <view class="history" bindtap="viewHistory">历史记录</view>
     <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
       <!-- 发好友 -->
@@ -142,8 +213,8 @@
   <view class="bottom-options" wx:else>
     <view class="history" style="width: 100%" bindtap="viewHistory">历史记录</view>
   </view>
-  <view class="share-modal-wrap" wx:if="{{isShowShareModal}}" bindtap="closeShareModal">
-    <view class="share-modal" catchtap="stopPropagation">
+  <view class="share-modal-wrap" wx:if="{{isShowShareModal}}">
+    <view class="share-modal">
       <view class="close-btn" bindtap="closeShareModal">
         <image src="/static/imgs/close.png"></image>
       </view>

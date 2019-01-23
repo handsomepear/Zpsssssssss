@@ -53,7 +53,7 @@
     </form>
     <form report-submit="{{true}}" bindsubmit="saveFormId">
       <button form-type="submit" class="address-entry" plain="{{true}}" bindtap="openAddressPanel">
-        收货地址 >
+        {{addrInfo ? '修改收货地址': '收货地址'}} >
       </button>
     </form>
     <view class="address-info" wx:if="{{addrInfo}}">

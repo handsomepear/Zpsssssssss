@@ -1,6 +1,6 @@
 const app = getApp()
 const { navigateTo, random } = require('../../utils/utils.js')
-const { startRound, pullFromRound, getRound } = require('../../server/api')
+const { startRound, pullFromRound, getRound, getMyRounds } = require('../../server/api')
 const { getConfigHandle, getGameUserInfo, saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
@@ -21,7 +21,7 @@ let eventFunctions = {
   toVideoPage() {
     let path = '/pages/videoPage/videoPage'
     if (this.data.source === 'share') {
-      path = '/pages/videoPage/videoPage?fatherName=' + this.data.fatherName + '&sonName=' + this.data.getList[0].nickName
+      path = '/pages/videoPage/videoPage?fatherName=' + this.data.gameData.fatherName + '&sonName=' + this.data.getList[0].nickName
     }
     wx.navigateTo({ url: path })
   },
@@ -56,8 +56,11 @@ let eventFunctions = {
         canSend: true,
         isShowShareModal: true,
         gameId: res.data.id,
-        fatherName: userInfo.nickName,
-        fatherAvatarUrl: userInfo.avatarUrl,
+        gameData: {
+          fatherName: userInfo.nickName,
+          fatherAvatarUrl: userInfo.avatarUrl,
+          currentGameOrange: res.data.orange
+        },
         gameSponsorOpenId: openId
       })
     })
@@ -71,16 +74,20 @@ let eventFunctions = {
     this.setData({ showGetOrangeModal: false })
   },
   next() {
-    const getIndex = ++this.data.getIndex
-    this.setData({
-      getIndex
-    })
+    if (this.data.getIndex < this.data.getList.length - 1) {
+      const getIndex = ++this.data.getIndex
+      this.setData({
+        getIndex
+      })
+    }
   },
   pre() {
-    const getIndex = --this.data.getIndex
-    this.setData({
-      getIndex
-    })
+    if (this.data.getIndex > 0) {
+      const getIndex = --this.data.getIndex
+      this.setData({
+        getIndex
+      })
+    }
   }
 }
 
@@ -129,10 +136,6 @@ let wxRelevantFunctions = {
         that.data.gameSponsorOpenId +
         '&gameId=' +
         that.data.gameId +
-        '&fatherName=' +
-        that.data.fatherName +
-        '&fatherAvatarUrl=' +
-        that.data.fatherAvatarUrl +
         '&source=share'
     }
     console.log(path)
@@ -147,10 +150,10 @@ let wxRelevantFunctions = {
     const that = this
     that.setData({ isAuthorized: true })
     const userInfo = wx.getStorageSync('userInfo')
-    this.setData({
-      fatherAvatarUrl: userInfo.avatarUrl,
-      fatherName: userInfo.nickName
-    })
+    // this.setData({
+    //   fatherAvatarUrl: userInfo.avatarUrl,
+    //   fatherName: userInfo.nickName
+    // })
     if (e.detail) {
       wx.navigateTo({ url: e.detail })
     } else {
@@ -190,26 +193,35 @@ Page({
     pullState: null, // 领取橘子状态  0 表示领取到 1表示未领取到
     gameSponsorOpenId: null, // 橘子游戏的所有者
     fatherAvatarUrl: null, // 橘子游戏的所有者
-    fatherName: null, // 橘子游戏的所有者
-    sonName: null // 领橘子的人
+    // fatherName: null, // 橘子游戏的所有者
+    // sonName: null, // 领橘子的人
+    gameData: null // 底部列表数据
+    // demo: {
+    //   fatherAvatarUrl: '',
+    //   fatherName: '',
+    //   currentGameOrange: ''
+    // }
   },
   pageLandHandle(opts) {
     if (opts && opts.source === 'share') {
       this.setData({
-        fatherAvatarUrl: opts.fatherAvatarUrl,
-        fatherName: opts.fatherName,
         gameId: opts.gameId,
         source: 'share'
       })
       this.pullFromRoundHandle()
     } else {
-      if (this.data.userInfo) {
-        this.setData({
-          fatherAvatarUrl: this.data.userInfo.avatarUrl,
-          fatherName: this.data.userInfo.nickName
-        })
-      }
+      this.getRecentGame()
     }
+  },
+  // 获取用户最近一次游戏数据
+  getRecentGame() {
+    const that = this
+    getMyRounds().then(res => {
+      that.setData({
+        gameId : res.data[0].id
+      })
+      that.getRoundByGameId()
+    })
   },
   // 领橘子
   pullFromRoundHandle() {
@@ -240,9 +252,11 @@ Page({
     getRound(this.data.gameId).then(res => {
       that.setData({
         getList: res.data.getList,
-        fatherAvatarUrl: res.data.owner_avatar,
-        fatherName: res.data.owner_name,
-        currentGameOrange: res.data.orange_total
+        gameData: {
+          fatherAvatarUrl: res.data.owner_avatar,
+          fatherName: res.data.owner_name,
+          currentGameOrange: res.data.orange_total
+        }
         // gameId: gameId,
         // gameState: res.data.state
       })

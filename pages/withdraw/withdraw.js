@@ -13,7 +13,7 @@ let eventFunctions = {
     this.setData({ isShowAddrPanel: true })
   },
   closeAddressPanel() {
-    this.setData({ isShowAddrPanel: false, canWithdraw: true, isConfirmAddress: false })
+    this.setData({ isShowAddrPanel: false, canWithdraw: true, isConfirmAddress: false, addressFlag: false })
   },
   bindRegionChange(e) {
     var that = this
@@ -37,6 +37,7 @@ let eventFunctions = {
     }
     if (!data.addrInfo) {
       // 如果没有地址 直接使用微信地址
+      this.setData({addressFlag: true})
       return that.getWxAddress()
     }
 
@@ -47,7 +48,6 @@ let eventFunctions = {
       this.openAddressPanel()
     }
   },
-  // 根据用户输入的橘子个数生成方案数据
   toggleConfirmAddress() {
     this.setData({ isConfirmAddress: !this.data.isConfirmAddress })
   },
@@ -88,7 +88,7 @@ let eventFunctions = {
           },
           region: addrInfo.region
         })
-        if (data.canWithdraw) {
+        if (data.canWithdraw && data.addressFlag) {
           withdraw({
             withdrawNum: data.orangeMin, // 实际到手的数量
             addr: data.addrInfo.detailInfo,
@@ -264,13 +264,13 @@ Page({
   name: 'withdraw',
   data: {
     orangeTotal: '',
-
+    addressFlag: false, // true 修改地址之后要提现 false 表示仅仅修改地址
     orangeMin: 60,
     isAuth: app.globalData.isAuthorized,
     isShowAddrPanel: false, // 控制地址弹窗是否显示
     withdrawNum: null, // 提现橘子个数
     hasAddrInfo: false,
-    isConfirmAddress: false,
+    isConfirmAddress: false, 
     remainTypeList: [], // 充值价格
     remainTypeIndex: 0,
     addrInfo: null,

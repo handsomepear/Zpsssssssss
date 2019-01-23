@@ -27,20 +27,20 @@
     </view>
   </view>
   <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
-    <!-- 我要做爸爸 -->
-    <form report-submit="{{true}}" bindsubmit="saveFormId">
-      <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrangeHandle">
-        <view class="send">我要做爸爸</view>
-      </button>
-    </form>
     <!-- 发好友 -->
     <form report-submit="{{true}}" bindsubmit="saveFormId">
       <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
         <!-- 发好友 -->
         <view class="share">
           <image src="../../static/imgs/share-icon.png" binderror="" bindload=""></image>
-          <view>发好友</view>
+          <view>分享给好友</view>
         </view>
+      </button>
+    </form>
+    <!-- 我要做爸爸 -->
+    <form report-submit="{{true}}" bindsubmit="saveFormId">
+      <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrangeHandle">
+        <view class="send">我要做爸爸</view>
       </button>
     </form>
   </view>

@@ -13,14 +13,14 @@ let eventFunctions = {
   swiperChange(e) {
     const data = this.data
     this.setData({ currentTab: e.detail.current })
-    if (data.currentTab === 0 && data.incomeList.length === 0) {
+    if (data.currentTab === 0) {
+      this.getMyRounds()
+    }
+    if (data.currentTab === 1 && data.incomeList.length === 0 ) {
       this.getIncomeList()
     }
-    if (data.currentTab === 1 && data.outcomeList.length === 0) {
+    if (data.currentTab === 2 && data.outcomeList.length === 0) {
       this.getOutcomeList()
-    }
-    if (data.currentTab === 2) {
-      this.getMyRounds()
     }
   },
   // 查看某局游戏详情
@@ -51,7 +51,7 @@ let lifeCycleFunctions = {
       incomePage: 0,
       outcomePage: 0
     })
-    this.getIncomeList()
+    this.getMyRounds()
   },
   onHide() {}
 }

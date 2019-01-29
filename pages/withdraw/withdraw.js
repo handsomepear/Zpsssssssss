@@ -37,7 +37,7 @@ let eventFunctions = {
     }
     if (!data.addrInfo) {
       // 如果没有地址 直接使用微信地址
-      this.setData({addressFlag: true})
+      this.setData({ addressFlag: true })
       return that.getWxAddress()
     }
 
@@ -106,14 +106,15 @@ let eventFunctions = {
                   app.globalData.gameUserInfo.addr = res.data.addr
                   that.setData({
                     orangeTotal: app.globalData.gameUserInfo.orangeTotal,
-                    canWithdraw: true
+                    canWithdraw: true,
+                    showWithdrawSuccessModal: true
                   })
                   wx.hideLoading()
-                  wx.showToast({
-                    title: '提现成功',
-                    icon: 'success',
-                    duration: 2000
-                  })
+                  // wx.showToast({
+                  //   title: '提现成功',
+                  //   icon: 'success',
+                  //   duration: 2000
+                  // })
                 })
                 .catch(err => {
                   wx.showToastWithoutIcon(err.msg)
@@ -187,6 +188,12 @@ let eventFunctions = {
           that.setData({ canPay: true })
         })
     }
+  },
+  // 关闭提现成功通知弹窗
+  closeWithdrawSuccessModal() {
+    this.setData({
+      showWithdrawSuccessModal: false
+    })
   }
 }
 
@@ -270,13 +277,14 @@ Page({
     isShowAddrPanel: false, // 控制地址弹窗是否显示
     withdrawNum: null, // 提现橘子个数
     hasAddrInfo: false,
-    isConfirmAddress: false, 
+    isConfirmAddress: false,
     remainTypeList: [], // 充值价格
     remainTypeIndex: 0,
     addrInfo: null,
     region: [],
     canWithdraw: true, // 能否点击提现按钮
-    canPay: true
+    canPay: true,
+    showWithdrawSuccessModal: false
   },
   /**
    * 根据橘子数量计算邮费

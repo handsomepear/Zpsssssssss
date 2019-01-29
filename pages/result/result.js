@@ -4,7 +4,12 @@ const { getRound } = require('../../server/api')
 const { saveFormId } = require('../../server/common')
 // 事件函数（属性值只能为function）
 const eventFunctions = {
-  navigateTo: navigateTo
+  navigateTo: navigateTo,
+  sendOrangeHandle() {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  }
 }
 
 // 生命周期函数（属性值只能为function）
@@ -55,29 +60,18 @@ const lifeCycleFunctions = {
 
 // 开放能力 & 组件相关（属性值只能为function）
 const wxRelevantFunctions = {
-  onShareAppMessage(e) {
-    const that = this
-    if (e.from == 'button') {
-      return {
-        title: '我买几个橘子去，你就在此地，不要走动~',
-        imageUrl: random(app.globalData.shareImgList),
-        path:
-          '/pages/videoPage/videoPage?gameId=' +
-          that.data.gameId +
-          '&shareOpenId=' +
-          that.data.shareOpenId +
-          '&shareUsername=' +
-          that.data.shareUsername
-      }
+  onShareAppMessage(obj) {
+    let that = this
+    let path = '/pages/index/index'
+    if (obj.from === 'button') {
+      path = '/pages/index/index?gameSponsorOpenId=' + that.data.shareOpenId + '&gameId=' + that.data.gameId + '&source=share'
     }
-  },
-  handleAuthorize() {
-    this.setData({
-      isAuth: true
-    })
-    wx.navigateTo({
-      url: '/pages/mine/mine'
-    })
+    console.log(path)
+    return {
+      title: '我买几个橘子去，你就在此地，不要走动~',
+      imageUrl: random(app.globalData.shareImgList),
+      path: path
+    }
   }
 }
 

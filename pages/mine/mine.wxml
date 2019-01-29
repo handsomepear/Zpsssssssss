@@ -39,7 +39,7 @@
       </block>
       <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo">
         <button form-type="submit" plain="{{true}}">
-          <view class="send-btn">发橘子</view>
+          <view class="send-btn">我要做爸爸</view>
         </button>
       </form>
     </swiper-item>
@@ -71,7 +71,7 @@
       </block>
       <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo">
         <button form-type="submit" plain="{{true}}">
-          <view class="send-btn">发橘子</view>
+          <view class="send-btn">我要做爸爸</view>
         </button>
       </form>
     </swiper-item>
@@ -106,7 +106,7 @@
       </block>
       <form class="send" report-submit="{{true}}" bindsubmit="saveFormId" data-page="/pages/index/index" bindtap="navigateTo">
         <button form-type="submit" plain="{{true}}">
-          <view class="send-btn">发橘子</view>
+          <view class="send-btn">我要做爸爸</view>
         </button>
       </form>
     </swiper-item>

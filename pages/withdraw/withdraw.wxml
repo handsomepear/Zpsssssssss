@@ -114,4 +114,11 @@
       </view>
     </form>
   </view>
+  <view class="withdraw-success-wrap" wx:if="{{showWithdrawSuccessModal}}">
+    <view class="withdraw-success-modal" >
+      <view class="title">提现成功</view>
+      <view class="withdraw-tips">因春节期间物流停运，所有提现节后发货。有问题请在客服消息中描述，并留下联系方式，节后工作人员统一回复。</view>
+      <view class="confirm-btn" bindtap="closeWithdrawSuccessModal">确定</view>
+    </view>
+  </view>
 </view>

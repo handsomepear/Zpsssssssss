@@ -77,7 +77,6 @@ let request = {
               if (res.data.result == 0) {
                 resolve(res.data.data.openid)
               } else {
-                console.log(res)
                 reject(res)
               }
             },

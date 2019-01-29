@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -13,7 +13,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.5.0",
-	"appid": "wx1443885c9558e2f9",
+	"appid": "wx1914d30c80460f6c",
 	"projectname": "orange",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -85,7 +85,7 @@
 					"id": 7,
 					"name": "分享着陆",
 					"pathName": "pages/index/index",
-					"query": "gameSponsorOpenId=o5SNK5KWsYEJv_vVWYzSiogxyBSE&gameId=388&fatherName=null&fatherAvatarUrl=null&source=share"
+					"query": "gameSponsorOpenId=oTn7y5P_NYZWDjjChzR8XFWQR1mQ&gameId=394&source=share"
 				}
 			]
 		}

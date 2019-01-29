@@ -18,15 +18,15 @@
             <view class="poster-modal" bindtap="startLoadGif">
               <image class="play-img" src="/static/imgs/play-btn.png" />
               <image class="hand-img" src="/static/imgs/hand.png" />
-              <view class="text1">点击观看视频</view>
-              <view class="text2">就可以领到橘子呦</view>
+              <view class="text1">点击观看感人视频</view>
             </view>
           </block>
         </view>
       </block>
+      
     </view>
   </view>
-  <view class="options" style="padding-bottom:{{ isx ? '40px' : '30rpx'}}">
+  <view class="options" style="padding-bottom:{{ isx ? '50rpx' : '40rpx'}}">
     <!-- 发好友 -->
     <form report-submit="{{true}}" bindsubmit="saveFormId">
       <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">

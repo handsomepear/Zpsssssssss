@@ -46,6 +46,7 @@ page {
 }
 .poster image {
     position: absolute;
+   
 }
 .poster .text1,
 .poster .text2 {
@@ -125,16 +126,16 @@ page {
     display: flex;
     justify-content: space-around;
     padding: 0 30rpx;
-    margin-top: 40rpx;
+    margin-top: 30rpx;
 }
 .options .auth-btn-init,
 .options .share-btn,
 .options form  {
     color: #fff;
     width: 310rpx;
-    height: 72rpx;
+    height: 92rpx;
     font-size: 32rpx;
-    line-height: 72rpx;
+    line-height: 92rpx;
 }
 .options .send {
     background-color: #ff6c00;

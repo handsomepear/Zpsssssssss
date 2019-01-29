@@ -135,3 +135,35 @@ page {
   text-align: center;
   margin-top: 100rpx;
 }
+
+
+/* 底部操作按钮 */
+.options {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 30rpx;
+}
+.options .auth-btn-init,
+.options .share-btn,
+.options form  {
+  color: #fff;
+  width: 310rpx;
+  height: 92rpx;
+  font-size: 32rpx;
+  line-height: 92rpx;
+}
+.options .send {
+  background-color: #ff6c00;
+}
+.options .share {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1aad19;
+}
+.options .share image {
+  width: 36rpx;
+  height: 37rpx;
+  margin-right: 10rpx;
+}

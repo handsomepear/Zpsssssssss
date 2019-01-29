@@ -48,18 +48,21 @@
           </block>
         </block>
       </scroll-view>
-      <view class="card-btns">
-        <view class="btn">
-          <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize">
-            <image src="/static/imgs/history.png" mode="widthFix" />
-          </auth-button>
-        </view>
+      <view class="options">
+        <!-- 发好友 -->
         <form report-submit="{{true}}" bindsubmit="saveFormId">
-          <button wx:if="{{gameState !== 0}}" form-type="submit" class="btn" plain="{{true}}" data-page="/pages/index/index" bindtap="navigateTo">
-            <image src="/static/imgs/send-lg.png" mode="widthFix" />
+          <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
+            <!-- 发好友 -->
+            <view class="share">
+              <image src="../../static/imgs/share-icon.png" binderror="" bindload=""></image>
+              <view>分享给好友</view>
+            </view>
           </button>
-          <button wx:else form-type="submit" open-type="share" class="btn" plain="{{true}}">
-            <image src="/static/imgs/share-orange.png" mode="widthFix" />
+        </form>
+        <!-- 我要做爸爸 -->
+        <form report-submit="{{true}}" bindsubmit="saveFormId">
+          <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="sendOrangeHandle">
+            <view class="send">我要做爸爸</view>
           </button>
         </form>
       </view>

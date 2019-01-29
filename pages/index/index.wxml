@@ -1,7 +1,7 @@
 <view class="index-page">
   <image class="gif_entry" src="../../static/imgs/gif_entry.png" mode="widthFix" bindtap="toVideoPage" />
   <!-- 生成的图片 -->
-  <view wx:if="{{getList.length > 0}}"  class="banner-con">
+  <view wx:if="{{getList.length > 0}}" class="banner-con">
     <swiper current="{{getIndex}}" duration="500" bindchange="">
       <block wx:for="{{getList}}" wx:key="{{index}}">
         <swiper-item>
@@ -145,7 +145,7 @@
           <view class="quantity">
             <view class="input-con">
               <view class="number" wx:if="{{showGetOrangeModal}}" style="color : #aaa">填写个数</view>
-              <block wx:if="{{!showGetOrangeModal && !isShowShareModal}}">
+              <block wx:if="{{!showGetOrangeModal && !isShowShareModal && !showAuthModal}}">
                 <input type="number" class="number" value="{{sendOrangeNum}}" cursor="{{120}}" placeholder="填写个数" placeholder-style="color: #aaa;font-size: 28rpx;" bindinput="getSendOrangeNum" bindblur="hideNumInput" />
               </block>
             </view>
@@ -154,14 +154,14 @@
         </view>
         <view class="send-btn">
           <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
-            <view class="auth-fill">发橘子</view>
+            <view class="auth-fill">发橘子给好友</view>
           </auth-button>
           <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="" wx:else>
             <!-- <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" wx:if="{{orangeTotal && sendOrangeNum && sendOrangeNum != 0 && orangeTotal >= sendOrangeNum}}">
               <view class="auth-fill">发橘子</view>
             </button> -->
             <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRoundHandle">
-              <view class="auth-fill">发橘子</view>
+              <view class="auth-fill">发橘子给好友</view>
             </button>
           </form>
         </view>
@@ -198,9 +198,17 @@
           </view>
         </form>
       </block>
+      <block wx:else>
+        <block wx:if="{{gameState == 3}}">
+            <view class="empty">您分享的橘子长时间无人领取，已返回到您账户～</view>
+          </block>
+          <block wx:else>
+            <view class="empty">还没有人领取您的橘子，快分享出去让别人领你的橘子吧～</view>
+          </block>
+      </block>
     </view>
   </block>
-  <view class="bottom-options" wx:if="{{source === 'share' || gameData.currentGameOrange < getList.length}}">
+  <view class="bottom-options" wx:if="{{source === 'share' && gameData.currentGameOrange > getList.length || gameData.currentGameOrange > getList.length}}">
     <view class="history" bindtap="viewHistory">历史记录</view>
     <button form-type="submit" open-type="share" plain="{{true}}" class="share-btn">
       <!-- 发好友 -->
@@ -229,8 +237,8 @@
       </button>
     </view>
   </view>
-  <view class="get-orange-wrap" wx:if="{{showGetOrangeModal}}" bindtap="closeGetOrangeModal">
-    <view class="get-orange-modal" catchtap="stopPropagation">
+  <view class="get-orange-wrap" wx:if="{{showGetOrangeModal}}">
+    <view class="get-orange-modal" >
       <view class="title">
         获得
         <text>1</text>
@@ -240,4 +248,20 @@
       <view class="confirm-btn" bindtap="closeGetOrangeModal">确定</view>
     </view>
   </view>
+  <block wx:if="{{showAuthModal}}">
+    <!-- 封面图 -->
+    <view class="image">
+      <view class="poster">
+        <image class="poster-img" src="/static/imgs/poster.jpg" />
+        <view class="poster-modal">
+          <image class="play-img" src="/static/imgs/play-btn.png" />
+          <image class="hand-img" src="/static/imgs/hand.png" />
+          <view class="text2">点击就可以领到橘子呦</view>
+        </view>
+      </view>
+      <button open-type="getUserInfo" class="auth-btn-init" plain="{{true}}" bindgetuserinfo="handleGetUserInfo">
+        <view class="play-btn"></view>
+      </button>
+    </view>
+  </block>
 </view>

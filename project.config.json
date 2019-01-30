@@ -37,13 +37,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "领取结果",
 					"pathName": "pages/result/result",
-					"query": "gameId=82&source=template"
+					"query": "gameId=425"
 				},
 				{
 					"id": -1,
@@ -85,7 +85,7 @@
 					"id": 7,
 					"name": "分享着陆",
 					"pathName": "pages/index/index",
-					"query": "gameSponsorOpenId=oTn7y5P_NYZWDjjChzR8XFWQR1mQ&gameId=394&source=share"
+					"query": "gameSponsorOpenId=oTn7y5P_NYZWDjjChzR8XFWQR1mQ&gameId=412&source=share"
 				}
 			]
 		}

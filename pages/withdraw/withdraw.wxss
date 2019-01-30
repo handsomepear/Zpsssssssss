@@ -88,6 +88,12 @@
   text-align: right;
   color: #5590e1;
 }
+button.contact-entry {
+  font-size: 28rpx;
+  height: auto;
+  line-height: 40rpx;
+  color: #5590e1;
+}
 .withdraw-btn {
   width: 420rpx;
   height: 90rpx;
@@ -408,6 +414,7 @@ button.remain-con {
   width: 100%;
   padding-top: 10rpx;
   background-color: #fff;
+  margin-top: 30rpx;
 }
 .remain-btn {
   height: 90rpx;

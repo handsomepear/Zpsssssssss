@@ -17,6 +17,6 @@
     </view>
   </block>
   <block wx:else>
-    <view class="empty">您还没有体现记录哦~</view>
+    <view class="empty">您还没有提现记录哦~</view>
   </block>
 </view>

@@ -21,7 +21,11 @@ let eventFunctions = {
   toVideoPage() {
     let path = '/pages/videoPage/videoPage'
     if (this.data.source === 'share') {
-      path = '/pages/videoPage/videoPage?fatherName=' + this.data.gameData.fatherName + '&sonName=' + this.data.getList[0].nickName
+      path =
+        '/pages/videoPage/videoPage?fatherName=' +
+        this.data.gameData.fatherName +
+        '&sonName=' +
+        this.data.getList[this.data.getIndex].nickName
     }
     wx.navigateTo({ url: path })
   },
@@ -52,6 +56,7 @@ let eventFunctions = {
     startRound(this.data.sendOrangeNum).then(res => {
       const userInfo = wx.getStorageSync('userInfo')
       const openId = wx.getStorageSync('openId')
+      const sendOrangeNum = this.data.sendOrangeNum
       that.setData({
         canSend: true,
         isShowShareModal: true,
@@ -61,7 +66,8 @@ let eventFunctions = {
           fatherAvatarUrl: userInfo.avatarUrl,
           currentGameOrange: res.data.orange
         },
-        orangeTotal: this.data.orangeTotal - parseInt(this.data.sendOrangeNum),
+        orangeTotal: this.data.orangeTotal - parseInt(sendOrangeNum),
+        sendOrangeNum: null,
         getList: [],
         gameSponsorOpenId: openId
       })
@@ -242,7 +248,7 @@ Page({
         this.setData({
           showAuthModal: true
         })
-      }else {
+      } else {
         this.pullFromRoundHandle()
       }
     } else {
@@ -253,7 +259,7 @@ Page({
   getRecentGame() {
     const that = this
     getMyRounds().then(res => {
-      if(res.data.length){
+      if (res.data.length) {
         that.setData({
           gameId: res.data[0].id
         })
@@ -281,12 +287,7 @@ Page({
       .catch(err => {
         that.getRoundByGameId()
         // 未领取到橘子
-        if(err.result === -6) {
-          wx.showToastWithoutIcon('不能领取自己的橘子', 2000)
-        }else {
-          wx.showToastWithoutIcon('橘子已领完', 2000)
-        }
-        
+        wx.showToastWithoutIcon(err.msg, 2000)
         that.setData({ pullState: 1 })
       })
   },

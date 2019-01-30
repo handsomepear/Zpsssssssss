@@ -25,14 +25,16 @@ swiper {
   box-sizing: border-box;
 }
 .arrow-left {
-  float: left
+  float: left;
+  transform-origin: center;
+  transform: rotate(180deg)
 }
 .arrow-right {
   float: right
 }
 .arrow-con image {
-  width: 24rpx;
-  height: 42rpx;
+  width: 72rpx;
+  height: 64rpx;
 }
 .banner-con .avatar {
   width: 40rpx;
@@ -374,6 +376,11 @@ swiper {
 }
 .get-orange-modal .juzi-img {
   margin-bottom: -4rpx;
+}
+.get-orange-tips {
+  font-size: 28rpx;
+  color: #5c5c5c;
+  margin-top: 35rpx;
 }
 .get-orange-modal text {
   color: #ff6c00;

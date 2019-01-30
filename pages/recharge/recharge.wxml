@@ -30,6 +30,7 @@
       </block>
     </view>
   </form>
+  <view class="tips-text">注：正宗临海蜜橘，提现包邮。由浙江省临海市涌泉镇果农直接发货，价格低于市场价。（为帮家里卖橘子开发的小程序，程序员能做的也就这么多了😂 ）</view>
   <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
     <button form-type="submit" class="remain-con" plain="{{true}}">
       <view class="remain-btn" bindtap="rechargeOrange">充值</view>

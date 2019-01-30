@@ -110,10 +110,8 @@ button.contact-btn {
 }
 
 button.remain-con {
-  position: fixed;
   width: 100%;
-  bottom: 0rpx;
-  left: 0;
+  margin-top: 40rpx;
   padding: 20rpx 30rpx 30rpx;
   background-color: #fff;
 }
@@ -125,4 +123,8 @@ button.remain-con {
   font-size: 34rpx;
   text-align: center;
   border-radius: 8rpx;
+}
+
+.tips-text {
+  padding: 0 28rpx;
 }

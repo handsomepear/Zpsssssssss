@@ -4,8 +4,13 @@
     <view class="main">
       <view class="remain-top">
         <view class="remain-title">橘子余额</view>
-        <view class="list-entry" data-page="/pages/orderList/orderList" bindtap="navigateTo">
-          提现记录
+        <view style="display: flex;">
+          <view class="list-entry" data-page="/pages/orderList/orderList" bindtap="navigateTo">
+            提现记录
+          </view>
+          <button class="contact-entry" plain="{{true}}" style="margin-left: 20rpx;" open-type="contact">
+            联系客服
+          </button>
         </view>
       </view>
       <view class="withdraw-options">
@@ -21,7 +26,7 @@
         </form>
       </view>
     </view>
-    <view class="tips">注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现60个，约十斤。</view>
+    <view class="tips">注：水果生鲜对物流要求较高，10斤的包装可避免橘子在运输过程中因碰撞、挤压造成的变质损耗。因此，每次仅可提现{{orangeMin}}个，约十斤。</view>
   </view>
   <view class="container">
     <!-- 充值 -->
@@ -46,13 +51,14 @@
         </block>
       </view>
     </form>
+    <view class="tips-text">注：正宗临海蜜橘，提现包邮。由浙江省临海市涌泉镇果农直接发货，价格低于市场价。（为帮家里卖橘子开发的小程序，程序员能做的也就这么多了😂 ）</view>
     <form report-submit="{{true}}" bindsubmit="saveFormId" bindtap="rechargeOrange">
       <button form-type="submit" class="remain-con" plain="{{true}}">
         <view class="remain-btn" bindtap="rechargeOrange">购买</view>
       </button>
     </form>
     <form report-submit="{{true}}" bindsubmit="saveFormId">
-      <button form-type="submit" class="address-entry" plain="{{true}}" bindtap="openAddressPanel">
+      <button form-type="submit" class="address-entry" plain="{{true}}" data-from="button" bindtap="openAddressPanel">
         {{addrInfo ? '修改收货地址': '收货地址'}} >
       </button>
     </form>
@@ -115,7 +121,7 @@
     </form>
   </view>
   <view class="withdraw-success-wrap" wx:if="{{showWithdrawSuccessModal}}">
-    <view class="withdraw-success-modal" >
+    <view class="withdraw-success-modal">
       <view class="title">提现成功</view>
       <view class="withdraw-tips">因春节期间物流停运，所有提现节后发货。有问题请在客服消息中描述，并留下联系方式，节后工作人员统一回复。</view>
       <view class="confirm-btn" bindtap="closeWithdrawSuccessModal">确定</view>

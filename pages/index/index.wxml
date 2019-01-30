@@ -52,10 +52,10 @@
     </swiper>
     <view class="arrow-con">
       <view class="arrow-left" bindtap="pre" wx:if="{{getIndex > 0}}">
-        <image src="/static/imgs/arrow-left.png" />
+        <image src="/static/imgs/arrow.png" />
       </view>
       <view class="arrow-right" bindtap="next" wx:if="{{getIndex < getList.length - 1}}">
-        <image src="/static/imgs/arrow-right.png" />
+        <image src="/static/imgs/arrow.png" />
       </view>
     </view>
   </view>
@@ -242,9 +242,10 @@
       <view class="title">
         获得
         <text>1</text>
-        个橘子
+        个
         <image src="../../static/imgs/juzi.png" class="juzi-img" />
       </view>
+      <view class="get-orange-tips">是真的橘子哦~提现后快递送上门~</view>
       <view class="confirm-btn" bindtap="closeGetOrangeModal">确定</view>
     </view>
   </view>

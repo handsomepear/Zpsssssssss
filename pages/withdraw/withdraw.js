@@ -5,7 +5,12 @@ const { saveFormId, getConfigHandle } = require('../../server/common')
 // 事件函数（属性值只能为function）
 let eventFunctions = {
   navigateTo: navigateTo,
-  openAddressPanel() {
+  openAddressPanel(e) {
+    if(!(e && e.currentTarget.dataset.from === 'button')) {
+      this.setData({
+        addressFlag: true
+      })
+    }
     if (!this.data.addrInfo) {
       // 如果没有地址 直接使用微信地址
       this.getWxAddress()
@@ -42,9 +47,6 @@ let eventFunctions = {
     }
 
     if (data.canWithdraw) {
-      this.setData({
-        canWithdraw: false
-      })
       this.openAddressPanel()
     }
   },
@@ -89,6 +91,9 @@ let eventFunctions = {
           region: addrInfo.region
         })
         if (data.canWithdraw && data.addressFlag) {
+          that.setData({
+            canWithdraw: false
+          })
           withdraw({
             withdrawNum: data.orangeMin, // 实际到手的数量
             addr: data.addrInfo.detailInfo,
@@ -109,6 +114,7 @@ let eventFunctions = {
                     canWithdraw: true,
                     showWithdrawSuccessModal: true
                   })
+                  that.closeAddressPanel()
                   wx.hideLoading()
                   // wx.showToast({
                   //   title: '提现成功',
@@ -130,11 +136,11 @@ let eventFunctions = {
                 canWithdraw: true
               })
             })
+        }else {
+          this.closeAddressPanel()
         }
       })
-      this.setData({
-        isShowAddrPanel: false
-      })
+      
     }
     if (!flag) {
       wx.showToastWithoutIcon(warn)
@@ -272,7 +278,7 @@ Page({
   data: {
     orangeTotal: '',
     addressFlag: false, // true 修改地址之后要提现 false 表示仅仅修改地址
-    orangeMin: 60,
+    orangeMin: 0,
     isAuth: app.globalData.isAuthorized,
     isShowAddrPanel: false, // 控制地址弹窗是否显示
     withdrawNum: null, // 提现橘子个数

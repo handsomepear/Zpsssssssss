@@ -18,10 +18,8 @@ const lifeCycleFunctions = {
     const userInfo = wx.getStorageSync('userInfo')
     let that = this
     let gameId = opts.gameId
-    let pullState = opts.pullState
-    let shareOpenId = opts.shareOpenId
-    let shareUsername = opts.shareUsername // 当前游戏的创建者
-    let openId = app.globalData.openId
+    // let pullState = opts.pullState
+    // let shareUsername = opts.shareUsername // 当前游戏的创建者
     let pages = getCurrentPages()
     if ((pages[pages.length - 2] && pages[pages.length - 2].name === 'mine') || opts.source === 'template') {
       this.setData({
@@ -30,14 +28,10 @@ const lifeCycleFunctions = {
         shareOpenId: app.globalData.openId
       })
     } else {
-      this.setData({ pullState: pullState, shareUsername: shareUsername, shareOpenId: shareOpenId })
+      // this.setData({ pullState: pullState, shareUsername: shareUsername, shareOpenId: shareOpenId })
     }
     // 判断是不是自己
-    if (shareOpenId) {
-      this.setData({ isSelf: shareOpenId === openId })
-    } else {
-      this.setData({ isSelf: true })
-    }
+    
     this.setData({
       calls: app.globalData.calls,
       isx: app.globalData.isx

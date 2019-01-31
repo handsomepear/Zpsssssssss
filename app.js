@@ -15,6 +15,8 @@ App({
     gifUrl: '', // gif图
     gifEnable: false, // 是否需要gif图
     calls: [], // 称呼
+    shareMsg: [],
+    indexSendBtn: '',
     gifDuration: 27000, // gif 时长
     isx: false,
     newUserFlag: false
@@ -59,5 +61,9 @@ App({
           wx.showToastWithoutIcon(err.msg)
         })
     }
+  },
+  test(){
+    console.log('这是一个测试更改')
+    console.log('这是一个追加更改')
   }
 })

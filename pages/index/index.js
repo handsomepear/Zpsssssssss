@@ -112,7 +112,8 @@ let lifeCycleFunctions = {
       that.setData({
         videoEnable: app.globalData.videoEnable,
         gifUrl: app.globalData.gifUrl,
-        bannerUrl: app.globalData.bannerUrl
+        bannerUrl: app.globalData.bannerUrl,
+        sendBtn: app.globalData.indexSendBtn
       })
     })
   },
@@ -142,7 +143,7 @@ let wxRelevantFunctions = {
       path = '/pages/index/index?gameSponsorOpenId=' + that.data.gameSponsorOpenId + '&gameId=' + that.data.gameId + '&source=share'
     }
     return {
-      title: '我买几个橘子去，你就在此地，不要走动~',
+      title: random(app.globalData.shareMsg),
       imageUrl: random(app.globalData.shareImgList),
       path: path
     }
@@ -213,6 +214,7 @@ Page({
     orangeTotal: 0, // 账户橘子个数
     sendOrangeNum: null, // 发橘子个数
     gameId: null,
+    sendBtn: '',
     isShowNumInput: false, // 显示真正的输入框
     isShowShareModal: false,
     videoEnable: true,

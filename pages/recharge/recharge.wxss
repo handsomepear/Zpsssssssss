@@ -128,3 +128,10 @@ button.remain-con {
 .tips-text {
   padding: 0 28rpx;
 }
+
+.detail-image {
+  padding: 30rpx;
+}
+.detail-image image {
+  width: 100%;
+}

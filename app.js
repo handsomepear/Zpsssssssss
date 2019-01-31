@@ -15,6 +15,8 @@ App({
     gifUrl: '', // gif图
     gifEnable: false, // 是否需要gif图
     calls: [], // 称呼
+    shareMsg: [],
+    indexSendBtn: '',
     gifDuration: 27000, // gif 时长
     isx: false,
     newUserFlag: false

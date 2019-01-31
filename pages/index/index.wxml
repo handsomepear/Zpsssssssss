@@ -154,14 +154,14 @@
         </view>
         <view class="send-btn">
           <auth-button auth-btn-init="auth-btn-init" onhandleAuthorize="handleAuthorize" wx:if="{{!isAuthorized}}">
-            <view class="auth-fill">发橘子给好友</view>
+            <view class="auth-fill">{{sendBtn}}</view>
           </auth-button>
           <form report-submit="{{true}}" bindsubmit="saveFormId" bindreset="" wx:else>
             <!-- <button form-type="submit" open-type="share" class="auth-btn-init" plain="{{true}}" wx:if="{{orangeTotal && sendOrangeNum && sendOrangeNum != 0 && orangeTotal >= sendOrangeNum}}">
               <view class="auth-fill">发橘子</view>
             </button> -->
             <button form-type="submit" class="auth-btn-init" plain="{{true}}" bindtap="startRoundHandle">
-              <view class="auth-fill">发橘子给好友</view>
+              <view class="auth-fill">{{sendBtn}}</view>
             </button>
           </form>
         </view>

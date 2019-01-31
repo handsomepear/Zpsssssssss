@@ -77,7 +77,7 @@ let wxRelevantFunctions = {
     }
     console.log(path)
     return {
-      title: '我买几个橘子去，你就在此地，不要走动~',
+      title: random(app.globalData.shareMsg),
       imageUrl: random(app.globalData.shareImgList),
       path: path
     }

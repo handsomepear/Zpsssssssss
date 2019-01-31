@@ -19,6 +19,8 @@ module.exports = {
           app.globalData.calls = res.data.calls
           app.globalData.gifEnable = res.data.gif.enable
           app.globalData.bannerUrl = res.data.banner_url
+          app.globalData.shareMsg = res.data.share_msg
+          app.globalData.indexSendBtn = res.data.btn1_value
           ;(app.globalData.shareImgList = res.data.share_img_url), cb && cb()
         })
         .catch(err => {
